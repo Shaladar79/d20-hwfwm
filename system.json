@@ -5,7 +5,9 @@
   "description": "Custom d20-based system using Power, Speed, Spirit, and Recovery as core attributes.",
   "version": "0.0.4",
   "authors": [
-    { "name": "Scott Anderson" }
+    {
+      "name": "Scott Anderson"
+    }
   ],
   "compatibility": {
     "minimum": "13",
