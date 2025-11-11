@@ -1,19 +1,18 @@
 {
   "id": "hwfwm-d20",
+  "type": "system",
   "title": "HWFWM System (d20)",
-  "description": "A custom d20-based system using Power, Speed, Spirit, and Recovery as core attributes for He Who Fights With Monsters.",
+  "description": "Custom d20-based system using Power, Speed, Spirit, and Recovery as core attributes.",
   "version": "0.0.3",
+  "authors": [
+    {
+      "name": "Scott Anderson"
+    }
+  ],
   "compatibility": {
     "minimum": "13",
     "verified": "13"
   },
-  "authors": [
-    {
-      "name": "Scott Anderson",
-      "url": "https://github.com/Scott-Anderson"
-    }
-  ],
-  "scripts": [],
   "esmodules": [
     "scripts/hwfwm-d20.js"
   ],
@@ -33,13 +32,5 @@
     "units": "ft"
   },
   "primaryTokenAttribute": "resources.lifeforce",
-  "secondaryTokenAttribute": "resources.trauma",
-  "templateVersion": 3,
-  "background": "systems/hwfwm-d20/assets/ui/background.webp",
-  "initiative": "reaction",
-  "initiativeConfig": {
-    "formula": "1d20 + @system.defenses.reaction.value",
-    "priority": 1
-  },
-  "system": "hwfwm-d20"
+  "secondaryTokenAttribute": "resources.trauma"
 }
