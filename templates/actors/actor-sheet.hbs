@@ -1,0 +1,102 @@
+<div style="background:#ff00ff; color:#000; padding:8px; font-weight:bold;">
+  IF YOU CAN SEE THIS, YOU ARE USING THE CORRECT ACTOR-SHEET.HBS
+</div>
+
+<form class="hwfwm sheet actor pc" autocomplete="off">
+  <!-- SIMPLE HEADER -->
+  <header class="sheet-header flexrow">
+    <div class="profile">
+      <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" />
+    </div>
+
+    <div class="header-fields">
+      <div class="name-row">
+        <input name="name" type="text" value="{{actor.name}}" placeholder="Name" />
+      </div>
+      <div class="meta-row flexrow">
+        <div class="field">
+          <label>Rank</label>
+          <input type="text" name="system.details.rank" value="{{system.details.rank}}" />
+        </div>
+        <div class="field">
+          <label>Level</label>
+          <input type="number" name="system.details.level" value="{{system.details.level}}" />
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- BODY: ONLY ATTRIBUTES, NO TABS -->
+  <section class="sheet-body">
+    <section class="card">
+      <h2>DEBUG: Attributes</h2>
+
+      <!-- Raw attributes JSON -->
+      <pre style="border:1px solid #000; padding:4px; background:#fdfdfd; font-size:10px; max-height:120px; overflow:auto;">
+{{{json system.attributes}}}
+      </pre>
+
+      <!-- Direct reads -->
+      <div style="margin-top:6px; font-size:12px; line-height:1.4;">
+        <div><strong>Power Base:</strong> {{system.attributes.power.base}}</div>
+        <div><strong>Speed Base:</strong> {{system.attributes.speed.base}}</div>
+        <div><strong>Spirit Base:</strong> {{system.attributes.spirit.base}}</div>
+        <div><strong>Recovery Base:</strong> {{system.attributes.recovery.base}}</div>
+      </div>
+
+      <!-- Editable inputs in a simple grid -->
+      <div style="margin-top:10px; display:grid; grid-template-columns:repeat(4, 1fr); gap:8px; font-size:11px;">
+
+        <div class="attribute" style="border:1px solid #000; padding:4px;">
+          <div><strong>Power</strong></div>
+          <label>Base</label>
+          <input type="number" name="system.attributes.power.base" value="{{system.attributes.power.base}}" />
+          <label>Rank</label>
+          <input type="text" name="system.attributes.power.rank" value="{{system.attributes.power.rank}}" />
+          <label>Rank Score</label>
+          <input type="number" name="system.attributes.power.rankScore" value="{{system.attributes.power.rankScore}}" />
+          <label>Mod</label>
+          <input type="number" name="system.attributes.power.mod" value="{{system.attributes.power.mod}}" />
+        </div>
+
+        <div class="attribute" style="border:1px solid #000; padding:4px;">
+          <div><strong>Speed</strong></div>
+          <label>Base</label>
+          <input type="number" name="system.attributes.speed.base" value="{{system.attributes.speed.base}}" />
+          <label>Rank</label>
+          <input type="text" name="system.attributes.speed.rank" value="{{system.attributes.speed.rank}}" />
+          <label>Rank Score</label>
+          <input type="number" name="system.attributes.speed.rankScore" value="{{system.attributes.speed.rankScore}}" />
+          <label>Mod</label>
+          <input type="number" name="system.attributes.speed.mod" value="{{system.attributes.speed.mod}}" />
+        </div>
+
+        <div class="attribute" style="border:1px solid #000; padding:4px;">
+          <div><strong>Spirit</strong></div>
+          <label>Base</label>
+          <input type="number" name="system.attributes.spirit.base" value="{{system.attributes.spirit.base}}" />
+          <label>Rank</label>
+          <input type="text" name="system.attributes.spirit.rank" value="{{system.attributes.spirit.rank}}" />
+          <label>Rank Score</label>
+          <input type="number" name="system.attributes.spirit.rankScore" value="{{system.attributes.spirit.rankScore}}" />
+          <label>Mod</label>
+          <input type="number" name="system.attributes.spirit.mod" value="{{system.attributes.spirit.mod}}" />
+        </div>
+
+        <div class="attribute" style="border:1px solid #000; padding:4px;">
+          <div><strong>Recovery</strong></div>
+          <label>Base</label>
+          <input type="number" name="system.attributes.recovery.base" value="{{system.attributes.recovery.base}}" />
+          <label>Rank</label>
+          <input type="text" name="system.attributes.recovery.rank" value="{{system.attributes.recovery.rank}}" />
+          <label>Rank Score</label>
+          <input type="number" name="system.attributes.recovery.rankScore" value="{{system.attributes.recovery.rankScore}}" />
+          <label>Mod</label>
+          <input type="number" name="system.attributes.recovery.mod" value="{{system.attributes.recovery.mod}}" />
+        </div>
+
+      </div>
+    </section>
+  </section>
+</form>
+
