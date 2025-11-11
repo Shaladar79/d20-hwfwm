@@ -3,11 +3,9 @@
   "type": "system",
   "title": "HWFWM System (d20)",
   "description": "Custom d20-based system using Power, Speed, Spirit, and Recovery as core attributes.",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "authors": [
-    {
-      "name": "Scott Anderson"
-    }
+    { "name": "Scott Anderson" }
   ],
   "compatibility": {
     "minimum": "13",
@@ -32,5 +30,9 @@
     "units": "ft"
   },
   "primaryTokenAttribute": "resources.lifeforce",
-  "secondaryTokenAttribute": "resources.trauma"
+  "secondaryTokenAttribute": "resources.trauma",
+  "manifest": "https://raw.githubusercontent.com/Shaladar79/d20-hwfwm/main/system.json",
+  "download": "https://github.com/Shaladar79/d20-hwfwm/archive/refs/heads/main.zip",
+  "license": "LICENSE",
+  "readme": "https://github.com/Shaladar79/d20-hwfwm#readme"
 }
