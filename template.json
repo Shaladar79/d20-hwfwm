@@ -1,0 +1,179 @@
+{
+  "Actor": {
+    "types": ["pc", "npc"],
+    "templates": {
+      "base": {
+        "details": {
+          "name": "",
+          "rank": "",
+          "nature": "",
+          "background": ""
+        },
+        "attributes": {
+          "power": { "label": "Power", "base": 10, "rank": "", "rankScore": 0, "mod": 0 },
+          "speed": { "label": "Speed", "base": 10, "rank": "", "rankScore": 0, "mod": 0 },
+          "spirit": { "label": "Spirit", "base": 10, "rank": "", "rankScore": 0, "mod": 0 },
+          "recovery": { "label": "Recovery", "base": 10, "rank": "", "rankScore": 0, "mod": 0 }
+        },
+        "resources": {
+          "lifeforce": { "label": "Life Force", "value": 10, "max": 10 },
+          "trauma": { "label": "Trauma", "value": 0, "max": 10 },
+          "mana": { "label": "Mana", "value": 0, "max": 0 },
+          "stamina": { "label": "Stamina", "value": 0, "max": 0 },
+          "armor": { "label": "Armor", "value": 0, "max": 0 },
+          "shielding": { "label": "Shielding", "value": 0 }
+        },
+        "defenses": {
+          "defense": { "label": "Defense", "value": 10 },
+          "reaction": { "label": "Reaction", "value": 0 }
+        },
+        "traits": { "size": "medium", "tags": [] },
+        "notes": { "biography": "", "gmNotes": "" }
+      }
+    },
+    "pc": { "templates": ["base"] },
+    "npc": { "templates": ["base"] }
+  },
+
+  "Item": {
+    "types": [
+      "weapon",
+      "armor",
+      "essence",
+      "magicStone",
+      "essenceAbility",
+      "feature",
+      "equipment",
+      "skill",
+      "race",
+      "background",
+      "racialAbility"
+    ],
+    "templates": {
+      "base": {
+        "description": "",
+        "source": "",
+        "rarity": "",
+        "rank": "",
+        "cost": 0,
+        "weight": 0
+      },
+
+      "weapon": {
+        "damage": "1d6",
+        "ability": "power",
+        "range": "",
+        "properties": []
+      },
+
+      "armor": {
+        "defense": 0,
+        "armorPoints": 0,
+        "armorDepleted": false,
+        "defenseBonus": 0,
+        "penalty": 0,
+        "properties": []
+      },
+
+      "essence": {
+        "name": "",
+        "category": "",
+        "rarity": "Common",
+        "tier": "",
+        "theme": "",
+        "notes": ""
+      },
+
+      "magicStone": {
+        "name": "",
+        "category": "",
+        "rarity": "Common",
+        "tier": "",
+        "theme": "",
+        "notes": ""
+      },
+
+      "essenceAbility": {
+        "essence": "",
+        "category": "",
+        "activation": "action",
+        "resource": "mana",
+        "cost": 1,
+        "damage": 0,
+        "healing": 0,
+        "shielding": 0,
+        "cooldown": 0,
+        "damageType": "",
+        "actionCost": 0,
+        "range": "",
+        "duration": "",
+        "effect": "",
+        "score": 0
+      },
+
+      "feature": {
+        "type": "",
+        "effect": ""
+      },
+
+      "skill": {
+        "category": "",
+        "associatedAttribute": "",
+        "trained": false,
+        "notes": ""
+      },
+
+      "race": {
+        "powerMod": 0,
+        "speedMod": 0,
+        "spiritMod": 0,
+        "recoveryMod": 0,
+        "lifeforceMod": 0,
+        "manaMod": 0,
+        "staminaMod": 0,
+        "armorMod": 0,
+        "traits": [],
+        "notes": ""
+      },
+
+      "background": {
+        "lifeforceMod": 0,
+        "manaMod": 0,
+        "staminaMod": 0,
+        "skillBonuses": [],
+        "resourcesBonuses": [],
+        "notes": ""
+      },
+
+      "racialAbility": {
+        "race": "",
+        "category": "",
+        "activation": "passive",
+        "resource": "",
+        "cost": 0,
+        "damage": 0,
+        "healing": 0,
+        "shielding": 0,
+        "cooldown": 0,
+        "damageType": "",
+        "actionCost": 0,
+        "range": "",
+        "duration": "",
+        "effect": "",
+        "notes": ""
+      }
+    },
+
+    "weapon": { "templates": ["base", "weapon"] },
+    "armor": { "templates": ["base", "armor"] },
+    "essence": { "templates": ["base", "essence"] },
+    "magicStone": { "templates": ["base", "magicStone"] },
+    "essenceAbility": { "templates": ["base", "essenceAbility"] },
+    "feature": { "templates": ["base", "feature"] },
+    "equipment": { "templates": ["base"] },
+    "skill": { "templates": ["base", "skill"] },
+    "race": { "templates": ["base", "race"] },
+    "background": { "templates": ["base", "background"] },
+    "racialAbility": { "templates": ["base", "racialAbility"] }
+  }
+}

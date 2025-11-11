@@ -1,0 +1,34 @@
+{
+  "id": "hwfwm-d20",
+  "type": "system",
+  "title": "HWFWM System (d20)",
+  "description": "Custom d20-based system using Power, Speed, Spirit, and Recovery as core attributes.",
+  "version": "0.0.1",
+  "compatibility": {
+    "minimum": "13",
+    "verified": "13"
+  },
+  "authors": [
+    {
+      "name": "Scott Anderson"
+    }
+  ],
+  "esmodules": [
+    "scripts/hwfwm-d20.js"
+  ],
+  "styles": [
+    "styles/hwfwm-d20.css"
+  ],
+  "packs": [],
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json"
+    }
+  ],
+  "grid": {
+    "distance": 5,
+    "units": "ft"
+  }
+}
