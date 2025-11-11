@@ -1,10 +1,9 @@
 // systems/hwfwm-d20/scripts/hwfwm-d20.js
 
-// Use Foundry's v2 sheet framework (v13+)
 const { DocumentSheetV2 } = foundry.applications.api;
 
 /**
- * PC Sheet
+ * HWFWM PC Sheet (V2)
  */
 class HWFWMPCSheet extends DocumentSheetV2 {
   static get defaultOptions() {
@@ -19,17 +18,17 @@ class HWFWMPCSheet extends DocumentSheetV2 {
     };
   }
 
-  /** Tell Foundry which document type this sheet is for */
+  /** This sheet is for Actor documents */
   static get documentTypes() {
     return ["Actor"];
   }
 
-  /** Limit this sheet to pc type */
+  /** Only apply to type "pc" */
   static match(document) {
     return document.type === "pc";
   }
 
-  /** Define our template parts */
+  /** Our template parts */
   static PARTS = {
     main: {
       template: "systems/hwfwm-d20/templates/actors/actor-sheet.hbs"
@@ -37,14 +36,13 @@ class HWFWMPCSheet extends DocumentSheetV2 {
   };
 
   /**
-   * Supply data to the template.
-   * context is what your .hbs sees (actor, system, items grouped, etc.)
+   * Data sent to the template.
    */
   async _prepareContext(_options) {
     const actor = this.document;
     const system = actor.system;
 
-    // Group items by type for easier use in the sheet
+    // Group items by type for easy access in the sheet
     const items = actor.items.contents ?? [];
     const itemTypes = items.reduce((acc, item) => {
       const t = item.type;
@@ -64,7 +62,7 @@ class HWFWMPCSheet extends DocumentSheetV2 {
 }
 
 /**
- * NPC Sheet - simplified, uses npc-sheet.hbs
+ * HWFWM NPC Sheet (V2)
  */
 class HWFWMNPCSheet extends DocumentSheetV2 {
   static get defaultOptions() {
@@ -83,6 +81,7 @@ class HWFWMNPCSheet extends DocumentSheetV2 {
     return ["Actor"];
   }
 
+  /** Only apply to type "npc" */
   static match(document) {
     return document.type === "npc";
   }
@@ -96,6 +95,7 @@ class HWFWMNPCSheet extends DocumentSheetV2 {
   async _prepareContext(_options) {
     const actor = this.document;
     const system = actor.system;
+
     const items = actor.items.contents ?? [];
     const itemTypes = items.reduce((acc, item) => {
       const t = item.type;
@@ -115,22 +115,37 @@ class HWFWMNPCSheet extends DocumentSheetV2 {
 }
 
 /**
- * Register sheets on init
+ * Register our sheets
  */
-Hooks.once("init", function () {
-  console.log("HWFWM-d20 | Initializing system and registering sheets (V2)");
+Hooks.once("init", () => {
+  console.log("HWFWM-d20 | Initializing system and registering V2 sheets");
 
-  // Unregister the default core sheets so ours become primary
-  Actors.unregisterSheet("core", foundry.applications.sheets.ActorSheetV2 || ActorSheet);
+  // Unregister core default Actor sheets so our custom ones are available/used
+  try {
+    Actors.unregisterSheet("core", ActorSheet);
+  } catch (err) {
+    // Ignore if already unregistered / not present
+  }
+
+  if (foundry.applications.sheets?.ActorSheetV2) {
+    try {
+      Actors.unregisterSheet("core", foundry.applications.sheets.ActorSheetV2);
+    } catch (err) {
+      // Safe to ignore
+    }
+  }
 
   // Register PC sheet
   Actors.registerSheet("hwfwm-d20", HWFWMPCSheet, {
+    types: ["pc"],
     label: "HWFWM PC Sheet",
     makeDefault: true
   });
 
   // Register NPC sheet
   Actors.registerSheet("hwfwm-d20", HWFWMNPCSheet, {
+    types: ["npc"],
     label: "HWFWM NPC Sheet"
   });
 });
+
