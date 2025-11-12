@@ -59,6 +59,7 @@ class HWFWMPCSheet extends ActorSheet {
       try {
         await item.update({ system: s }, { diff: false, recursive: false });
       } catch (e) {
+        // Compendium items are read-only; ignore update errors from drops
         console.warn("HWFWM-D20 | Could not normalize dropped skill fields:", e);
       }
     }
@@ -154,21 +155,26 @@ class HWFWMSkillSheet extends ItemSheet {
 
   getData(options) {
     const data = super.getData(options);
-    const s = data.item.system ?? {};
+
+    // Build a normalized, non-destructive view for the template (compendium-safe)
+    const s = foundry.utils.duplicate(data.item.system ?? {});
     if (s.skillType && !s.category) s.category = s.skillType;
     if (s.attribute && !s.associatedAttribute) s.associatedAttribute = s.attribute;
     if (s.category && !s.skillType) s.skillType = s.category;
     if (s.associatedAttribute && !s.attribute) s.attribute = s.associatedAttribute;
-    data.item.updateSource({ system: s }); // update source only
+
+    data.systemView = s; // used by the HBS for read-only display
     return data;
   }
 
+  /** On submit, mirror fields so both are always in-sync (for editable docs) */
   async _updateObject(event, formData) {
     const s = foundry.utils.expandObject(formData).system ?? {};
     if (s.skillType && !s.category) s.category = s.skillType;
     if (s.attribute && !s.associatedAttribute) s.associatedAttribute = s.attribute;
     if (s.category && !s.skillType) s.skillType = s.category;
     if (s.associatedAttribute && !s.attribute) s.attribute = s.associatedAttribute;
+
     formData = foundry.utils.flattenObject({ system: s });
     return super._updateObject(event, formData);
   }
