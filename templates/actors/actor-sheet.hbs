@@ -216,7 +216,8 @@
     <h2>Skills</h2>
 
     {{!-- We’ll render groups in this fixed order --}}
-    {{#each (array "Power" "Speed" "Spirit" "Recovery" "Crafting" "Knowledge" "Combat") as |cat|}}
+   {{#each (array "Combat" "Power" "Speed" "Spirit" "Recovery" "Crafting" "Knowledge") as |cat|}}
+
       <div class="skill-group" style="margin-top:12px;">
         <div class="flexrow" style="justify-content:space-between; align-items:center;">
           <h3 style="margin:0;">{{cat}}</h3>
@@ -288,6 +289,7 @@
     </div>
   </section>
 </form>
+
 
 
 
