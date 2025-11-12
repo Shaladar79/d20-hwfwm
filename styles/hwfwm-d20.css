@@ -1,27 +1,31 @@
 /* =====================================================
    HWFWM v13 | PC Sheet Styling
    Clean white cards, bold black borders,
-   1/2" gradient margin (blue → silver → gold)
-   Narrow centered sheet, stacked layout for stats tab
+   Full-width layout with gradient background,
+   Scrollable vertical Stats tab
    ===================================================== */
 
 /* ----- Root Layout ----- */
 .hwfwm.sheet {
-  --margin: 48px;            /* ~1/2 inch margin */
   --border: 3px solid #000;  /* bold black */
   --radius: 10px;
   --gap: 12px;
   --pad: 10px;
 
   background: linear-gradient(135deg, #2e6cff 0%, #cfd4da 50%, #d4af37 100%);
-  padding: var(--margin);
-  box-sizing: border-box;
+  background-attachment: fixed;
+  background-size: cover;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
 
-  /* Centered and narrower */
-  max-width: 860px;
-  width: min(860px, 90vw);
-  margin-left: auto;
-  margin-right: auto;
+/* ----- Sheet Wrapper ----- */
+.hwfwm.sheet .window-content {
+  background: transparent;
+  padding: 0;
+  margin: 0;
 }
 
 /* White panels with strong borders */
@@ -30,6 +34,8 @@
   background: #fff;
   border: var(--border);
   border-radius: var(--radius);
+  width: 100%;
+  box-sizing: border-box;
 }
 
 /* ----- Header ----- */
@@ -95,6 +101,7 @@
   border-right: var(--border);
   border-bottom: var(--border);
   border-radius: 0 0 var(--radius) var(--radius);
+  justify-content: center;
 }
 
 .hwfwm.sheet .sheet-tabs .item {
@@ -113,9 +120,11 @@
   border-top: none;
   border-radius: 0 0 var(--radius) var(--radius);
   padding: var(--pad);
+  width: 100%;
+  box-sizing: border-box;
 
   /* Scrollable vertical area */
-  max-height: calc(100vh - 2 * 48px - 240px);
+  max-height: calc(100vh - 250px);
   overflow-y: auto;
 }
 
@@ -137,7 +146,7 @@
 
 /* ----- STATS TAB: Stacked layout ----- */
 
-/* Previously a 2-column grid; now stacked vertically */
+/* Stack vertically */
 .hwfwm.sheet .stats .flexrow {
   display: block;
 }
@@ -156,14 +165,8 @@
 
 .hwfwm.sheet .attributes-grid {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: 1fr 1fr;
   gap: var(--gap);
-}
-
-@media (min-width: 1100px) {
-  .hwfwm.sheet .attributes-grid {
-    grid-template-columns: 1fr 1fr;
-  }
 }
 
 .hwfwm.sheet .attribute {
@@ -237,7 +240,7 @@
   gap: var(--gap);
 }
 
-/* ----- Scrollbar Style (optional aesthetic) ----- */
+/* ----- Scrollbar Style ----- */
 .hwfwm.sheet .sheet-content::-webkit-scrollbar {
   width: 10px;
 }
@@ -252,5 +255,3 @@
 .hwfwm.sheet .sheet-content::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
-
-
