@@ -32,7 +32,7 @@
       <!-- Binding attribute -->
       <div class="flexrow" style="margin-top:8px; align-items:center; gap:6px;">
         <label style="white-space:nowrap;">Binds to Attribute:</label>
-        <select class="essence-attr-select" data-essence-key="e1" name="system.essences.e1.attribute" style="flex:1;">
+        <select class="essence-attr-select" data-essence-key="e1" style="flex:1;">
           <option value="">—</option>
           <option value="power"    {{#if (eq system.essences.e1.attribute "power")}}selected{{/if}}>Power</option>
           <option value="speed"    {{#if (eq system.essences.e1.attribute "speed")}}selected{{/if}}>Speed</option>
@@ -66,13 +66,11 @@
             <div class="flexrow" style="align-items:center; gap:8px; margin-top:6px;">
               <label style="width:50px;">Score</label>
               <input type="number" class="ability-score" data-essence-key="e1" data-slot-index="{{i}}"
-                     name="system.essences.e1.abilities.{{i}}.score"
                      value="{{lookup (lookup system.essences.e1.abilities i) "score"}}" min="0" />
 
               {{!-- Active is always visible, independent --}}
               <label class="checkbox">
                 <input type="checkbox" class="ability-active" data-essence-key="e1" data-slot-index="{{i}}"
-                       name="system.essences.e1.abilities.{{i}}.isActive"
                        {{#if (lookup (lookup system.essences.e1.abilities i) "isActive")}}checked{{/if}}/>
                 Active
               </label>
@@ -81,7 +79,6 @@
               {{#if (lookup (lookup system.essences.e1.abilities i) "isActive")}}
                 <label class="checkbox">
                   <input type="checkbox" class="ability-attack" data-essence-key="e1" data-slot-index="{{i}}"
-                         name="system.essences.e1.abilities.{{i}}.isAttack"
                          {{#if (lookup (lookup system.essences.e1.abilities i) "isAttack")}}checked{{/if}}/>
                   Attack Ability
                 </label>
@@ -119,7 +116,7 @@
 
       <div class="flexrow" style="margin-top:8px; align-items:center; gap:6px;">
         <label style="white-space:nowrap;">Binds to Attribute:</label>
-        <select class="essence-attr-select" data-essence-key="e2" name="system.essences.e2.attribute" style="flex:1;">
+        <select class="essence-attr-select" data-essence-key="e2" style="flex:1;">
           <option value="">—</option>
           <option value="power"    {{#if (eq system.essences.e2.attribute "power")}}selected{{/if}}>Power</option>
           <option value="speed"    {{#if (eq system.essences.e2.attribute "speed")}}selected{{/if}}>Speed</option>
@@ -149,12 +146,10 @@
             <div class="flexrow" style="align-items:center; gap:8px; margin-top:6px;">
               <label style="width:50px;">Score</label>
               <input type="number" class="ability-score" data-essence-key="e2" data-slot-index="{{i}}"
-                     name="system.essences.e2.abilities.{{i}}.score"
                      value="{{lookup (lookup system.essences.e2.abilities i) "score"}}" min="0" />
 
               <label class="checkbox">
                 <input type="checkbox" class="ability-active" data-essence-key="e2" data-slot-index="{{i}}"
-                       name="system.essences.e2.abilities.{{i}}.isActive"
                        {{#if (lookup (lookup system.essences.e2.abilities i) "isActive")}}checked{{/if}}/>
                 Active
               </label>
@@ -162,7 +157,6 @@
               {{#if (lookup (lookup system.essences.e2.abilities i) "isActive")}}
                 <label class="checkbox">
                   <input type="checkbox" class="ability-attack" data-essence-key="e2" data-slot-index="{{i}}"
-                         name="system.essences.e2.abilities.{{i}}.isAttack"
                          {{#if (lookup (lookup system.essences.e2.abilities i) "isAttack")}}checked{{/if}}/>
                   Attack Ability
                 </label>
@@ -199,7 +193,7 @@
 
       <div class="flexrow" style="margin-top:8px; align-items:center; gap:6px;">
         <label style="white-space:nowrap;">Binds to Attribute:</label>
-        <select class="essence-attr-select" data-essence-key="e3" name="system.essences.e3.attribute" style="flex:1;">
+        <select class="essence-attr-select" data-essence-key="e3" style="flex:1;">
           <option value="">—</option>
           <option value="power"    {{#if (eq system.essences.e3.attribute "power")}}selected{{/if}}>Power</option>
           <option value="speed"    {{#if (eq system.essences.e3.attribute "speed")}}selected{{/if}}>Speed</option>
@@ -229,12 +223,10 @@
             <div class="flexrow" style="align-items:center; gap:8px; margin-top:6px;">
               <label style="width:50px;">Score</label>
               <input type="number" class="ability-score" data-essence-key="e3" data-slot-index="{{i}}"
-                     name="system.essences.e3.abilities.{{i}}.score"
                      value="{{lookup (lookup system.essences.e3.abilities i) "score"}}" min="0" />
 
               <label class="checkbox">
                 <input type="checkbox" class="ability-active" data-essence-key="e3" data-slot-index="{{i}}"
-                       name="system.essences.e3.abilities.{{i}}.isActive"
                        {{#if (lookup (lookup system.essences.e3.abilities i) "isActive")}}checked{{/if}}/>
                 Active
               </label>
@@ -242,7 +234,6 @@
               {{#if (lookup (lookup system.essences.e3.abilities i) "isActive")}}
                 <label class="checkbox">
                   <input type="checkbox" class="ability-attack" data-essence-key="e3" data-slot-index="{{i}}"
-                         name="system.essences.e3.abilities.{{i}}.isAttack"
                          {{#if (lookup (lookup system.essences.e3.abilities i) "isAttack")}}checked{{/if}}/>
                   Attack Ability
                 </label>
@@ -279,7 +270,7 @@
 
       <div class="flexrow" style="margin-top:8px; align-items:center; gap:6px;">
         <label style="white-space:nowrap;">Binds to Attribute:</label>
-        <select class="essence-attr-select" data-essence-key="confluence" name="system.essences.confluence.attribute" style="flex:1;">
+        <select class="essence-attr-select" data-essence-key="confluence" style="flex:1;">
           <option value="">—</option>
           <option value="power"    {{#if (eq system.essences.confluence.attribute "power")}}selected{{/if}}>Power</option>
           <option value="speed"    {{#if (eq system.essences.confluence.attribute "speed")}}selected{{/if}}>Speed</option>
@@ -309,12 +300,10 @@
             <div class="flexrow" style="align-items:center; gap:8px; margin-top:6px;">
               <label style="width:50px;">Score</label>
               <input type="number" class="ability-score" data-essence-key="confluence" data-slot-index="{{i}}"
-                     name="system.essences.confluence.abilities.{{i}}.score"
                      value="{{lookup (lookup system.essences.confluence.abilities i) "score"}}" min="0" />
 
               <label class="checkbox">
                 <input type="checkbox" class="ability-active" data-essence-key="confluence" data-slot-index="{{i}}"
-                       name="system.essences.confluence.abilities.{{i}}.isActive"
                        {{#if (lookup (lookup system.essences.confluence.abilities i) "isActive")}}checked{{/if}}/>
                 Active
               </label>
@@ -322,7 +311,6 @@
               {{#if (lookup (lookup system.essences.confluence.abilities i) "isActive")}}
                 <label class="checkbox">
                   <input type="checkbox" class="ability-attack" data-essence-key="confluence" data-slot-index="{{i}}"
-                         name="system.essences.confluence.abilities.{{i}}.isAttack"
                          {{#if (lookup (lookup system.essences.confluence.abilities i) "isAttack")}}checked{{/if}}/>
                   Attack Ability
                 </label>
