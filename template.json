@@ -191,12 +191,16 @@
         "effect": ""
       },
 
-      "skill": {
-        "category": "",
-        "associatedAttribute": "",
-        "trained": false,
-        "notes": ""
-      },
+     "skill": {
+  "category": "",
+  "associatedAttribute": "",
+  "rank": "",
+  "mod": 0,
+  "trained": false,
+  "specialization": "",
+  "description": ""
+}
+,
 
       "race": {
         "powerMod": 0,
@@ -288,3 +292,4 @@
     }
   }
 }
+
