@@ -27,11 +27,11 @@ class HWFWMPCSheet extends ActorSheet {
     return data;
   }
 
- activateListeners(html) {
+activateListeners(html) {
   super.activateListeners(html);
   if (!this.isEditable) return;
 
-  // Create new embedded Item (with defaults from button dataset)
+  // ---- Create embedded Item (with default category/attribute) ----
   html.find(".item-create").on("click", async (ev) => {
     const btn = ev.currentTarget;
     const type = btn.dataset.type;
@@ -50,7 +50,7 @@ class HWFWMPCSheet extends ActorSheet {
     }]);
   });
 
-  // Edit embedded Item
+  // ---- Edit embedded Item ----
   html.find(".item-edit").on("click", (ev) => {
     const li = ev.currentTarget.closest("[data-item-id]");
     if (!li) return;
@@ -58,14 +58,14 @@ class HWFWMPCSheet extends ActorSheet {
     if (item) item.sheet.render(true);
   });
 
-  // Delete embedded Item
+  // ---- Delete embedded Item ----
   html.find(".item-delete").on("click", async (ev) => {
     const li = ev.currentTarget.closest("[data-item-id]");
     if (!li) return;
     await this.actor.deleteEmbeddedDocuments("Item", [li.dataset.itemId]);
   });
 
-  // Live “Trained” toggle
+  // ---- Toggle trained ----
   html.find(".skill-trained").on("change", async (ev) => {
     const cb = ev.currentTarget;
     const id = cb.dataset.itemId;
@@ -73,24 +73,6 @@ class HWFWMPCSheet extends ActorSheet {
     if (!item) return;
     await item.update({ "system.trained": cb.checked });
   });
-}
-
-
-    // Edit embedded Item
-    html.find(".item-edit").on("click", (ev) => {
-      const li = ev.currentTarget.closest("[data-item-id]");
-      if (!li) return;
-      const item = this.actor.items.get(li.dataset.itemId);
-      if (item) item.sheet.render(true);
-    });
-
-    // Delete embedded Item
-    html.find(".item-delete").on("click", async (ev) => {
-      const li = ev.currentTarget.closest("[data-item-id]");
-      if (!li) return;
-      await this.actor.deleteEmbeddedDocuments("Item", [li.dataset.itemId]);
-    });
-  }
 }
 
 /* ------------------------------ Item Sheet -------------------------------- */
@@ -128,6 +110,7 @@ Hooks.once("init", () => {
 Hooks.once("ready", () => {
   console.log("HWFWM-D20 | ready");
 });
+
 
 
 
