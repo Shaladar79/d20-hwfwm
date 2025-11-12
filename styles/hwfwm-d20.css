@@ -1,13 +1,12 @@
 /* =====================================================
-   HWFWM v13 | PC Sheet Styling
-   Clean white cards, bold black borders,
-   Full-width layout with gradient background,
-   Scrollable vertical Stats tab
+   HWFWM v13 | PC Sheet Styling (Compact, Scrollable)
+   Clean white cards, bold black borders, gradient bg
+   Narrow centered sheet with full vertical scroll
    ===================================================== */
 
 /* ----- Root Layout ----- */
 .hwfwm.sheet {
-  --border: 3px solid #000;  /* bold black */
+  --border: 3px solid #000;
   --radius: 10px;
   --gap: 12px;
   --pad: 10px;
@@ -15,17 +14,17 @@
   background: linear-gradient(135deg, #2e6cff 0%, #cfd4da 50%, #d4af37 100%);
   background-attachment: fixed;
   background-size: cover;
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 100%;
+
+  /* Center the whole sheet and keep it narrower */
+  max-width: 940px;
+  width: min(940px, 92vw);
+  margin: 0 auto;
 }
 
-/* ----- Sheet Wrapper ----- */
+/* Remove extra padding from the window content */
 .hwfwm.sheet .window-content {
   background: transparent;
   padding: 0;
-  margin: 0;
 }
 
 /* White panels with strong borders */
@@ -41,35 +40,29 @@
 /* ----- Header ----- */
 .hwfwm.sheet .sheet-header {
   display: grid;
-  grid-template-columns: 120px 1fr;
+  grid-template-columns: 110px 1fr;
   gap: var(--gap);
   padding: var(--pad);
   margin-bottom: var(--gap);
 }
 
 .hwfwm.sheet .profile-img {
-  width: 120px;
-  height: 120px;
+  width: 110px; height: 110px;
   border: var(--border);
   border-radius: var(--radius);
   object-fit: cover;
   background: #fff;
 }
 
-.hwfwm.sheet .header-fields {
-  display: grid;
-  gap: 8px;
-}
+.hwfwm.sheet .header-fields { display: grid; gap: 8px; }
 
 .hwfwm.sheet .header-fields .name-row input {
   width: 100%;
-  font-size: 22px;
-  font-weight: 700;
+  font-size: 20px; font-weight: 700;
   border: var(--border);
   border-radius: var(--radius);
-  padding: 8px 10px;
-  background: #fff;
-  color: #000;
+  padding: 7px 9px;
+  background: #fff; color: #000;
 }
 
 .hwfwm.sheet .meta-row {
@@ -77,24 +70,15 @@
   grid-template-columns: repeat(4, 1fr);
   gap: var(--gap);
 }
-
-.hwfwm.sheet .meta-row .field {
-  display: grid;
-  gap: 4px;
-}
-
+.hwfwm.sheet .meta-row .field { display: grid; gap: 4px; }
 .hwfwm.sheet .meta-row .field input {
-  border: var(--border);
-  border-radius: var(--radius);
-  padding: 6px 8px;
-  background: #fff;
-  color: #000;
+  border: var(--border); border-radius: var(--radius);
+  padding: 5px 7px; background: #fff; color: #000;
 }
 
 /* ----- Tabs Bar ----- */
 .hwfwm.sheet .sheet-tabs {
-  display: flex;
-  gap: var(--gap);
+  display: flex; gap: var(--gap);
   padding: 8px var(--pad);
   background: #fff;
   border-left: var(--border);
@@ -103,17 +87,14 @@
   border-radius: 0 0 var(--radius) var(--radius);
   justify-content: center;
 }
-
 .hwfwm.sheet .sheet-tabs .item {
   padding: 6px 12px;
   border: var(--border);
   border-radius: var(--radius);
-  background: #fff;
-  font-weight: 600;
-  cursor: pointer;
+  background: #fff; font-weight: 600; cursor: pointer;
 }
 
-/* ----- Content Area ----- */
+/* ----- Content Area (scrollable) ----- */
 .hwfwm.sheet .sheet-content {
   background: #fff;
   border: var(--border);
@@ -123,18 +104,13 @@
   width: 100%;
   box-sizing: border-box;
 
-  /* Scrollable vertical area */
-  max-height: calc(100vh - 250px);
+  /* Reliable vertical scroll; extra bottom padding so nothing clips */
+  max-height: calc(100vh - 210px);
   overflow-y: auto;
+  padding-bottom: 24px;
 }
-
-/* Tabs visibility */
-.hwfwm.sheet .tab {
-  display: none;
-}
-.hwfwm.sheet .tab.active {
-  display: block;
-}
+.hwfwm.sheet .tab { display: none; }
+.hwfwm.sheet .tab.active { display: block; }
 
 /* Section card appearance */
 .hwfwm.sheet .card {
@@ -142,62 +118,42 @@
   border: var(--border);
   border-radius: var(--radius);
   padding: var(--pad);
+  box-sizing: border-box;
 }
 
-/* ----- STATS TAB: Stacked layout ----- */
+/* ----- STATS TAB: compact, stacked ----- */
+.hwfwm.sheet .stats .flexrow { display: block; }
+.hwfwm.sheet .stats .card { margin-bottom: var(--gap); }
 
-/* Stack vertically */
-.hwfwm.sheet .stats .flexrow {
-  display: block;
-}
-
-/* Space between cards when stacked */
-.hwfwm.sheet .stats .card {
-  margin-bottom: var(--gap);
-}
-
-/* ----- Attributes Section ----- */
+/* Headings */
 .hwfwm.sheet h2 {
-  font-size: 26px;
-  margin: 0 0 8px 0;
-  color: #000;
+  font-size: 22px; margin: 0 0 8px 0; color: #000;
 }
 
+/* ----- Attributes (smaller boxes) ----- */
 .hwfwm.sheet .attributes-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr;   /* two smaller columns */
   gap: var(--gap);
 }
 
 .hwfwm.sheet .attribute {
   border: var(--border);
   border-radius: var(--radius);
-  padding: 10px;
+  padding: 8px;
   background: #fff;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 6px 10px;
+  gap: 6px 8px;
 }
-
 .hwfwm.sheet .attribute .attr-label {
-  grid-column: 1 / -1;
-  font-size: 18px;
-  font-weight: 700;
-  margin-bottom: 2px;
+  grid-column: 1 / -1; font-size: 16px; font-weight: 700; margin-bottom: 2px;
 }
-
-.hwfwm.sheet .attribute label {
-  font-size: 12px;
-  opacity: 0.8;
-}
-
+.hwfwm.sheet .attribute label { font-size: 11px; opacity: 0.8; }
 .hwfwm.sheet .attribute input {
   width: 100%;
-  border: var(--border);
-  border-radius: var(--radius);
-  padding: 6px 8px;
-  background: #fff;
-  color: #000;
+  border: var(--border); border-radius: var(--radius);
+  padding: 5px 7px; background: #fff; color: #000;
 }
 
 /* ----- Resources & Defenses (below attributes) ----- */
@@ -212,26 +168,22 @@
   background: #fff;
   border: var(--border);
   border-radius: var(--radius);
-  padding: 8px;
+  padding: 7px;
   display: grid;
   grid-template-columns: auto 1fr auto 1fr;
   align-items: center;
   gap: 6px 8px;
 }
-
 .hwfwm.sheet .res label,
-.hwfwm.sheet .def label {
-  font-weight: 700;
-}
+.hwfwm.sheet .def label { font-weight: 700; }
 
 .hwfwm.sheet .res input[type="number"],
 .hwfwm.sheet .def input[type="number"] {
   width: 100%;
   border: var(--border);
   border-radius: var(--radius);
-  padding: 6px 8px;
-  background: #fff;
-  color: #000;
+  padding: 5px 7px;
+  background: #fff; color: #000;
 }
 
 .hwfwm.sheet .defenses-grid {
@@ -240,17 +192,13 @@
   gap: var(--gap);
 }
 
-/* ----- Scrollbar Style ----- */
-.hwfwm.sheet .sheet-content::-webkit-scrollbar {
-  width: 10px;
-}
+/* ----- Optional nicer scrollbar ----- */
+.hwfwm.sheet .sheet-content::-webkit-scrollbar { width: 10px; }
 .hwfwm.sheet .sheet-content::-webkit-scrollbar-track {
-  background: #f0f0f0;
-  border-left: 1px solid #ccc;
+  background: #f0f0f0; border-left: 1px solid #ccc;
 }
 .hwfwm.sheet .sheet-content::-webkit-scrollbar-thumb {
-  background: #888;
-  border-radius: 5px;
+  background: #888; border-radius: 5px;
 }
 .hwfwm.sheet .sheet-content::-webkit-scrollbar-thumb:hover {
   background: #555;
