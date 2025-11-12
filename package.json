@@ -1,0 +1,10 @@
+{
+  "name": "hwfwm-d20",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "bump": "node tools/bump-version.mjs",
+    "bump:commit": "node tools/bump-version.mjs && git add . && git commit -m \"chore: bump version\"",
+    "bump:tag": "node tools/bump-version.mjs && git add . && git commit -m \"chore: bump version\" && git tag v$(node -p \"require('./system.json').version\")"
+  }
+}
