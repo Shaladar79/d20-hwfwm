@@ -1,1 +1,8 @@
-
+{"_id":"smithing","name":"Smithing","type":"skill","img":"icons/svg/hammer.svg","system":{"skillType":"crafting","attribute":"power","description":"Forging, shaping, and repairing metal weapons, armor, and tools through heat, strength, and precision."}}
+{"_id":"alchemy","name":"Alchemy","type":"skill","img":"icons/svg/potion.svg","system":{"skillType":"crafting","attribute":"spirit","description":"Creating potions, elixirs, and magical compounds using reagents and arcane processes."}}
+{"_id":"engineering","name":"Engineering","type":"skill","img":"icons/svg/cog.svg","system":{"skillType":"crafting","attribute":"speed","description":"Designing, constructing, and maintaining machines, mechanisms, or magitech constructs requiring technical precision."}}
+{"_id":"cooking","name":"Cooking","type":"skill","img":"icons/svg/knife.svg","system":{"skillType":"crafting","attribute":"recovery","description":"Preparing meals and consumables that restore vitality or grant temporary effects."}}
+{"_id":"textiles","name":"Textiles","type":"skill","img":"icons/svg/vest.svg","system":{"skillType":"crafting","attribute":"speed","description":"Crafting and repairing garments, cloth armor, and woven materials using fabrics, threads, and leathers."}}
+{"_id":"enchanting","name":"Enchanting","type":"skill","img":"icons/svg/magic.svg","system":{"skillType":"crafting","attribute":"spirit","description":"Imbuing objects with magical energy to create charms, artifacts, or permanent enchantments."}}
+{"_id":"woodworking","name":"Woodworking","type":"skill","img":"icons/svg/tree.svg","system":{"skillType":"crafting","attribute":"power","description":"Shaping wood into tools, weapons, or furniture with craftsmanship and strength."}}
+{"_id":"jewelcrafting","name":"Jewelcrafting","type":"skill","img":"icons/svg/gem.svg","system":{"skillType":"crafting","attribute":"spirit","description":"Shaping and setting gems or crystals to create decorative or enchanted jewelry."}}
