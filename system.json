@@ -3,7 +3,7 @@
   "type": "system",
   "title": "HWFWM System (d20)",
   "description": "Custom d20-based system using Power, Speed, Spirit, and Recovery as core attributes.",
-  "version": "0.0.6.6",
+  "version": "0.0.6.7",
   "authors": [
     {
       "name": "Shaladar"
@@ -19,7 +19,17 @@
   "styles": [
     "styles/hwfwm-d20.css"
   ],
-  "packs": [],
+ "packs": [
+  {
+    "name": "hwfwm-combat-skills",
+    "label": "Combat Skills (HWFWM)",
+    "path": "packs/hwfwm-combat-skills.db",
+    "type": "Item",
+    "system": "hwfwm-d20",
+    "private": false
+  }
+],
+
   "languages": [
     {
       "lang": "en",
@@ -38,6 +48,7 @@
   "license": "LICENSE",
   "readme": "https://github.com/Shaladar79/d20-hwfwm#readme"
 }
+
 
 
 
