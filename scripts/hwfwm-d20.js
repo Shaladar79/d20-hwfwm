@@ -21,7 +21,13 @@ class HWFWMPCSheet extends ActorSheet {
       template: "systems/hwfwm-d20/templates/actors/actor-sheet.hbs",
       width: 960,
       height: "auto",
-      tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-content", initial: "stats" }],
+      tabs: [
+        {
+          navSelector: ".sheet-tabs",
+          contentSelector: ".sheet-content",
+          initial: "stats"
+        }
+      ],
       // Make the whole content area a drop target
       dragDrop: [{ dragSelector: ".item", dropSelector: ".sheet-content" }]
     });
@@ -97,8 +103,6 @@ class HWFWMPCSheet extends ActorSheet {
     if (dropTarget) {
       const dropped = await fromDrop.call(Item, data);
       if (!dropped) return false;
-
-      // Only PC/NPC are expected to use this sheet; if you add monsters later, guard here.
 
       // Ensure the dropped doc is embedded on this actor (clone if coming from compendium/world)
       const ensureEmbedded = async (doc) => {
@@ -220,7 +224,7 @@ class HWFWMPCSheet extends ActorSheet {
       ]);
     });
 
-    // ---- Edit embedded Item (generic item rows, racial abilities, etc.) ----
+    // ---- Edit embedded Item ----
     html.find(".item-edit").on("click", (ev) => {
       const li = ev.currentTarget.closest("[data-item-id]");
       if (!li) return;
@@ -246,23 +250,52 @@ class HWFWMPCSheet extends ActorSheet {
 
     // ===================== Essence-specific listeners =====================
 
-    // Change bound attribute select, ability score, active, attack
-    html
-      .find(
-        ".essence-attr-select, .ability-score, .ability-active, .ability-attack"
-      )
-      .on("change", async (ev) => {
-        const input = ev.currentTarget;
-        const path = input.name;
-        if (!path) return;
-
-        let value;
-        if (input.type === "checkbox") value = input.checked;
-        else if (input.type === "number") value = Number(input.value) || 0;
-        else value = input.value;
-
-        await this.actor.update({ [path]: value });
+    // Change bound attribute select
+    html.find(".essence-attr-select").on("change", async (ev) => {
+      const select = ev.currentTarget;
+      const essenceKey = select.dataset.essenceKey;
+      if (!essenceKey) return;
+      const value = select.value || "";
+      await this.actor.update({
+        [`system.essences.${essenceKey}.attribute`]: value
       });
+    });
+
+    // Change ability score
+    html.find(".ability-score").on("change", async (ev) => {
+      const input = ev.currentTarget;
+      const essenceKey = input.dataset.essenceKey;
+      const slotIndex = input.dataset.slotIndex;
+      if (!essenceKey || slotIndex === undefined) return;
+      const value = Number(input.value) || 0;
+      await this.actor.update({
+        [`system.essences.${essenceKey}.abilities.${slotIndex}.score`]: value
+      });
+    });
+
+    // Toggle Active
+    html.find(".ability-active").on("change", async (ev) => {
+      const cb = ev.currentTarget;
+      const essenceKey = cb.dataset.essenceKey;
+      const slotIndex = cb.dataset.slotIndex;
+      if (!essenceKey || slotIndex === undefined) return;
+      const value = cb.checked;
+      await this.actor.update({
+        [`system.essences.${essenceKey}.abilities.${slotIndex}.isActive`]: value
+      });
+    });
+
+    // Toggle Attack Ability
+    html.find(".ability-attack").on("change", async (ev) => {
+      const cb = ev.currentTarget;
+      const essenceKey = cb.dataset.essenceKey;
+      const slotIndex = cb.dataset.slotIndex;
+      if (!essenceKey || slotIndex === undefined) return;
+      const value = cb.checked;
+      await this.actor.update({
+        [`system.essences.${essenceKey}.abilities.${slotIndex}.isAttack`]: value
+      });
+    });
 
     // Essence edit button
     html.find(".essence-edit").on("click", (ev) => {
@@ -284,9 +317,10 @@ class HWFWMPCSheet extends ActorSheet {
       const updates = {
         [`system.essences.${essenceKey}.itemId`]: ""
       };
-      // Optionally clear all ability itemIds under this essence
       for (let i = 0; i < 5; i++) {
         updates[`system.essences.${essenceKey}.abilities.${i}.itemId`] = "";
+        updates[`system.essences.${essenceKey}.abilities.${i}.isActive`] = false;
+        updates[`system.essences.${essenceKey}.abilities.${i}.isAttack`] = false;
       }
 
       await this.actor.update(updates);
@@ -315,7 +349,9 @@ class HWFWMPCSheet extends ActorSheet {
       if (!essenceKey || Number.isNaN(slotIndex)) return;
 
       await this.actor.update({
-        [`system.essences.${essenceKey}.abilities.${slotIndex}.itemId`]: ""
+        [`system.essences.${essenceKey}.abilities.${slotIndex}.itemId`]: "",
+        [`system.essences.${essenceKey}.abilities.${slotIndex}.isActive`]: false,
+        [`system.essences.${essenceKey}.abilities.${slotIndex}.isAttack`]: false
       });
     });
 
@@ -437,8 +473,14 @@ Hooks.once("init", () => {
 
   // Item sheets
   Items.unregisterSheet("core", ItemSheet);
-  Items.registerSheet("hwfwm-d20", HWFWMSkillSheet, { types: ["skill"], makeDefault: true }); // dedicated Skill sheet
-  Items.registerSheet("hwfwm-d20", HWFWMItemSheet, { types: [], makeDefault: false }); // fallback for others
+  Items.registerSheet("hwfwm-d20", HWFWMSkillSheet, {
+    types: ["skill"],
+    makeDefault: true
+  }); // dedicated Skill sheet
+  Items.registerSheet("hwfwm-d20", HWFWMItemSheet, {
+    types: [],
+    makeDefault: false
+  }); // fallback for others
 
   console.log("HWFWM-D20 | sheets registered");
 });
