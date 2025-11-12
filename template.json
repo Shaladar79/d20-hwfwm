@@ -24,6 +24,54 @@
           "defense":  { "label": "Defense",  "value": 10 },
           "reaction": { "label": "Reaction", "value": 0 }
         },
+
+        "essences": {
+          "e1": {
+            "itemId": "",
+            "attribute": "",
+            "abilities": [
+              { "itemId": "", "score": 0, "isActive": false, "isAttack": false },
+              { "itemId": "", "score": 0, "isActive": false, "isAttack": false },
+              { "itemId": "", "score": 0, "isActive": false, "isAttack": false },
+              { "itemId": "", "score": 0, "isActive": false, "isAttack": false },
+              { "itemId": "", "score": 0, "isActive": false, "isAttack": false }
+            ]
+          },
+          "e2": {
+            "itemId": "",
+            "attribute": "",
+            "abilities": [
+              { "itemId": "", "score": 0, "isActive": false, "isAttack": false },
+              { "itemId": "", "score": 0, "isActive": false, "isAttack": false },
+              { "itemId": "", "score": 0, "isActive": false, "isAttack": false },
+              { "itemId": "", "score": 0, "isActive": false, "isAttack": false },
+              { "itemId": "", "score": 0, "isActive": false, "isAttack": false }
+            ]
+          },
+          "e3": {
+            "itemId": "",
+            "attribute": "",
+            "abilities": [
+              { "itemId": "", "score": 0, "isActive": false, "isAttack": false },
+              { "itemId": "", "score": 0, "isActive": false, "isAttack": false },
+              { "itemId": "", "score": 0, "isActive": false, "isAttack": false },
+              { "itemId": "", "score": 0, "isActive": false, "isAttack": false },
+              { "itemId": "", "score": 0, "isActive": false, "isAttack": false }
+            ]
+          },
+          "confluence": {
+            "itemId": "",
+            "attribute": "",
+            "abilities": [
+              { "itemId": "", "score": 0, "isActive": false, "isAttack": false },
+              { "itemId": "", "score": 0, "isActive": false, "isAttack": false },
+              { "itemId": "", "score": 0, "isActive": false, "isAttack": false },
+              { "itemId": "", "score": 0, "isActive": false, "isAttack": false },
+              { "itemId": "", "score": 0, "isActive": false, "isAttack": false }
+            ]
+          }
+        },
+
         "traits": { "size": "medium", "tags": [] },
         "notes":  { "biography": "", "gmNotes": "" }
       }
