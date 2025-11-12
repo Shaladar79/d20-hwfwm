@@ -1,134 +1,59 @@
-{{!-- =========================================================================
-     HWFWM-D20 | Skill Item Sheet
-     - Uses the dedicated HWFWMSkillSheet class (registered in hwfwm-d20.js)
-     - Fields: name, icon, category/skillType, attribute, rank, mod, trained,
-               specialization, description
-     - Simple layout that matches your white cards / bold borders aesthetic
-   ========================================================================= --}}
-
 <form class="hwfwm item-sheet skill-sheet" autocomplete="off">
-  <header class="sheet-header">
-    <div class="header-grid">
-      <div class="name-block">
-        <h1 class="item-name">
-          <input name="name" type="text" value="{{item.name}}" placeholder="Skill Name"/>
-        </h1>
-        <div class="subline">
-          <span class="pill">Type: {{item.type}}</span>
+  <header class="sheet-header flexrow">
+    <img class="profile" src="{{item.img}}" title="{{item.name}}" data-edit="img"/>
+    <div class="header-fields">
+      <h1 class="charname">
+        <input name="name" type="text" value="{{item.name}}" placeholder="Skill Name" {{#unless editable}}readonly{{/unless}}/>
+      </h1>
+      <div class="grid-2col">
+        <div class="field">
+          <label>Category</label>
+          <input type="text" name="system.category" value="{{systemView.category}}" placeholder="e.g. Combat, Power, Speed" {{#unless editable}}readonly{{/unless}}/>
+        </div>
+        <div class="field">
+          <label>Associated Attribute</label>
+          <select name="system.attribute" {{#unless editable}}disabled{{/unless}}>
+            <option value="power"    {{#if (eq systemView.attribute "power")}}selected{{/if}}>Power</option>
+            <option value="speed"    {{#if (eq systemView.attribute "speed")}}selected{{/if}}>Speed</option>
+            <option value="spirit"   {{#if (eq systemView.attribute "spirit")}}selected{{/if}}>Spirit</option>
+            <option value="recovery" {{#if (eq systemView.attribute "recovery")}}selected{{/if}}>Recovery</option>
+          </select>
         </div>
       </div>
-      <div class="thumb-block">
-        <img class="item-image" src="{{item.img}}" data-edit="img" title="{{item.name}}" />
+
+      <div class="grid-3col">
+        <div class="field">
+          <label>Rank</label>
+          <input type="text" name="system.rank" value="{{system.rank}}"
+                 placeholder="" {{#unless editable}}readonly{{/unless}}/>
+        </div>
+        <div class="field">
+          <label>Modifier</label>
+          <input type="number" name="system.mod" value="{{system.mod}}"
+                 step="1" {{#unless editable}}readonly{{/unless}}/>
+        </div>
+        <div class="field checkbox">
+          <label>Trained</label>
+          <input type="checkbox" name="system.trained" {{checked system.trained}} {{#unless editable}}disabled{{/unless}}/>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Specialization</label>
+        <input type="text" name="system.specialization" value="{{system.specialization}}"
+               placeholder="(optional)" {{#unless editable}}readonly{{/unless}}/>
       </div>
     </div>
   </header>
 
-  <nav class="sheet-tabs tabs" data-group="primary">
-    <a class="item" data-tab="details">Details</a>
-    <a class="item" data-tab="description">Description</a>
-    <a class="item" data-tab="advanced">Advanced</a>
-  </nav>
-
-  <section class="sheet-content">
-    {{!-- ========================== DETAILS TAB ========================== --}}
-    <div class="tab" data-group="primary" data-tab="details">
-      <div class="form-grid two-col">
-        {{!-- Category / Skill Type --}}
-        <div class="form-group">
-          <label>Category</label>
-          <select name="system.skillType">
-            <option value="" {{#unless system.skillType}}selected{{/unless}}>- choose -</option>
-            <option value="general"  {{#if (eq system.skillType "general")}}selected{{/if}}>General</option>
-            <option value="combat"   {{#if (eq system.skillType "combat")}}selected{{/if}}>Combat</option>
-            <option value="crafting" {{#if (eq system.skillType "crafting")}}selected{{/if}}>Crafting</option>
-            <option value="knowledge"{{#if (eq system.skillType "knowledge")}}selected{{/if}}>Knowledge</option>
-          </select>
-          {{!-- Legacy alias (kept visible for clarity; sheet class mirrors both ways) --}}
-          <input type="hidden" name="system.category" value="{{system.category}}">
-        </div>
-
-        {{!-- Governing Attribute --}}
-        <div class="form-group">
-          <label>Attribute</label>
-          <select name="system.attribute">
-            <option value="" {{#unless system.attribute}}selected{{/unless}}>- choose -</option>
-            <option value="power"    {{#if (eq system.attribute "power")}}selected{{/if}}>Power</option>
-            <option value="speed"    {{#if (eq system.attribute "speed")}}selected{{/if}}>Speed</option>
-            <option value="spirit"   {{#if (eq system.attribute "spirit")}}selected{{/if}}>Spirit</option>
-            <option value="recovery" {{#if (eq system.attribute "recovery")}}selected{{/if}}>Recovery</option>
-          </select>
-          {{!-- Legacy alias --}}
-          <input type="hidden" name="system.associatedAttribute" value="{{system.associatedAttribute}}">
-        </div>
-
-        {{!-- Rank --}}
-        <div class="form-group">
-          <label>Rank</label>
-          <input type="number" name="system.rank" value="{{system.rank}}" min="0" />
-        </div>
-
-        {{!-- Modifier --}}
-        <div class="form-group">
-          <label>Modifier</label>
-          <input type="number" name="system.mod" value="{{system.mod}}" min="-10" max="10" />
-        </div>
-
-        {{!-- Trained --}}
-        <div class="form-group checkbox">
-          <label>Trained</label>
-          <input type="checkbox" name="system.trained" {{checked system.trained}} />
-        </div>
-
-        {{!-- Specialization --}}
-        <div class="form-group">
-          <label>Specialization</label>
-          <input type="text" name="system.specialization" value="{{system.specialization}}" placeholder="Optional focus (e.g., “Climbing”)" />
-        </div>
-      </div>
+  <section class="sheet-body">
+    <div class="field">
+      <label>Description</label>
+      <textarea name="system.description" rows="8" {{#unless editable}}readonly{{/unless}}>{{system.description}}</textarea>
     </div>
 
-    {{!-- ======================= DESCRIPTION TAB ======================= --}}
-    <div class="tab" data-group="primary" data-tab="description">
-      <div class="form-group">
-        <label>Description</label>
-        <textarea name="system.description" rows="10" placeholder="Describe how this skill is used, common checks, examples, etc.">{{system.description}}</textarea>
-      </div>
-    </div>
-
-    {{!-- ========================= ADVANCED TAB ======================== --}}
-    <div class="tab" data-group="primary" data-tab="advanced">
-      <p class="muted">Advanced data (debug). Useful while developing schemas.</p>
-      <pre class="code-block">{{json system}}</pre>
-    </div>
+    {{!-- Hidden mirrors ensure both pairs exist after submit --}}
+    <input type="hidden" name="system.skillType" value="{{systemView.category}}"/>
+    <input type="hidden" name="system.associatedAttribute" value="{{systemView.attribute}}"/>
   </section>
 </form>
-
-{{!-- ============================== STYLES ============================== --}}
-<style>
-  .hwfwm.item-sheet.skill-sheet .header-grid {
-    display: grid; grid-template-columns: 1fr 96px; gap: 12px; align-items: center;
-  }
-  .hwfwm.item-sheet.skill-sheet .item-image {
-    width: 96px; height: 96px; border: 3px solid #000; border-radius: 10px; object-fit: cover; background: #fff;
-  }
-  .hwfwm.item-sheet.skill-sheet .subline .pill {
-    display: inline-block; padding: 2px 8px; border: 2px solid #000; border-radius: 8px; background: #fff;
-    font-size: 12px; line-height: 1;
-  }
-  .hwfwm.item-sheet.skill-sheet .form-grid.two-col {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
-  }
-  .hwfwm.item-sheet.skill-sheet .form-group { display: flex; flex-direction: column; gap: 6px; }
-  .hwfwm.item-sheet.skill-sheet .form-group.checkbox { flex-direction: row; align-items: center; gap: 8px; }
-  .hwfwm.item-sheet.skill-sheet .form-group.span-2 { grid-column: span 2; }
-  .hwfwm.item-sheet.skill-sheet input[type="text"],
-  .hwfwm.item-sheet.skill-sheet input[type="number"],
-  .hwfwm.item-sheet.skill-sheet select,
-  .hwfwm.item-sheet.skill-sheet textarea {
-    border: 3px solid #000; border-radius: 10px; padding: 6px 8px; background: #fff; font: inherit;
-  }
-  .hwfwm.item-sheet.skill-sheet textarea { min-height: 140px; }
-  .hwfwm.item-sheet.skill-sheet .code-block {
-    border: 3px dashed #000; border-radius: 10px; padding: 10px; background: #f6f6f6; max-height: 320px; overflow: auto;
-  }
-</style>
