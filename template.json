@@ -11,34 +11,10 @@
           "background": ""
         },
         "attributes": {
-          "power": {
-            "label": "Power",
-            "base": 10,
-            "rank": "",
-            "rankScore": 0,
-            "mod": 0
-          },
-          "speed": {
-            "label": "Speed",
-            "base": 10,
-            "rank": "",
-            "rankScore": 0,
-            "mod": 0
-          },
-          "spirit": {
-            "label": "Spirit",
-            "base": 10,
-            "rank": "",
-            "rankScore": 0,
-            "mod": 0
-          },
-          "recovery": {
-            "label": "Recovery",
-            "base": 10,
-            "rank": "",
-            "rankScore": 0,
-            "mod": 0
-          }
+          "power": { "label": "Power", "base": 10, "rank": "", "rankScore": 0, "mod": 0 },
+          "speed": { "label": "Speed", "base": 10, "rank": "", "rankScore": 0, "mod": 0 },
+          "spirit": { "label": "Spirit", "base": 10, "rank": "", "rankScore": 0, "mod": 0 },
+          "recovery": { "label": "Recovery", "base": 10, "rank": "", "rankScore": 0, "mod": 0 }
         },
         "resources": {
           "lifeforce": { "label": "Life Force", "value": 10, "max": 10 },
@@ -54,14 +30,8 @@
           "defense": { "label": "Defense", "value": 10 },
           "reaction": { "label": "Reaction", "value": 0 }
         },
-        "traits": {
-          "size": "medium",
-          "tags": []
-        },
-        "notes": {
-          "biography": "",
-          "gmNotes": ""
-        }
+        "traits": { "size": "medium", "tags": [] },
+        "notes": { "biography": "", "gmNotes": "" }
       }
     },
     "pc": { "templates": ["base"] },
@@ -83,7 +53,6 @@
       "role",
       "racialAbility"
     ],
-
     "templates": {
       "base": {
         "description": "",
@@ -93,14 +62,12 @@
         "cost": 0,
         "weight": 0
       },
-
       "weapon": {
         "damage": "1d6",
         "ability": "power",
         "range": "",
         "properties": []
       },
-
       "armor": {
         "defense": 0,
         "armorPoints": 0,
@@ -109,7 +76,6 @@
         "penalty": 0,
         "properties": []
       },
-
       "essence": {
         "name": "",
         "category": "",
@@ -118,7 +84,6 @@
         "theme": "",
         "notes": ""
       },
-
       "magicStone": {
         "name": "",
         "category": "",
@@ -127,7 +92,6 @@
         "theme": "",
         "notes": ""
       },
-
       "essenceAbility": {
         "essence": "",
         "category": "",
@@ -145,24 +109,21 @@
         "effect": "",
         "score": 0
       },
-
       "feature": {
         "type": "",
         "effect": ""
       },
-
       "skill": {
-        "category": "",                // legacy alias
-        "associatedAttribute": "",     // legacy alias
-        "skillType": "",               // used by current compendiums
-        "attribute": "",               // used by current compendiums
+        "category": "",
+        "associatedAttribute": "",
+        "skillType": "",
+        "attribute": "",
         "rank": "",
         "mod": 0,
         "trained": false,
         "specialization": "",
         "description": ""
       },
-
       "race": {
         "powerMod": 0,
         "speedMod": 0,
@@ -175,7 +136,6 @@
         "traits": [],
         "notes": ""
       },
-
       "background": {
         "lifeforceMod": 0,
         "manaMod": 0,
@@ -184,7 +144,6 @@
         "resourcesBonuses": [],
         "notes": ""
       },
-
       "role": {
         "lifeforceMod": 0,
         "manaMod": 0,
@@ -195,7 +154,6 @@
         "resourcesBonuses": [],
         "notes": ""
       },
-
       "racialAbility": {
         "race": "",
         "category": "",
@@ -214,7 +172,6 @@
         "notes": ""
       }
     },
-
     "weapon": { "templates": ["base", "weapon"] },
     "armor": { "templates": ["base", "armor"] },
     "essence": { "templates": ["base", "essence"] },
