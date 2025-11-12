@@ -115,7 +115,7 @@ class HWFWMPCSheet extends ActorSheet {
       await this.actor.deleteEmbeddedDocuments("Item", [li.dataset.itemId]);
     });
 
-    // ---- Toggle trained ----
+    // ---- Toggle trained (inline) ----
     html.find(".skill-trained").on("change", async (ev) => {
       const cb = ev.currentTarget;
       const id = cb.dataset.itemId;
@@ -156,6 +156,9 @@ class HWFWMSkillSheet extends ItemSheet {
   getData(options) {
     const data = super.getData(options);
 
+    // Editable for owned/world items; read-only in compendiums
+    data.editable = this.isEditable && !this.item.pack;
+
     // Build a normalized, non-destructive view for the template (compendium-safe)
     const s = foundry.utils.duplicate(data.item.system ?? {});
     if (s.skillType && !s.category) s.category = s.skillType;
@@ -163,7 +166,7 @@ class HWFWMSkillSheet extends ItemSheet {
     if (s.category && !s.skillType) s.skillType = s.category;
     if (s.associatedAttribute && !s.attribute) s.attribute = s.associatedAttribute;
 
-    data.systemView = s; // used by the HBS for read-only display
+    data.systemView = s; // used by the HBS for display
     return data;
   }
 
