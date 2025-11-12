@@ -1,153 +1,102 @@
-// systems/hwfwm-d20/scripts/hwfwm-d20.js
+// ============================================================================
+// HWFWM-D20 SYSTEM | Foundry VTT v13 Compatible
+// Author: Scott Anderson (Shaladar)
+// Description: Custom d20-based system using Power, Speed, Spirit, and Recovery
+// ============================================================================
 
-const {
-  DocumentSheetV2,
-  HandlebarsApplicationMixin
-} = foundry.applications.api;
+const { DocumentSheetV2 } = foundry.applications.api;
 
-/* -------------------------------------------- */
-/*  PC Sheet (V2 + Handlebars)                  */
-/* -------------------------------------------- */
-
+// ============================================================================
+// PC SHEET CLASS
+// ============================================================================
 class HWFWMPCSheet extends HandlebarsApplicationMixin(DocumentSheetV2) {
+  /** Default sheet settings */
   static DEFAULT_OPTIONS = {
     ...super.DEFAULT_OPTIONS,
     id: "hwfwm-pc-sheet",
     classes: ["hwfwm", "sheet", "actor", "pc"],
     window: {
-      title: "HWFWM PC",
-      resizable: true
-    }
+      title: "HWFWM PC Sheet",
+      resizable: true,
+    },
+    position: {
+      width: 960,
+      height: "auto",
+    },
   };
 
-  static get documentTypes() {
-    return ["Actor"];
-  }
-
-  static match(document) {
-    return document.type === "pc";
-  }
-
+  /** Template parts */
   static PARTS = {
-    main: {
-      template: "systems/hwfwm-d20/templates/actors/actor-sheet.hbs"
-    }
+    form: {
+      template: "systems/hwfwm-d20/templates/actors/actor-sheet.hbs",
+    },
   };
 
-  static TABS = {
-    primary: {
-      navSelector: ".sheet-tabs",
-      contentSelector: ".sheet-content",
-      initial: "stats"
-    }
-  };
+  /** Dynamic window title */
+  get title() {
+    return this.document.name || "HWFWM Character";
+  }
 
-  async _prepareContext(_options) {
-    const actor = this.document;
-    const system = actor.system;
+  /** Prepare context for Handlebars template */
+  async _prepareContext(options) {
+    const context = await super._prepareContext(options);
 
-    const items = actor.items.contents ?? [];
-    const itemTypes = items.reduce((acc, item) => {
-      const t = item.type;
-      if (!acc[t]) acc[t] = [];
-      acc[t].push(item);
-      return acc;
-    }, {});
+    // Access actor data safely
+    const sys = this.document.system ?? {};
+    const rankStr = (sys.details?.rank ?? "").toString().toLowerCase();
 
-    return {
-      actor,
-      system,
-      itemTypes,
-      editable: this.isEditable,
-      owner: actor.isOwner
-    };
+    // Show Willpower only for Gold and Diamond rank characters
+    context.showWillpower =
+      rankStr.includes("gold") || rankStr.includes("diamond");
+
+    // Expose item collections (skills, etc.)
+    context.itemTypes = this.document.itemTypes ?? {};
+
+    return context;
+  }
+
+  /** Optional event listeners */
+  activateListeners(html) {
+    super.activateListeners(html);
+
+    // Example: Rollable attributes (future feature)
+    html.find(".attribute-roll").on("click", (ev) => {
+      const attr = ev.currentTarget.dataset.attr;
+      ui.notifications.info(`Rolling for ${attr} (Coming soon!)`);
+    });
   }
 }
 
-/* -------------------------------------------- */
-/*  NPC Sheet (V2 + Handlebars)                 */
-/* -------------------------------------------- */
-
-class HWFWMNPCSheet extends HandlebarsApplicationMixin(DocumentSheetV2) {
-  static DEFAULT_OPTIONS = {
-    ...super.DEFAULT_OPTIONS,
-    id: "hwfwm-npc-sheet",
-    classes: ["hwfwm", "sheet", "actor", "npc"],
-    window: {
-      title: "HWFWM NPC",
-      resizable: true
-    }
-  };
-
-  static get documentTypes() {
-    return ["Actor"];
-  }
-
-  static match(document) {
-    return document.type === "npc";
-  }
-
-  static PARTS = {
-    main: {
-      template: "systems/hwfwm-d20/templates/actors/npc-sheet.hbs"
-    }
-  };
-
-  static TABS = {
-    primary: {
-      navSelector: ".sheet-tabs",
-      contentSelector: ".sheet-content",
-      initial: "stats"
-    }
-  };
-
-  async _prepareContext(_options) {
-    const actor = this.document;
-    const system = actor.system;
-
-    const items = actor.items.contents ?? [];
-    const itemTypes = items.reduce((acc, item) => {
-      const t = item.type;
-      if (!acc[t]) acc[t] = [];
-      acc[t].push(item);
-      return acc;
-    }, {});
-
-    return {
-      actor,
-      system,
-      itemTypes,
-      editable: this.isEditable,
-      owner: actor.isOwner
-    };
-  }
-}
-
-/* -------------------------------------------- */
-/*  Register Sheets                             */
-/* -------------------------------------------- */
-
+// ============================================================================
+// SYSTEM INITIALIZATION
+// ============================================================================
 Hooks.once("init", () => {
-  console.log("HWFWM-d20 | Initializing system and registering V2 sheets");
+  console.log("Initializing HWFWM-D20 System for Foundry VTT v13");
 
-  try {
-    Actors.unregisterSheet("core", ActorSheet);
-  } catch (err) { /* ignore */ }
-
-  try {
-    if (foundry.applications.sheets?.ActorSheetV2) {
-      Actors.unregisterSheet("core", foundry.applications.sheets.ActorSheetV2);
-    }
-  } catch (err) { /* ignore */ }
-
+  // Register Actor Sheet
+  Actors.unregisterSheet("core", ActorSheet);
   Actors.registerSheet("hwfwm-d20", HWFWMPCSheet, {
     types: ["pc"],
-    label: "HWFWM PC Sheet",
-    makeDefault: true
+    makeDefault: true,
   });
 
-  Actors.registerSheet("hwfwm-d20", HWFWMNPCSheet, {
-    types: ["npc"],
-    label: "HWFWM NPC Sheet"
-  });
+  // Define custom document classes (if needed later)
+  CONFIG.Actor.documentClass = Actor;
+  CONFIG.Item.documentClass = Item;
+
+  console.log("✅ HWFWM-D20 System Loaded Successfully");
+});
+
+// ============================================================================
+// FUTURE HOOKS & UTILITY REGISTRATION
+// ============================================================================
+Hooks.once("ready", () => {
+  console.log("🎲 HWFWM-D20 System Ready");
+});
+
+// Optional: Add hot reload for development
+Hooks.on("hotReload", (module) => {
+  if (module === "hwfwm-d20") {
+    ui.notifications.info("♻️ HWFWM-D20 system reloaded.");
+  }
 });
