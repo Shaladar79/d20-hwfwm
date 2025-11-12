@@ -1,7 +1,7 @@
 # 🧭 HWFWM-D20 System Development Roadmap
 **Repository:** Shaladar79/d20-hwfwm  
 **System Name:** HWFWM-D20  
-**Platform:** Foundry VTT v13 (The Forge compatible)  
+**Platform:** Foundry VTT v13 (Forge compatible)  
 **Base Version:** Stable Legacy `ActorSheet` (white cards, black borders, blue-silver-gold gradient)
 
 ---
@@ -112,9 +112,22 @@
 
 ---
 
+## 🕓 Version History
+| Version | Date | Summary | Status |
+|:--------:|:------:|:--------|:-------|
+| **v0.0.4** | *(Base)* | Stable base release — attributes, resources, defenses functional. | ✅ Stable |
+| **v0.0.5** | *(Planned)* | Add Skills tab with dynamic item list + basic item creation. | 🔄 In Progress |
+| **v0.0.6** | *(Planned)* | Add Abilities tab (racial + essence). | ⏳ Pending |
+| **v0.0.7** | *(Planned)* | Add Inventory tab (weapons, armor, items). | ⏳ Pending |
+| **v0.0.8** | *(Planned)* | Implement roll mechanics and chat output. | ⏳ Pending |
+| **v0.0.9+** | *(Later)* | UI polish, compendium content, optimization. | ⏳ Planned |
+
+---
+
 ### ✨ Notes
 This roadmap reflects the stable legacy `ActorSheet` implementation — **do not switch to `ApplicationV2`** until the Foundry VTT 14+ API stabilizes for third-party systems.
 
 ---
 
-*Last Updated:* {{insert current date here}}
+*Last Updated:* {{insert date here}}
+
