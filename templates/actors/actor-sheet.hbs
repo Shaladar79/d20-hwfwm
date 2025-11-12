@@ -210,22 +210,23 @@
     </div>
 
     <!-- Other tabs can be filled later -->
-  <!-- ===================== TAB: SKILLS ===================== -->
+ <!-- ===================== TAB: SKILLS ===================== -->
 <div class="tab skills" data-group="primary" data-tab="skills">
   <section class="card">
     <h2>Skills</h2>
 
-    {{!-- We’ll render groups in this fixed order --}}
-   {{#each (array "Combat" "Power" "Speed" "Spirit" "Recovery" "Crafting" "Knowledge") as |cat|}}
-
+    {{!-- Render groups in this fixed order (Combat first) --}}
+    {{#each (array "Combat" "Power" "Speed" "Spirit" "Recovery" "Crafting" "Knowledge") as |cat|}}
       <div class="skill-group" style="margin-top:12px;">
+
         <div class="flexrow" style="justify-content:space-between; align-items:center;">
           <h3 style="margin:0;">{{cat}}</h3>
-          <button type="button"
-                  class="item-create"
-                  data-type="skill"
-                  data-category="{{cat}}"
-                  data-attr="{{#if (eq cat "Power")}}power{{else if (eq cat "Speed")}}speed{{else if (eq cat "Spirit")}}spirit{{else if (eq cat "Recovery")}}recovery{{else if (eq cat "Knowledge")}}spirit{{else}}power{{/if}}">
+          <button
+            type="button"
+            class="item-create"
+            data-type="skill"
+            data-category="{{cat}}"
+            data-attr="{{#if (eq cat "Power")}}power{{else if (eq cat "Speed")}}speed{{else if (eq cat "Spirit")}}spirit{{else if (eq cat "Recovery")}}recovery{{else if (eq cat "Knowledge")}}spirit{{else}}power{{/if}}">
             + Add {{cat}} Skill
           </button>
         </div>
@@ -244,7 +245,8 @@
             </tr>
           </thead>
           <tbody>
-            {{#each ../itemTypes.skill as |skill|}}
+            {{!-- Sort all skills by name, then render only those in this category --}}
+            {{#each (sortBy ../itemTypes.skill "name") as |skill|}}
               {{#if (eq skill.system.category cat)}}
                 <tr class="item" data-item-id="{{skill._id}}">
                   <td><a class="item-edit">{{skill.name}}</a></td>
@@ -253,10 +255,11 @@
                   <td>{{skill.system.mod}}</td>
                   <td>{{skill.system.specialization}}</td>
                   <td>
-                    <input class="skill-trained"
-                           type="checkbox"
-                           data-item-id="{{skill._id}}"
-                           {{#if skill.system.trained}}checked{{/if}} />
+                    <input
+                      class="skill-trained"
+                      type="checkbox"
+                      data-item-id="{{skill._id}}"
+                      {{#if skill.system.trained}}checked{{/if}} />
                   </td>
                   <td><button type="button" class="item-edit">Open</button></td>
                   <td><button type="button" class="item-delete" aria-label="Delete">&times;</button></td>
@@ -265,10 +268,13 @@
             {{/each}}
           </tbody>
         </table>
-      </div>
+
+      </div>  {{!-- /.skill-group --}}
     {{/each}}
+
   </section>
 </div>
+
 
 
     <div class="tab abilities" data-group="primary" data-tab="abilities">
@@ -289,6 +295,7 @@
     </div>
   </section>
 </form>
+
 
 
 
