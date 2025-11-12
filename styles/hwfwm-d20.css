@@ -1,105 +1,202 @@
-/* --- Layout frame --- */
+/* =========================
+   HWFWM v13 — Clean white cards, bold black borders,
+   1/2" gradient margin (blue → silver → gold)
+   ========================= */
+
+/* Approx. 1/2 inch at typical 96dpi ≈ 48px */
 .hwfwm.sheet {
-  --pad: 8px;
-  --gap: 8px;
-  --border: 2px solid #000;
-  --radius: 6px;
-  --bg: #fff;
-  --ink: #222;
-  color: var(--ink);
+  --margin: 48px;
+  --border: 3px solid #000;   /* bold black */
+  --radius: 10px;
+  --gap: 12px;
+  --pad: 10px;
+
+  /* Gradient margin around the sheet */
+  background: linear-gradient(135deg, #2e6cff 0%, #cfd4da 50%, #d4af37 100%);
+  padding: var(--margin);
+  box-sizing: border-box;
 }
 
-.hwfwm.sheet .card {
-  background: var(--bg);
-  border: var(--border);
-  border-radius: var(--radius);
-  padding: var(--pad);
-}
-
-/* --- Header --- */
+/* Make the inner page white with a strong border */
+.hwfwm.sheet .sheet-body,
 .hwfwm.sheet .sheet-header {
-  background: var(--bg);
+  background: #fff;
   border: var(--border);
   border-radius: var(--radius);
-  padding: 10px;
-  gap: 12px;
-  align-items: center;
+}
+
+/* Header layout */
+.hwfwm.sheet .sheet-header {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: var(--gap);
+  padding: var(--pad);
+  margin-bottom: var(--gap);
 }
 
 .hwfwm.sheet .profile-img {
-  width: 96px; height: 96px; border: var(--border);
+  width: 120px; height: 120px;
+  border: var(--border);
   border-radius: var(--radius);
   object-fit: cover;
+  background: #fff;
+}
+
+.hwfwm.sheet .header-fields {
+  display: grid; gap: 8px;
 }
 
 .hwfwm.sheet .header-fields .name-row input {
   width: 100%;
-  font-size: 20px;
-  font-weight: 700;
-  padding: 6px 8px;
-  background: #2f2b33; color: #f3e9dd;
-  border-radius: 6px;
-  border: none;
+  font-size: 22px; font-weight: 700;
+  border: var(--border);
+  border-radius: var(--radius);
+  padding: 8px 10px;
+  background: #fff; color: #000;
 }
 
 .hwfwm.sheet .meta-row {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: var(--gap);
-  margin-top: 8px;
 }
+
 .hwfwm.sheet .meta-row .field {
   display: grid; gap: 4px;
 }
+
 .hwfwm.sheet .meta-row .field input {
-  padding: 6px 8px; border-radius: 6px; border: var(--border);
+  border: var(--border);
+  border-radius: var(--radius);
+  padding: 6px 8px;
+  background: #fff; color: #000;
 }
 
-/* --- Tabs --- */
+/* Tabs bar block */
 .hwfwm.sheet .sheet-tabs {
   display: flex; gap: var(--gap);
-  margin: 10px 0 6px;
+  padding: 8px var(--pad);
+  background: #fff;
+  border-left: var(--border);
+  border-right: var(--border);
+  border-bottom: var(--border);
+  border-radius: 0 0 var(--radius) var(--radius);
 }
+
 .hwfwm.sheet .sheet-tabs .item {
-  border: var(--border); border-radius: var(--radius);
-  padding: 6px 10px; background: var(--bg);
+  padding: 6px 12px;
+  border: var(--border);
+  border-radius: var(--radius);
+  background: #fff;
+  font-weight: 600;
 }
-.hwfwm.sheet .sheet-content { margin-top: 8px; }
+
+/* Content wrapper */
+.hwfwm.sheet .sheet-content {
+  background: #fff;
+  border: var(--border);
+  border-top: none;               /* connects to tabs bar */
+  border-radius: 0 0 var(--radius) var(--radius);
+  padding: var(--pad);
+}
+
+/* Tabs visibility */
 .hwfwm.sheet .tab { display: none; }
 .hwfwm.sheet .tab.active { display: block; }
 
-/* --- Two-column stats layout --- */
-.hwfwm.sheet .stats .flexrow {
-  display: grid; grid-template-columns: 1.1fr 1fr; gap: var(--gap);
-}
-
-/* Attributes */
-.hwfwm.sheet .attributes-grid {
-  display: grid; gap: var(--gap);
-  grid-template-columns: repeat(2, 1fr);
-}
-.hwfwm.sheet .attribute {
-  border: var(--border); border-radius: var(--radius);
+/* Section cards inside content */
+.hwfwm.sheet .card {
+  background: #fff;
+  border: var(--border);
+  border-radius: var(--radius);
   padding: var(--pad);
-  display: grid; grid-template-columns: 1fr 1fr; gap: 6px;
 }
-.hwfwm.sheet .attribute .attr-label {
-  grid-column: 1 / -1; font-weight: 700; margin-bottom: 4px;
-}
-.hwfwm.sheet .attribute label { font-size: 11px; opacity: .8; }
-.hwfwm.sheet .attribute input { width: 100%; }
 
-/* Resources & Defenses */
-.hwfwm.sheet .resources-grid {
-  display: grid; grid-template-columns: 1fr 1fr; gap: var(--gap);
+/* Two-column layout for Stats */
+.hwfwm.sheet .stats .flexrow {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: var(--gap);
 }
-.hwfwm.sheet .res, .hwfwm.sheet .def {
-  border: var(--border); border-radius: var(--radius);
-  padding: var(--pad); display: grid; grid-template-columns: auto 1fr auto 1fr;
-  align-items: center; gap: 6px;
+
+/* Section headings */
+.hwfwm.sheet h2 {
+  font-size: 26px;
+  margin: 0 0 8px 0;
+  color: #000;
 }
-.hwfwm.sheet .res label, .hwfwm.sheet .def label { grid-column: 1 / 2; font-weight: 700; }
-.hwfwm.sheet .res input[type=number], .hwfwm.sheet .def input[type=number] {
+
+/* Attributes grid */
+.hwfwm.sheet .attributes-grid {
+  display: grid;
+  gap: var(--gap);
+  grid-template-columns: 1fr 1fr;
+}
+
+.hwfwm.sheet .attribute {
+  border: var(--border);
+  border-radius: var(--radius);
+  padding: 10px;
+  background: #fff;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px 10px;
+}
+
+.hwfwm.sheet .attribute .attr-label {
+  grid-column: 1 / -1;
+  font-size: 18px; font-weight: 700;
+  margin-bottom: 2px;
+}
+
+.hwfwm.sheet .attribute label {
+  font-size: 12px; opacity: 0.8;
+}
+
+.hwfwm.sheet .attribute input {
   width: 100%;
+  border: var(--border);
+  border-radius: var(--radius);
+  padding: 6px 8px;
+  background: #fff; color: #000;
 }
-.hwfwm.sheet .defenses-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--gap); }
+
+/* Resources & defenses grids */
+.hwfwm.sheet .resources-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--gap);
+}
+
+.hwfwm.sheet .res,
+.hwfwm.sheet .def {
+  background: #fff;
+  border: var(--border);
+  border-radius: var(--radius);
+  padding: 8px;
+  display: grid;
+  grid-template-columns: auto 1fr auto 1fr;
+  align-items: center;
+  gap: 6px 8px;
+}
+
+.hwfwm.sheet .res label,
+.hwfwm.sheet .def label {
+  font-weight: 700;
+}
+
+.hwfwm.sheet .res input[type="number"],
+.hwfwm.sheet .def input[type="number"] {
+  width: 100%;
+  border: var(--border);
+  border-radius: var(--radius);
+  padding: 6px 8px;
+  background: #fff; color: #000;
+}
+
+.hwfwm.sheet .defenses-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--gap);
+}
+
