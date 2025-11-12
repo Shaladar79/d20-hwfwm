@@ -210,9 +210,47 @@
     </div>
 
     <!-- Other tabs can be filled later -->
-    <div class="tab skills" data-group="primary" data-tab="skills">
-      <section class="card"><h2>Skills</h2><p>Coming soon.</p></section>
+   <!-- ===================== TAB: SKILLS ===================== -->
+<div class="tab skills" data-group="primary" data-tab="skills">
+  <section class="card">
+    <div class="flexrow" style="justify-content:space-between; align-items:center;">
+      <h2>Skills</h2>
+      <button type="button" class="item-create" data-type="skill">+ Add Skill</button>
     </div>
+
+    <table class="skills-table">
+      <thead>
+        <tr>
+          <th style="width:18%">Name</th>
+          <th style="width:12%">Category</th>
+          <th style="width:12%">Attribute</th>
+          <th style="width:10%">Rank</th>
+          <th style="width:8%">Mod</th>
+          <th style="width:18%">Specialization</th>
+          <th style="width:8%">Trained</th>
+          <th style="width:10%">Edit</th>
+          <th style="width:4%">🗑️</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each itemTypes.skill as |skill|}}
+          <tr class="item" data-item-id="{{skill._id}}">
+            <td><a class="item-edit">{{skill.name}}</a></td>
+            <td>{{skill.system.category}}</td>
+            <td>{{skill.system.associatedAttribute}}</td>
+            <td>{{skill.system.rank}}</td>
+            <td>{{skill.system.mod}}</td>
+            <td>{{skill.system.specialization}}</td>
+            <td><input type="checkbox" disabled {{#if skill.system.trained}}checked{{/if}} /></td>
+            <td><button type="button" class="item-edit">Open</button></td>
+            <td><button type="button" class="item-delete" aria-label="Delete">&times;</button></td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </section>
+</div>
+
     <div class="tab abilities" data-group="primary" data-tab="abilities">
       <section class="card"><h2>Abilities</h2><p>Coming soon.</p></section>
     </div>
@@ -231,4 +269,5 @@
     </div>
   </section>
 </form>
+
 
