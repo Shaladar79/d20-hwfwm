@@ -68,22 +68,28 @@
               <input type="number" class="ability-score" data-essence-key="e1" data-slot-index="{{i}}"
                      name="system.essences.e1.abilities.{{i}}.score"
                      value="{{lookup (lookup system.essences.e1.abilities i) "score"}}" min="0" />
+
+              {{!-- Active is always visible, independent --}}
               <label class="checkbox">
                 <input type="checkbox" class="ability-active" data-essence-key="e1" data-slot-index="{{i}}"
                        name="system.essences.e1.abilities.{{i}}.isActive"
                        {{#if (lookup (lookup system.essences.e1.abilities i) "isActive")}}checked{{/if}}/>
                 Active
               </label>
-              <label class="checkbox">
-                <input type="checkbox" class="ability-attack" data-essence-key="e1" data-slot-index="{{i}}"
-                       name="system.essences.e1.abilities.{{i}}.isAttack"
-                       {{#if (lookup (lookup system.essences.e1.abilities i) "isAttack")}}checked{{/if}}/>
-                Attack
-              </label>
-              {{#if (lookup (lookup system.essences.e1.abilities i) "isAttack")}}
-                <button type="button" class="ability-roll" data-essence-key="e1" data-slot-index="{{i}}" title="Roll">
-                  <i class="fas fa-dice-d20"></i>
-                </button>
+
+              {{!-- Attack Ability + Roll only if Active is true --}}
+              {{#if (lookup (lookup system.essences.e1.abilities i) "isActive")}}
+                <label class="checkbox">
+                  <input type="checkbox" class="ability-attack" data-essence-key="e1" data-slot-index="{{i}}"
+                         name="system.essences.e1.abilities.{{i}}.isAttack"
+                         {{#if (lookup (lookup system.essences.e1.abilities i) "isAttack")}}checked{{/if}}/>
+                  Attack Ability
+                </label>
+                {{#if (lookup (lookup system.essences.e1.abilities i) "isAttack")}}
+                  <button type="button" class="ability-roll" data-essence-key="e1" data-slot-index="{{i}}" title="Roll">
+                    <i class="fas fa-dice-d20"></i>
+                  </button>
+                {{/if}}
               {{/if}}
             </div>
           </div>
@@ -145,22 +151,26 @@
               <input type="number" class="ability-score" data-essence-key="e2" data-slot-index="{{i}}"
                      name="system.essences.e2.abilities.{{i}}.score"
                      value="{{lookup (lookup system.essences.e2.abilities i) "score"}}" min="0" />
+
               <label class="checkbox">
                 <input type="checkbox" class="ability-active" data-essence-key="e2" data-slot-index="{{i}}"
                        name="system.essences.e2.abilities.{{i}}.isActive"
                        {{#if (lookup (lookup system.essences.e2.abilities i) "isActive")}}checked{{/if}}/>
                 Active
               </label>
-              <label class="checkbox">
-                <input type="checkbox" class="ability-attack" data-essence-key="e2" data-slot-index="{{i}}"
-                       name="system.essences.e2.abilities.{{i}}.isAttack"
-                       {{#if (lookup (lookup system.essences.e2.abilities i) "isAttack")}}checked{{/if}}/>
-                Attack
-              </label>
-              {{#if (lookup (lookup system.essences.e2.abilities i) "isAttack")}}
-                <button type="button" class="ability-roll" data-essence-key="e2" data-slot-index="{{i}}">
-                  <i class="fas fa-dice-d20"></i>
-                </button>
+
+              {{#if (lookup (lookup system.essences.e2.abilities i) "isActive")}}
+                <label class="checkbox">
+                  <input type="checkbox" class="ability-attack" data-essence-key="e2" data-slot-index="{{i}}"
+                         name="system.essences.e2.abilities.{{i}}.isAttack"
+                         {{#if (lookup (lookup system.essences.e2.abilities i) "isAttack")}}checked{{/if}}/>
+                  Attack Ability
+                </label>
+                {{#if (lookup (lookup system.essences.e2.abilities i) "isAttack")}}
+                  <button type="button" class="ability-roll" data-essence-key="e2" data-slot-index="{{i}}">
+                    <i class="fas fa-dice-d20"></i>
+                  </button>
+                {{/if}}
               {{/if}}
             </div>
           </div>
@@ -221,22 +231,26 @@
               <input type="number" class="ability-score" data-essence-key="e3" data-slot-index="{{i}}"
                      name="system.essences.e3.abilities.{{i}}.score"
                      value="{{lookup (lookup system.essences.e3.abilities i) "score"}}" min="0" />
+
               <label class="checkbox">
                 <input type="checkbox" class="ability-active" data-essence-key="e3" data-slot-index="{{i}}"
                        name="system.essences.e3.abilities.{{i}}.isActive"
                        {{#if (lookup (lookup system.essences.e3.abilities i) "isActive")}}checked{{/if}}/>
                 Active
               </label>
-              <label class="checkbox">
-                <input type="checkbox" class="ability-attack" data-essence-key="e3" data-slot-index="{{i}}"
-                       name="system.essences.e3.abilities.{{i}}.isAttack"
-                       {{#if (lookup (lookup system.essences.e3.abilities i) "isAttack")}}checked{{/if}}/>
-                Attack
-              </label>
-              {{#if (lookup (lookup system.essences.e3.abilities i) "isAttack")}}
-                <button type="button" class="ability-roll" data-essence-key="e3" data-slot-index="{{i}}">
-                  <i class="fas fa-dice-d20"></i>
-                </button>
+
+              {{#if (lookup (lookup system.essences.e3.abilities i) "isActive")}}
+                <label class="checkbox">
+                  <input type="checkbox" class="ability-attack" data-essence-key="e3" data-slot-index="{{i}}"
+                         name="system.essences.e3.abilities.{{i}}.isAttack"
+                         {{#if (lookup (lookup system.essences.e3.abilities i) "isAttack")}}checked{{/if}}/>
+                  Attack Ability
+                </label>
+                {{#if (lookup (lookup system.essences.e3.abilities i) "isAttack")}}
+                  <button type="button" class="ability-roll" data-essence-key="e3" data-slot-index="{{i}}">
+                    <i class="fas fa-dice-d20"></i>
+                  </button>
+                {{/if}}
               {{/if}}
             </div>
           </div>
@@ -297,22 +311,26 @@
               <input type="number" class="ability-score" data-essence-key="confluence" data-slot-index="{{i}}"
                      name="system.essences.confluence.abilities.{{i}}.score"
                      value="{{lookup (lookup system.essences.confluence.abilities i) "score"}}" min="0" />
+
               <label class="checkbox">
                 <input type="checkbox" class="ability-active" data-essence-key="confluence" data-slot-index="{{i}}"
                        name="system.essences.confluence.abilities.{{i}}.isActive"
                        {{#if (lookup (lookup system.essences.confluence.abilities i) "isActive")}}checked{{/if}}/>
                 Active
               </label>
-              <label class="checkbox">
-                <input type="checkbox" class="ability-attack" data-essence-key="confluence" data-slot-index="{{i}}"
-                       name="system.essences.confluence.abilities.{{i}}.isAttack"
-                       {{#if (lookup (lookup system.essences.confluence.abilities i) "isAttack")}}checked{{/if}}/>
-                Attack
-              </label>
-              {{#if (lookup (lookup system.essences.confluence.abilities i) "isAttack")}}
-                <button type="button" class="ability-roll" data-essence-key="confluence" data-slot-index="{{i}}">
-                  <i class="fas fa-dice-d20"></i>
-                </button>
+
+              {{#if (lookup (lookup system.essences.confluence.abilities i) "isActive")}}
+                <label class="checkbox">
+                  <input type="checkbox" class="ability-attack" data-essence-key="confluence" data-slot-index="{{i}}"
+                         name="system.essences.confluence.abilities.{{i}}.isAttack"
+                         {{#if (lookup (lookup system.essences.confluence.abilities i) "isAttack")}}checked{{/if}}/>
+                  Attack Ability
+                </label>
+                {{#if (lookup (lookup system.essences.confluence.abilities i) "isAttack")}}
+                  <button type="button" class="ability-roll" data-essence-key="confluence" data-slot-index="{{i}}">
+                    <i class="fas fa-dice-d20"></i>
+                  </button>
+                {{/if}}
               {{/if}}
             </div>
           </div>
