@@ -27,20 +27,54 @@ class HWFWMPCSheet extends ActorSheet {
     return data;
   }
 
-  activateListeners(html) {
-    super.activateListeners(html);
-    if (!this.isEditable) return;
+ activateListeners(html) {
+  super.activateListeners(html);
+  if (!this.isEditable) return;
 
-    // Create new embedded Item
-    html.find(".item-create").on("click", async (ev) => {
-      const type = ev.currentTarget.dataset.type;
-      if (!type) return;
-      await this.actor.createEmbeddedDocuments("Item", [{
-        name: `New ${type.charAt(0).toUpperCase() + type.slice(1)}`,
-        type,
-        system: {}
-      }]);
-    });
+  // Create new embedded Item (with defaults from button dataset)
+  html.find(".item-create").on("click", async (ev) => {
+    const btn = ev.currentTarget;
+    const type = btn.dataset.type;
+    if (!type) return;
+
+    const category = btn.dataset.category ?? "";
+    const attr = btn.dataset.attr ?? "";
+
+    await this.actor.createEmbeddedDocuments("Item", [{
+      name: `New ${category || type}`,
+      type,
+      system: {
+        category,
+        associatedAttribute: attr
+      }
+    }]);
+  });
+
+  // Edit embedded Item
+  html.find(".item-edit").on("click", (ev) => {
+    const li = ev.currentTarget.closest("[data-item-id]");
+    if (!li) return;
+    const item = this.actor.items.get(li.dataset.itemId);
+    if (item) item.sheet.render(true);
+  });
+
+  // Delete embedded Item
+  html.find(".item-delete").on("click", async (ev) => {
+    const li = ev.currentTarget.closest("[data-item-id]");
+    if (!li) return;
+    await this.actor.deleteEmbeddedDocuments("Item", [li.dataset.itemId]);
+  });
+
+  // Live “Trained” toggle
+  html.find(".skill-trained").on("change", async (ev) => {
+    const cb = ev.currentTarget;
+    const id = cb.dataset.itemId;
+    const item = this.actor.items.get(id);
+    if (!item) return;
+    await item.update({ "system.trained": cb.checked });
+  });
+}
+
 
     // Edit embedded Item
     html.find(".item-edit").on("click", (ev) => {
@@ -94,6 +128,7 @@ Hooks.once("init", () => {
 Hooks.once("ready", () => {
   console.log("HWFWM-D20 | ready");
 });
+
 
 
 
