@@ -1,0 +1,11 @@
+{"_id":"k1R1L2yq2C0i8v5P","name":"Brawl","type":"skill","img":"icons/skills/melee/unarmed-punch-fist.webp","system":{"skillType":"combat","attribute":"power","description":"Unarmed strikes, martial arts, improvised weapon use, and close-quarters combat."}}
+{"_id":"c9hP0QmGvJtZ7x2N","name":"Medium Melee","type":"skill","img":"icons/weapons/swords/sword-guard.webp","system":{"skillType":"combat","attribute":"power","description":"One-handed melee weapons relying on strength — swords, axes, maces, and similar."}}
+{"_id":"r4N8eBqV0HjS3kWd","name":"Heavy Melee","type":"skill","img":"icons/weapons/greatswords/greatsword-blue.webp","system":{"skillType":"combat","attribute":"power","description":"Two-handed melee weapons such as greatswords, greataxes, halberds, and similar heavy weapons."}}
+{"_id":"u6Z2tLmC1PaQ9sYe","name":"Grappling","type":"skill","img":"icons/skills/melee/grab-pull-lift.webp","system":{"skillType":"combat","attribute":"power","description":"Using holds, locks, and throws to control or restrain opponents in melee."}}
+
+{"_id":"n2X7wCvB5DsQ1fGh","name":"Light Melee","type":"skill","img":"icons/weapons/swords/shortsword-blue.webp","system":{"skillType":"combat","attribute":"speed","description":"Small, agile blades and weapons relying on finesse — daggers, shortswords, rapiers."}}
+{"_id":"a8J5mTrE4VbK6pQw","name":"Thrown Weapons","type":"skill","img":"icons/weapons/thrown/dagger.webp","system":{"skillType":"combat","attribute":"speed","description":"Thrown projectiles such as knives, darts, axes, and other precision weapons."}}
+{"_id":"y7F3kHsD9LpQ2tXc","name":"Ranged Weapons","type":"skill","img":"icons/weapons/bows/longbow.webp","system":{"skillType":"combat","attribute":"speed","description":"Weapons fired from a distance — bows, crossbows, firearms, blowguns, and similar."}}
+
+{"_id":"p3M6vNzK0QaL8dRf","name":"Spellcraft","type":"skill","img":"icons/magic/control/buff-strength-muscle-blue.webp","system":{"skillType":"combat","attribute":"spirit","description":"Accuracy, control, and power when casting offensive or defensive spells."}}
+{"_id":"t5W1cBxR8GjN4eUv","name":"Arcane Weaponry","type":"skill","img":"icons/magic/fire/wand-fireball-orange.webp","system":{"skillType":"combat","attribute":"spirit","description":"Using magical implements such as wands, staves, or spellguns as weapons."}}
