@@ -2,6 +2,16 @@
 // HWFWM-D20 | Actor & Item sheet registration + Skills support
 // ============================================================================
 
+/* ------------------------------ Template Preload ------------------------------ */
+async function preloadHWFWMTemplates() {
+  const paths = [
+    "systems/hwfwm-d20/templates/actors/actor-sheet.hbs",
+    "systems/hwfwm-d20/templates/items/item-sheet.hbs",
+    "systems/hwfwm-d20/templates/items/skill-sheet.hbs"
+  ];
+  return loadTemplates(paths);
+}
+
 /* ----------------------------- PC Actor Sheet ----------------------------- */
 class HWFWMPCSheet extends ActorSheet {
   static get defaultOptions() {
@@ -11,7 +21,7 @@ class HWFWMPCSheet extends ActorSheet {
       width: 960,
       height: "auto",
       tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-content", initial: "stats" }],
-      // Make entire sheet-body a drop target
+      // Make the whole content area a drop target
       dragDrop: [{ dragSelector: ".item", dropSelector: ".sheet-content" }]
     });
   }
@@ -31,23 +41,26 @@ class HWFWMPCSheet extends ActorSheet {
 
   /**
    * Accept item drops (skills, etc.) from compendiums or Items directory.
-   * Uses the core implementation to create embedded documents,
-   * but we normalize skill field names for our template.json.
+   * Normalizes skill field names so either schema works.
    */
   async _onDropItem(event, data) {
-    const item = await Item.implementation.fromDropData(data);
+    // Support different core versions
+    const fromDrop = (Item.implementation?.fromDropData || Item.fromDropData || foundry.documents.Item.fromDropData);
+    const item = await fromDrop.call(Item, data);
     if (!item) return false;
 
-    // Normalize skill field names on-the-fly so either schema works
     if (item.type === "skill") {
       const s = foundry.utils.duplicate(item.system ?? {});
-      // If compendium uses "skillType"/"attribute", mirror to "category"/"associatedAttribute"
+      // Mirror both pairs so sheets & template.json stay happy
       if (s.skillType && !s.category) s.category = s.skillType;
       if (s.attribute && !s.associatedAttribute) s.associatedAttribute = s.attribute;
-      // If world items use legacy fields, mirror forward too
       if (s.category && !s.skillType) s.skillType = s.category;
       if (s.associatedAttribute && !s.attribute) s.attribute = s.associatedAttribute;
-      await item.update({ system: s }, { diff: false, recursive: false });
+      try {
+        await item.update({ system: s }, { diff: false, recursive: false });
+      } catch (e) {
+        console.warn("HWFWM-D20 | Could not normalize dropped skill fields:", e);
+      }
     }
 
     return super._onDropItem(event, data);
@@ -66,7 +79,6 @@ class HWFWMPCSheet extends ActorSheet {
       const category = btn.dataset.category ?? "";
       const attr = btn.dataset.attr ?? "";
 
-      // Mirror both current + legacy keys so either sheet+template works
       await this.actor.createEmbeddedDocuments("Item", [{
         name: `New ${category || type}`,
         type,
@@ -110,8 +122,8 @@ class HWFWMPCSheet extends ActorSheet {
       if (!item) return;
       await item.update({ "system.trained": cb.checked });
     });
-  } // <--- CLOSES HWFWMPCSheet.activateListeners
-}   // <--- CLOSES HWFWMPCSheet CLASS
+  }
+}
 
 /* ------------------------------ Item Sheets ------------------------------- */
 // Generic Item sheet (fallback)
@@ -142,27 +154,21 @@ class HWFWMSkillSheet extends ItemSheet {
 
   getData(options) {
     const data = super.getData(options);
-
-    // Normalize values for form display (ensure both pairs exist)
     const s = data.item.system ?? {};
     if (s.skillType && !s.category) s.category = s.skillType;
     if (s.attribute && !s.associatedAttribute) s.associatedAttribute = s.attribute;
     if (s.category && !s.skillType) s.skillType = s.category;
     if (s.associatedAttribute && !s.attribute) s.attribute = s.associatedAttribute;
-
-    data.item.updateSource({ system: s }); // only source update (no doc update)
+    data.item.updateSource({ system: s }); // update source only
     return data;
   }
 
-  /** On submit, mirror fields so both are always in-sync */
   async _updateObject(event, formData) {
-    // Mirror both ways for robustness
     const s = foundry.utils.expandObject(formData).system ?? {};
     if (s.skillType && !s.category) s.category = s.skillType;
     if (s.attribute && !s.associatedAttribute) s.associatedAttribute = s.attribute;
     if (s.category && !s.skillType) s.skillType = s.category;
     if (s.associatedAttribute && !s.attribute) s.attribute = s.associatedAttribute;
-
     formData = foundry.utils.flattenObject({ system: s });
     return super._updateObject(event, formData);
   }
@@ -171,6 +177,9 @@ class HWFWMSkillSheet extends ItemSheet {
 /* --------------------------- Register everything --------------------------- */
 Hooks.once("init", () => {
   console.log("HWFWM-D20 | init");
+
+  // Preload templates so compendium items can open immediately
+  preloadHWFWMTemplates();
 
   // Handlebars helpers
   Handlebars.registerHelper("array", (...args) => args.slice(0, -1));
@@ -190,10 +199,8 @@ Hooks.once("init", () => {
 
   // Item sheets
   Items.unregisterSheet("core", ItemSheet);
-  // Dedicated sheet for Skills
-  Items.registerSheet("hwfwm-d20", HWFWMSkillSheet, { types: ["skill"], makeDefault: true });
-  // Fallback generic sheet for other item types
-  Items.registerSheet("hwfwm-d20", HWFWMItemSheet, { types: [], makeDefault: false });
+  Items.registerSheet("hwfwm-d20", HWFWMSkillSheet, { types: ["skill"], makeDefault: true }); // dedicated Skill sheet
+  Items.registerSheet("hwfwm-d20", HWFWMItemSheet, { types: [], makeDefault: false });       // fallback for others
 
   console.log("HWFWM-D20 | sheets registered");
 });
