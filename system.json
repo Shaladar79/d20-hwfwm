@@ -19,16 +19,65 @@
   "styles": [
     "styles/hwfwm-d20.css"
   ],
- "packs": [
+"packs": [
   {
-    "name": "hwfwm-combat-skills",
-    "label": "Combat Skills (HWFWM)",
-    "path": "packs/hwfwm-combat-skills.db",
+    "name": "hwfwm-skills-power",
+    "label": "Skills / Power (HWFWM)",
+    "path": "packs/hwfwm-skills-power.db",
+    "type": "Item",
+    "system": "hwfwm-d20",
+    "private": false
+  },
+  {
+    "name": "hwfwm-skills-speed",
+    "label": "Skills / Speed (HWFWM)",
+    "path": "packs/hwfwm-skills-speed.db",
+    "type": "Item",
+    "system": "hwfwm-d20",
+    "private": false
+  },
+  {
+    "name": "hwfwm-skills-spirit",
+    "label": "Skills / Spirit (HWFWM)",
+    "path": "packs/hwfwm-skills-spirit.db",
+    "type": "Item",
+    "system": "hwfwm-d20",
+    "private": false
+  },
+  {
+    "name": "hwfwm-skills-recovery",
+    "label": "Skills / Recovery (HWFWM)",
+    "path": "packs/hwfwm-skills-recovery.db",
+    "type": "Item",
+    "system": "hwfwm-d20",
+    "private": false
+  },
+  {
+    "name": "hwfwm-skills-combat",
+    "label": "Skills / Combat (HWFWM)",
+    "path": "packs/hwfwm-skills-combat.db",
+    "type": "Item",
+    "system": "hwfwm-d20",
+    "private": false
+  },
+  {
+    "name": "hwfwm-skills-crafting",
+    "label": "Skills / Crafting (HWFWM)",
+    "path": "packs/hwfwm-skills-crafting.db",
+    "type": "Item",
+    "system": "hwfwm-d20",
+    "private": false
+  },
+  {
+    "name": "hwfwm-skills-knowledge",
+    "label": "Skills / Knowledge (HWFWM)",
+    "path": "packs/hwfwm-skills-knowledge.db",
     "type": "Item",
     "system": "hwfwm-d20",
     "private": false
   }
-],
+]
+
 
   "languages": [
     {
@@ -48,6 +97,7 @@
   "license": "LICENSE",
   "readme": "https://github.com/Shaladar79/d20-hwfwm#readme"
 }
+
 
 
 
