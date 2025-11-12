@@ -1,5 +1,5 @@
 /* =====================================================
-   HWFWM v13 | PC Sheet Styling (Compact, Scrollable)
+   HWFWM v13 | PC Sheet Styling (Compact, 2-Column Stats)
    Clean white cards, bold black borders, gradient bg
    Narrow centered sheet with full vertical scroll
    ===================================================== */
@@ -121,44 +121,49 @@
   box-sizing: border-box;
 }
 
-/* ----- STATS TAB: compact, stacked ----- */
-.hwfwm.sheet .stats .flexrow { display: block; }
-.hwfwm.sheet .stats .card { margin-bottom: var(--gap); }
-
-/* Headings */
-.hwfwm.sheet h2 {
-  font-size: 22px; margin: 0 0 8px 0; color: #000;
+/* =====================================================
+   STATS TAB LAYOUT: 2 columns
+   Left column:  Attributes (narrow, stacked)
+   Right column: Resources + Defenses
+   ===================================================== */
+.hwfwm.sheet .stats .flexrow {
+  display: grid;
+  grid-template-columns: 520px 1fr;   /* left (attributes) / right (resources) */
+  gap: var(--gap);
+  align-items: start;
 }
 
-/* ---------- Attributes (narrower, inline rank) ---------- */
+/* ---------- Attributes (narrower, inline rank, smaller fields) ---------- */
 
-/* Use flex so we can control each card width exactly */
+/* Left column is a single vertical list of attribute cards */
+.hwfwm.sheet .attributes.card {
+  margin: 0;
+}
+
 .hwfwm.sheet .attributes-grid {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   gap: var(--gap);
-  justify-content: space-between;
 }
 
-/* Two compact cards per row */
+/* Each attribute card fits the left column width */
 .hwfwm.sheet .attribute {
-  width: 440px;                /* tweak to 420/400 if you want even slimmer */
-  max-width: 100%;
+  width: 100%;                 /* fill the left column width (520px) */
   border: var(--border);
   border-radius: var(--radius);
   padding: 8px;                /* tighter padding */
   background: #fff;
 
   display: grid;
-  grid-template-columns: 110px 1fr;  /* compact label column */
-  gap: 4px 10px;                      /* less space between label & field */
+  grid-template-columns: 90px auto;  /* compact label column */
+  gap: 4px 8px;                       /* less space between label & field */
 }
 
 /* Header row with name (left) and Rank (right) */
 .hwfwm.sheet .attribute .attr-header {
   grid-column: 1 / -1;
   display: grid;
-  grid-template-columns: 1fr auto 120px; /* name | "Rank" | input */
+  grid-template-columns: 1fr auto 100px; /* name | "Rank" | input */
   align-items: center;
   margin-bottom: 2px;
 }
@@ -179,10 +184,11 @@
   border: var(--border);
   border-radius: var(--radius);
   padding: 4px 6px;
-  height: 28px;
+  height: 26px;
+  width: 100%;
 }
 
-/* Compact labels & inputs */
+/* Compact labels & inputs; inputs don’t stretch full width */
 .hwfwm.sheet .attribute label {
   font-size: 11px;
   align-self: center;
@@ -194,17 +200,25 @@
   border: var(--border);
   border-radius: var(--radius);
   padding: 4px 6px;
-  height: 28px;
+  height: 26px;
   background: #fff; color: #000;
+  max-width: 260px;            /* <- keep fields modest in width */
+  justify-self: start;         /* align to the left, not full stretch */
 }
 
-/* ---------- Resources & Defenses ---------- */
+/* ---------- Resources & Defenses on the right ---------- */
+.hwfwm.sheet .resources-and-defenses.card {
+  margin: 0;                   /* aligns with attributes card */
+}
+
+/* Make resource rows full-width of the right column */
 .hwfwm.sheet .resources-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;  /* single column rows */
   gap: var(--gap);
 }
 
+/* Resource / defense rows */
 .hwfwm.sheet .res,
 .hwfwm.sheet .def {
   background: #fff;
@@ -228,9 +242,10 @@
   background: #fff; color: #000;
 }
 
+/* Defenses grid: two lines stacked */
 .hwfwm.sheet .defenses-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: var(--gap);
 }
 
@@ -244,4 +259,11 @@
 }
 .hwfwm.sheet .sheet-content::-webkit-scrollbar-thumb:hover {
   background: #555;
+}
+
+/* Headings */
+.hwfwm.sheet h2 {
+  font-size: 22px;
+  margin: 0 0 8px 0;
+  color: #000;
 }
