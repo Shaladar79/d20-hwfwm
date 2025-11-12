@@ -41,55 +41,18 @@
           }
         },
         "resources": {
-          "lifeforce": {
-            "label": "Life Force",
-            "value": 10,
-            "max": 10
-          },
-          "trauma": {
-            "label": "Trauma",
-            "value": 0,
-            "max": 10
-          },
-          "mana": {
-            "label": "Mana",
-            "value": 0,
-            "max": 0
-          },
-          "stamina": {
-            "label": "Stamina",
-            "value": 0,
-            "max": 0
-          },
-          "armor": {
-            "label": "Armor",
-            "value": 0,
-            "max": 0
-          },
-          "shielding": {
-            "label": "Shielding",
-            "value": 0
-          },
-          "resolve": {
-            "label": "Resolve",
-            "value": 0,
-            "max": 0
-          },
-          "willpower": {
-            "label": "Willpower",
-            "value": 0,
-            "max": 0
-          }
+          "lifeforce": { "label": "Life Force", "value": 10, "max": 10 },
+          "trauma": { "label": "Trauma", "value": 0, "max": 10 },
+          "mana": { "label": "Mana", "value": 0, "max": 0 },
+          "stamina": { "label": "Stamina", "value": 0, "max": 0 },
+          "armor": { "label": "Armor", "value": 0, "max": 0 },
+          "shielding": { "label": "Shielding", "value": 0 },
+          "resolve": { "label": "Resolve", "value": 0, "max": 0 },
+          "willpower": { "label": "Willpower", "value": 0, "max": 0 }
         },
         "defenses": {
-          "defense": {
-            "label": "Defense",
-            "value": 10
-          },
-          "reaction": {
-            "label": "Reaction",
-            "value": 0
-          }
+          "defense": { "label": "Defense", "value": 10 },
+          "reaction": { "label": "Reaction", "value": 0 }
         },
         "traits": {
           "size": "medium",
@@ -101,12 +64,8 @@
         }
       }
     },
-    "pc": {
-      "templates": ["base"]
-    },
-    "npc": {
-      "templates": ["base"]
-    }
+    "pc": { "templates": ["base"] },
+    "npc": { "templates": ["base"] }
   },
 
   "Item": {
@@ -124,6 +83,7 @@
       "role",
       "racialAbility"
     ],
+
     "templates": {
       "base": {
         "description": "",
@@ -191,16 +151,17 @@
         "effect": ""
       },
 
-     "skill": {
-  "category": "",
-  "associatedAttribute": "",
-  "rank": "",
-  "mod": 0,
-  "trained": false,
-  "specialization": "",
-  "description": ""
-}
-,
+      "skill": {
+        "category": "",                // legacy alias
+        "associatedAttribute": "",     // legacy alias
+        "skillType": "",               // used by current compendiums
+        "attribute": "",               // used by current compendiums
+        "rank": "",
+        "mod": 0,
+        "trained": false,
+        "specialization": "",
+        "description": ""
+      },
 
       "race": {
         "powerMod": 0,
@@ -254,42 +215,17 @@
       }
     },
 
-    "weapon": {
-      "templates": ["base", "weapon"]
-    },
-    "armor": {
-      "templates": ["base", "armor"]
-    },
-    "essence": {
-      "templates": ["base", "essence"]
-    },
-    "magicStone": {
-      "templates": ["base", "magicStone"]
-    },
-    "essenceAbility": {
-      "templates": ["base", "essenceAbility"]
-    },
-    "feature": {
-      "templates": ["base", "feature"]
-    },
-    "equipment": {
-      "templates": ["base"]
-    },
-    "skill": {
-      "templates": ["base", "skill"]
-    },
-    "race": {
-      "templates": ["base", "race"]
-    },
-    "background": {
-      "templates": ["base", "background"]
-    },
-    "role": {
-      "templates": ["base", "role"]
-    },
-    "racialAbility": {
-      "templates": ["base", "racialAbility"]
-    }
+    "weapon": { "templates": ["base", "weapon"] },
+    "armor": { "templates": ["base", "armor"] },
+    "essence": { "templates": ["base", "essence"] },
+    "magicStone": { "templates": ["base", "magicStone"] },
+    "essenceAbility": { "templates": ["base", "essenceAbility"] },
+    "feature": { "templates": ["base", "feature"] },
+    "equipment": { "templates": ["base"] },
+    "skill": { "templates": ["base", "skill"] },
+    "race": { "templates": ["base", "race"] },
+    "background": { "templates": ["base", "background"] },
+    "role": { "templates": ["base", "role"] },
+    "racialAbility": { "templates": ["base", "racialAbility"] }
   }
 }
-
