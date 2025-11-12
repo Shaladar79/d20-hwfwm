@@ -130,33 +130,75 @@
   font-size: 22px; margin: 0 0 8px 0; color: #000;
 }
 
-/* ----- Attributes (smaller boxes) ----- */
+/* ---------- Attributes (narrower, inline rank) ---------- */
+
+/* Use flex so we can control each card width exactly */
 .hwfwm.sheet .attributes-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;   /* two smaller columns */
+  display: flex;
+  flex-wrap: wrap;
   gap: var(--gap);
+  justify-content: space-between;
 }
 
+/* Two compact cards per row */
 .hwfwm.sheet .attribute {
+  width: 440px;                /* tweak to 420/400 if you want even slimmer */
+  max-width: 100%;
   border: var(--border);
   border-radius: var(--radius);
-  padding: 8px;
+  padding: 8px;                /* tighter padding */
   background: #fff;
+
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 6px 8px;
-}
-.hwfwm.sheet .attribute .attr-label {
-  grid-column: 1 / -1; font-size: 16px; font-weight: 700; margin-bottom: 2px;
-}
-.hwfwm.sheet .attribute label { font-size: 11px; opacity: 0.8; }
-.hwfwm.sheet .attribute input {
-  width: 100%;
-  border: var(--border); border-radius: var(--radius);
-  padding: 5px 7px; background: #fff; color: #000;
+  grid-template-columns: 110px 1fr;  /* compact label column */
+  gap: 4px 10px;                      /* less space between label & field */
 }
 
-/* ----- Resources & Defenses (below attributes) ----- */
+/* Header row with name (left) and Rank (right) */
+.hwfwm.sheet .attribute .attr-header {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 1fr auto 120px; /* name | "Rank" | input */
+  align-items: center;
+  margin-bottom: 2px;
+}
+
+.hwfwm.sheet .attribute .attr-label {
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.hwfwm.sheet .attribute .mini {
+  font-size: 11px;
+  opacity: 0.85;
+  margin-right: 6px;
+}
+
+.hwfwm.sheet .attribute .attr-rank {
+  border: var(--border);
+  border-radius: var(--radius);
+  padding: 4px 6px;
+  height: 28px;
+}
+
+/* Compact labels & inputs */
+.hwfwm.sheet .attribute label {
+  font-size: 11px;
+  align-self: center;
+  margin: 0;
+}
+
+.hwfwm.sheet .attribute input[type="number"],
+.hwfwm.sheet .attribute input[type="text"] {
+  border: var(--border);
+  border-radius: var(--radius);
+  padding: 4px 6px;
+  height: 28px;
+  background: #fff; color: #000;
+}
+
+/* ---------- Resources & Defenses ---------- */
 .hwfwm.sheet .resources-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
