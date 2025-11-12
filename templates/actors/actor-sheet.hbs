@@ -49,8 +49,7 @@
       <!-- ===================== TAB: STATS ===================== -->
       <div class="tab stats active" data-group="primary" data-tab="stats">
         <div class="flexrow">
-
-          <!-- ATTRIBUTES -->
+          <!-- ATTRIBUTES (left column) -->
           <section class="attributes card">
             <h2>Attributes</h2>
 
@@ -129,11 +128,12 @@
             </div>
           </section>
 
-          <!-- RESOURCES & DEFENSES -->
+          <!-- RESOURCES + DEFENSES (right column) -->
           <section class="resources-and-defenses card">
             <h2>Resources</h2>
+
             <div class="resources-grid">
-              <!-- Lifeforce -->
+              <!-- 1. Life Force -->
               <div class="res">
                 <label>Life Force</label>
                 <input type="number" name="system.resources.lifeforce.value" value="{{system.resources.lifeforce.value}}" />
@@ -141,15 +141,7 @@
                 <input type="number" name="system.resources.lifeforce.max" value="{{system.resources.lifeforce.max}}" />
               </div>
 
-              <!-- Trauma -->
-              <div class="res">
-                <label>Trauma</label>
-                <input type="number" name="system.resources.trauma.value" value="{{system.resources.trauma.value}}" />
-                <span>/</span>
-                <input type="number" name="system.resources.trauma.max" value="{{system.resources.trauma.max}}" />
-              </div>
-
-              <!-- Armor -->
+              <!-- 2. Armor -->
               <div class="res">
                 <label>Armor</label>
                 <input type="number" name="system.resources.armor.value" value="{{system.resources.armor.value}}" />
@@ -157,29 +149,13 @@
                 <input type="number" name="system.resources.armor.max" value="{{system.resources.armor.max}}" />
               </div>
 
-              <!-- Shielding (uncapped) -->
+              <!-- 3. Shielding (uncapped) -->
               <div class="res">
                 <label>Shielding</label>
                 <input type="number" name="system.resources.shielding.value" value="{{system.resources.shielding.value}}" />
               </div>
 
-              <!-- Resolve -->
-              <div class="res">
-                <label>Resolve</label>
-                <input type="number" name="system.resources.resolve.value" value="{{system.resources.resolve.value}}" />
-                <span>/</span>
-                <input type="number" name="system.resources.resolve.max" value="{{system.resources.resolve.max}}" />
-              </div>
-
-              <!-- Willpower -->
-              <div class="res">
-                <label>Willpower</label>
-                <input type="number" name="system.resources.willpower.value" value="{{system.resources.willpower.value}}" />
-                <span>/</span>
-                <input type="number" name="system.resources.willpower.max" value="{{system.resources.willpower.max}}" />
-              </div>
-
-              <!-- Mana -->
+              <!-- 4. Mana -->
               <div class="res">
                 <label>Mana</label>
                 <input type="number" name="system.resources.mana.value" value="{{system.resources.mana.value}}" />
@@ -187,13 +163,39 @@
                 <input type="number" name="system.resources.mana.max" value="{{system.resources.mana.max}}" />
               </div>
 
-              <!-- Stamina -->
+              <!-- 5. Stamina -->
               <div class="res">
                 <label>Stamina</label>
                 <input type="number" name="system.resources.stamina.value" value="{{system.resources.stamina.value}}" />
                 <span>/</span>
                 <input type="number" name="system.resources.stamina.max" value="{{system.resources.stamina.max}}" />
               </div>
+
+              <!-- 6. Trauma -->
+              <div class="res">
+                <label>Trauma</label>
+                <input type="number" name="system.resources.trauma.value" value="{{system.resources.trauma.value}}" />
+                <span>/</span>
+                <input type="number" name="system.resources.trauma.max" value="{{system.resources.trauma.max}}" />
+              </div>
+
+              <!-- 7. Resolve -->
+              <div class="res">
+                <label>Resolve</label>
+                <input type="number" name="system.resources.resolve.value" value="{{system.resources.resolve.value}}" />
+                <span>/</span>
+                <input type="number" name="system.resources.resolve.max" value="{{system.resources.resolve.max}}" />
+              </div>
+
+              <!-- 8. Willpower (Gold/Diamond only) -->
+              {{#if showWillpower}}
+              <div class="res">
+                <label>Willpower</label>
+                <input type="number" name="system.resources.willpower.value" value="{{system.resources.willpower.value}}" />
+                <span>/</span>
+                <input type="number" name="system.resources.willpower.max" value="{{system.resources.willpower.max}}" />
+              </div>
+              {{/if}}
             </div>
 
             <h2>Defenses</h2>
@@ -208,7 +210,6 @@
               </div>
             </div>
           </section>
-
         </div>
       </div>
 
@@ -268,9 +269,6 @@
           {{editor system.notes.gmNotes target="system.notes.gmNotes" button=true owner=owner editable=editable}}
         </section>
       </div>
-
     </section>
   </section>
 </form>
-
-
