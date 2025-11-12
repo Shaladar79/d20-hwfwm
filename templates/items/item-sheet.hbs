@@ -1,0 +1,59 @@
+<form class="hwfwm sheet item" autocomplete="off">
+  <header class="sheet-header flexrow" style="gap:12px;">
+    <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}" style="width:64px;height:64px;border:3px solid #000;border-radius:8px;object-fit:cover;" />
+    <div class="header-fields" style="flex:1;">
+      <input name="name" type="text" value="{{item.name}}" placeholder="Skill Name" style="width:100%;font-size:18px;font-weight:700;border:3px solid #000;border-radius:8px;padding:6px 8px;" />
+      <div style="display:flex; gap:12px; margin-top:8px;">
+        <div style="flex:1;">
+          <label>Category</label>
+          <select name="system.category" style="width:100%;">
+            <option value="">(select)</option>
+            <option {{#if (eq system.category "Power")}}selected{{/if}}>Power</option>
+            <option {{#if (eq system.category "Speed")}}selected{{/if}}>Speed</option>
+            <option {{#if (eq system.category "Spirit")}}selected{{/if}}>Spirit</option>
+            <option {{#if (eq system.category "Recovery")}}selected{{/if}}>Recovery</option>
+            <option {{#if (eq system.category "Crafting")}}selected{{/if}}>Crafting</option>
+            <option {{#if (eq system.category "Knowledge")}}selected{{/if}}>Knowledge</option>
+            <option {{#if (eq system.category "Combat")}}selected{{/if}}>Combat</option>
+          </select>
+        </div>
+        <div style="flex:1;">
+          <label>Associated Attribute</label>
+          <select name="system.associatedAttribute" style="width:100%;">
+            <option value="">(select)</option>
+            <option {{#if (eq system.associatedAttribute "power")}}selected{{/if}} value="power">Power</option>
+            <option {{#if (eq system.associatedAttribute "speed")}}selected{{/if}} value="speed">Speed</option>
+            <option {{#if (eq system.associatedAttribute "spirit")}}selected{{/if}} value="spirit">Spirit</option>
+            <option {{#if (eq system.associatedAttribute "recovery")}}selected{{/if}} value="recovery">Recovery</option>
+          </select>
+        </div>
+        <div style="width:120px;">
+          <label>Rank</label>
+          <input type="text" name="system.rank" value="{{system.rank}}" />
+        </div>
+        <div style="width:100px;">
+          <label>Mod</label>
+          <input type="number" name="system.mod" value="{{system.mod}}" />
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section class="sheet-body" style="background:#fff;border:3px solid #000;border-radius:10px;padding:10px;margin-top:12px;">
+    <div style="display:flex; gap:12px; align-items:flex-end;">
+      <div style="flex:1;">
+        <label>Specialization</label>
+        <input type="text" name="system.specialization" value="{{system.specialization}}" />
+      </div>
+      <label style="display:flex; gap:6px; align-items:center; margin-bottom:2px;">
+        <input type="checkbox" name="system.trained" {{#if system.trained}}checked{{/if}} />
+        Trained
+      </label>
+    </div>
+
+    <div style="margin-top:10px;">
+      <label>Description</label>
+      <textarea name="system.description" rows="6" style="width:100%;"></textarea>
+    </div>
+  </section>
+</form>
