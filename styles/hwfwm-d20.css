@@ -1,356 +1,105 @@
-/* Base sheet wrapper */
-form.hwfwm.sheet {
-  /* Outer decorative frame */
-  background: linear-gradient(135deg, #1d4ed8, #c0c0c0, #d4af37);
-  padding: 0.5in;
-  box-sizing: border-box;
-  min-height: 100%;
+/* --- Layout frame --- */
+.hwfwm.sheet {
+  --pad: 8px;
+  --gap: 8px;
+  --border: 2px solid #000;
+  --radius: 6px;
+  --bg: #fff;
+  --ink: #222;
+  color: var(--ink);
 }
 
-/* Inner sheet content (everything inside the frame) */
-form.hwfwm.sheet .sheet-header,
-form.hwfwm.sheet .sheet-body {
-  background: #ffffff;
-  border: 3px solid #000000;
-  box-sizing: border-box;
+.hwfwm.sheet .card {
+  background: var(--bg);
+  border: var(--border);
+  border-radius: var(--radius);
+  padding: var(--pad);
 }
 
-/* Stack header on top of body with clean separation */
-form.hwfwm.sheet .sheet-header {
-  padding: 0.5rem;
-  margin-bottom: 0.5rem;
-  display: flex;
-  gap: 0.5rem;
+/* --- Header --- */
+.hwfwm.sheet .sheet-header {
+  background: var(--bg);
+  border: var(--border);
+  border-radius: var(--radius);
+  padding: 10px;
+  gap: 12px;
+  align-items: center;
 }
 
-/* Body */
-form.hwfwm.sheet .sheet-body {
-  padding: 0.5rem;
-}
-
-/* Profile image */
-form.hwfwm.sheet .profile-img {
-  width: 96px;
-  height: 96px;
+.hwfwm.sheet .profile-img {
+  width: 96px; height: 96px; border: var(--border);
+  border-radius: var(--radius);
   object-fit: cover;
-  border: 3px solid #000000;
-  background: #ffffff;
 }
 
-/* Header fields */
-form.hwfwm.sheet .header-fields {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-}
-
-form.hwfwm.sheet .name-row input {
+.hwfwm.sheet .header-fields .name-row input {
   width: 100%;
-  font-size: 1.3rem;
+  font-size: 20px;
   font-weight: 700;
-  border: 0;
-  border-bottom: 2px solid #000000;
-  padding: 0.1rem 0.2rem;
+  padding: 6px 8px;
+  background: #2f2b33; color: #f3e9dd;
+  border-radius: 6px;
+  border: none;
 }
 
-form.hwfwm.sheet .meta-row {
-  display: flex;
-  gap: 0.5rem;
-}
-
-form.hwfwm.sheet .meta-row .field {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  font-size: 0.75rem;
-}
-
-form.hwfwm.sheet .meta-row label {
-  font-weight: 700;
-  margin-bottom: 0.1rem;
-}
-
-form.hwfwm.sheet .meta-row input {
-  border: 1px solid #000000;
-  padding: 0.15rem 0.25rem;
-}
-
-form.hwfwm.sheet .tags-row {
-  font-size: 0.75rem;
-}
-
-form.hwfwm.sheet .tags-row label {
-  font-weight: 700;
-  margin-right: 0.25rem;
-}
-
-form.hwfwm.sheet .tags-row input {
-  width: 100%;
-  border: 1px solid #000000;
-  padding: 0.15rem 0.25rem;
-}
-
-/* Tabs bar */
-form.hwfwm.sheet .sheet-tabs {
-  margin-bottom: 0.5rem;
-  border-bottom: 3px solid #000000;
-  display: flex;
-  gap: 0.25rem;
-}
-
-form.hwfwm.sheet .sheet-tabs .item {
-  padding: 0.25rem 0.5rem;
-  font-weight: 700;
-  border: 2px solid #000000;
-  border-bottom: 0;
-  background: #ffffff;
-  cursor: pointer;
-}
-
-form.hwfwm.sheet .sheet-tabs .item.active {
-  background: #e5e5e5;
-}
-
-/* Generic card sections */
-form.hwfwm.sheet .card {
-  background: #ffffff;
-  border: 3px solid #000000;
-  padding: 0.4rem;
-  margin: 0.25rem;
-  box-sizing: border-box;
-}
-
-form.hwfwm.sheet .card h2 {
-  margin: 0 0 0.25rem 0;
-  padding-bottom: 0.15rem;
-  font-size: 0.9rem;
-  font-weight: 700;
-  border-bottom: 2px solid #000000;
-}
-
-/* Attributes grid */
-form.hwfwm.sheet .attributes-grid {
+.hwfwm.sheet .meta-row {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 0.25rem;
+  gap: var(--gap);
+  margin-top: 8px;
+}
+.hwfwm.sheet .meta-row .field {
+  display: grid; gap: 4px;
+}
+.hwfwm.sheet .meta-row .field input {
+  padding: 6px 8px; border-radius: 6px; border: var(--border);
 }
 
-form.hwfwm.sheet .attribute {
-  border: 2px solid #000000;
-  padding: 0.25rem;
-  box-sizing: border-box;
+/* --- Tabs --- */
+.hwfwm.sheet .sheet-tabs {
+  display: flex; gap: var(--gap);
+  margin: 10px 0 6px;
+}
+.hwfwm.sheet .sheet-tabs .item {
+  border: var(--border); border-radius: var(--radius);
+  padding: 6px 10px; background: var(--bg);
+}
+.hwfwm.sheet .sheet-content { margin-top: 8px; }
+.hwfwm.sheet .tab { display: none; }
+.hwfwm.sheet .tab.active { display: block; }
+
+/* --- Two-column stats layout --- */
+.hwfwm.sheet .stats .flexrow {
+  display: grid; grid-template-columns: 1.1fr 1fr; gap: var(--gap);
 }
 
-form.hwfwm.sheet .attribute .attr-label {
-  font-weight: 700;
-  text-align: center;
-  margin-bottom: 0.15rem;
-  border-bottom: 1px solid #000000;
-}
-
-form.hwfwm.sheet .attribute .attr-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 0.7rem;
-  margin-bottom: 0.1rem;
-}
-
-form.hwfwm.sheet .attribute .attr-row label {
-  font-weight: 600;
-}
-
-form.hwfwm.sheet .attribute .attr-row input {
-  width: 55%;
-  border: 1px solid #000000;
-  padding: 0.05rem 0.15rem;
-  font-size: 0.7rem;
-}
-
-form.hwfwm.sheet .attribute .attr-total {
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.75rem;
-  font-weight: 700;
-  margin-top: 0.1rem;
-  border-top: 1px solid #000000;
-  padding-top: 0.05rem;
-}
-
-/* Resources grid */
-form.hwfwm.sheet .resources-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.15rem 0.5rem;
-  font-size: 0.75rem;
-}
-
-form.hwfwm.sheet .resources-grid .res {
-  display: flex;
-  align-items: center;
-  gap: 0.1rem;
-}
-
-form.hwfwm.sheet .resources-grid label {
-  font-weight: 700;
-  min-width: 90px;
-}
-
-form.hwfwm.sheet .resources-grid input {
-  width: 48px;
-  border: 1px solid #000000;
-  padding: 0.05rem 0.1rem;
-}
-
-/* Defenses grid */
-form.hwfwm.sheet .defenses-grid {
-  display: grid;
-  grid-template-columns: repeat(2, auto);
-  gap: 0.25rem 0.75rem;
-  margin-top: 0.25rem;
-  font-size: 0.75rem;
-}
-
-form.hwfwm.sheet .defenses-grid .def {
-  display: flex;
-  align-items: center;
-  gap: 0.15rem;
-}
-
-form.hwfwm.sheet .defenses-grid label {
-  font-weight: 700;
-}
-
-form.hwfwm.sheet .defenses-grid input {
-  width: 56px;
-  border: 1px solid #000000;
-  padding: 0.05rem 0.1rem;
-}
-
-/* Tables (skills, abilities, etc.) */
-form.hwfwm.sheet table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 0.7rem;
-}
-
-form.hwfwm.sheet table th,
-form.hwfwm.sheet table td {
-  border: 1px solid #000000;
-  padding: 0.15rem 0.2rem;
-}
-
-form.hwfwm.sheet table th {
-  font-weight: 700;
-  background: #f3f3f3;
-}
-
-/* Item lists */
-form.hwfwm.sheet .item-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  font-size: 0.75rem;
-}
-
-form.hwfwm.sheet .item-list .item {
-  padding: 0.15rem 0.1rem;
-  border-bottom: 1px solid #000000;
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
-}
-
-form.hwfwm.sheet .item-list .item:last-child {
-  border-bottom: 0;
-}
-
-form.hwfwm.sheet .item a.item-edit {
-  font-weight: 700;
-  text-decoration: none;
-  color: #000000;
-}
-
-/* Depleted armor badge */
-form.hwfwm.sheet .depleted {
-  font-size: 0.65rem;
-  font-weight: 700;
-  color: #b91c1c;
-}
-
-/* Flex helpers */
-form.hwfwm.sheet .flexrow {
-  display: flex;
-  flex-direction: row;
-}
-
-form.hwfwm.sheet .sheet-content .flexrow > .card {
-  flex: 1;
-}
-
-/* NPC tweaks */
-form.hwfwm.sheet.actor.npc .npc-core-grid,
-form.hwfwm.sheet.actor.npc .npc-attr-grid {
-  display: grid;
-  gap: 0.15rem 0.5rem;
-  font-size: 0.75rem;
-}
-
-form.hwfwm.sheet.actor.npc .npc-attr-grid {
+/* Attributes */
+.hwfwm.sheet .attributes-grid {
+  display: grid; gap: var(--gap);
   grid-template-columns: repeat(2, 1fr);
 }
-
-form.hwfwm.sheet.actor.npc .npc-attr span.label {
-  font-weight: 700;
-  margin-right: 0.15rem;
+.hwfwm.sheet .attribute {
+  border: var(--border); border-radius: var(--radius);
+  padding: var(--pad);
+  display: grid; grid-template-columns: 1fr 1fr; gap: 6px;
 }
-
-/* === Tabs hover & active (blue/silver/gold accent) === */
-
-form.hwfwm.sheet .sheet-tabs .item {
-  transition: background 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+.hwfwm.sheet .attribute .attr-label {
+  grid-column: 1 / -1; font-weight: 700; margin-bottom: 4px;
 }
+.hwfwm.sheet .attribute label { font-size: 11px; opacity: .8; }
+.hwfwm.sheet .attribute input { width: 100%; }
 
-form.hwfwm.sheet .sheet-tabs .item:hover {
-  background: #e0ecff;                 /* soft blue */
-  box-shadow: 0 0 4px rgba(0,0,0,0.3);
+/* Resources & Defenses */
+.hwfwm.sheet .resources-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: var(--gap);
 }
-
-form.hwfwm.sheet .sheet-tabs .item.active {
-  background: #f5f5f5;
-  box-shadow: inset 0 -2px 0 #1d4ed8;  /* blue underline */
-  border-color: #000000;
+.hwfwm.sheet .res, .hwfwm.sheet .def {
+  border: var(--border); border-radius: var(--radius);
+  padding: var(--pad); display: grid; grid-template-columns: auto 1fr auto 1fr;
+  align-items: center; gap: 6px;
 }
-
-/* === Item row hover (skills, abilities, inventory) === */
-
-form.hwfwm.sheet table tbody tr.item,
-form.hwfwm.sheet .item-list .item {
-  transition: background 0.12s ease, box-shadow 0.12s ease, border-color 0.12s ease;
+.hwfwm.sheet .res label, .hwfwm.sheet .def label { grid-column: 1 / 2; font-weight: 700; }
+.hwfwm.sheet .res input[type=number], .hwfwm.sheet .def input[type=number] {
+  width: 100%;
 }
-
-form.hwfwm.sheet table tbody tr.item:hover,
-form.hwfwm.sheet .item-list .item:hover {
-  background: #fffef8;                            /* subtle warm highlight */
-  box-shadow: 0 0 3px rgba(0,0,0,0.25);
-  border-color: #d4af37;                          /* gold edge hint */
-}
-
-/* Clickable item names */
-form.hwfwm.sheet .item a.item-edit {
-  position: relative;
-  transition: color 0.12s ease;
-}
-
-form.hwfwm.sheet .item a.item-edit:hover {
-  color: #1d4ed8;                                  /* blue accent */
-}
-
-/* Depleted armor emphasis */
-form.hwfwm.sheet .depleted {
-  padding: 0 0.2rem;
-  border-radius: 2px;
-  border: 1px solid #b91c1c;
-  background: #fff5f5;
-}
+.hwfwm.sheet .defenses-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--gap); }
