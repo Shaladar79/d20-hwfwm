@@ -20,24 +20,20 @@ class HWFWMPCSheet extends HandlebarsApplicationMixin(DocumentSheetV2) {
     }
   };
 
-  /** This sheet is for Actor documents */
   static get documentTypes() {
     return ["Actor"];
   }
 
-  /** Only apply to actors of type "pc" */
   static match(document) {
     return document.type === "pc";
   }
 
-  /** Handlebars template parts */
   static PARTS = {
     main: {
       template: "systems/hwfwm-d20/templates/actors/actor-sheet.hbs"
     }
   };
 
-  /** Tab configuration */
   static TABS = {
     primary: {
       navSelector: ".sheet-tabs",
@@ -46,9 +42,6 @@ class HWFWMPCSheet extends HandlebarsApplicationMixin(DocumentSheetV2) {
     }
   };
 
-  /**
-   * Context passed to the template.
-   */
   async _prepareContext(_options) {
     const actor = this.document;
     const system = actor.system;
@@ -90,7 +83,6 @@ class HWFWMNPCSheet extends HandlebarsApplicationMixin(DocumentSheetV2) {
     return ["Actor"];
   }
 
-  /** Only apply to actors of type "npc" */
   static match(document) {
     return document.type === "npc";
   }
@@ -138,7 +130,6 @@ class HWFWMNPCSheet extends HandlebarsApplicationMixin(DocumentSheetV2) {
 Hooks.once("init", () => {
   console.log("HWFWM-d20 | Initializing system and registering V2 sheets");
 
-  // Try to unregister any core/default sheets so ours take over
   try {
     Actors.unregisterSheet("core", ActorSheet);
   } catch (err) { /* ignore */ }
@@ -149,18 +140,14 @@ Hooks.once("init", () => {
     }
   } catch (err) { /* ignore */ }
 
-  // Register PC sheet for type "pc"
   Actors.registerSheet("hwfwm-d20", HWFWMPCSheet, {
     types: ["pc"],
     label: "HWFWM PC Sheet",
     makeDefault: true
   });
 
-  // Register NPC sheet for type "npc"
   Actors.registerSheet("hwfwm-d20", HWFWMNPCSheet, {
     types: ["npc"],
     label: "HWFWM NPC Sheet"
   });
 });
-
-
