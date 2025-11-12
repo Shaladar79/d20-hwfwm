@@ -115,12 +115,12 @@
 ## 🕓 Version History
 | Version | Date | Summary | Status |
 |:--------:|:------:|:--------|:-------|
-| **v0.0.4** | *(Base)* | Stable base release — attributes, resources, defenses functional. | ✅ Stable |
-| **v0.0.5** | *(Planned)* | Add Skills tab with dynamic item list + basic item creation. | 🔄 In Progress |
-| **v0.0.6** | *(Planned)* | Add Abilities tab (racial + essence). | ⏳ Pending |
-| **v0.0.7** | *(Planned)* | Add Inventory tab (weapons, armor, items). | ⏳ Pending |
-| **v0.0.8** | *(Planned)* | Implement roll mechanics and chat output. | ⏳ Pending |
-| **v0.0.9+** | *(Later)* | UI polish, compendium content, optimization. | ⏳ Planned |
+| **v0.0.5** | *(Base)* | Stable base release — attributes, resources, defenses functional. | ✅ Stable |
+| **v0.0.6** | *(Planned)* | Add Skills tab with dynamic item list + basic item creation. | 🔄 In Progress |
+| **v0.0.7** | *(Planned)* | Add Abilities tab (racial + essence). | ⏳ Pending |
+| **v0.0.8** | *(Planned)* | Add Inventory tab (weapons, armor, items). | ⏳ Pending |
+| **v0.0.9** | *(Planned)* | Implement roll mechanics and chat output. | ⏳ Pending |
+| **v0.1.0+** | *(Later)* | UI polish, compendium content, optimization. | ⏳ Planned |
 
 ---
 
