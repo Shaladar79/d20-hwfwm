@@ -4,6 +4,4 @@
 {"_id":"deception","name":"Deception","type":"skill","img":"icons/svg/masks.svg","system":{"skillType":"general","attribute":"spirit","description":"Hiding truth, misleading others, or projecting false emotions or intentions."}}
 {"_id":"insight","name":"Insight","type":"skill","img":"icons/svg/eye.svg","system":{"skillType":"general","attribute":"spirit","description":"Reading emotional cues, motives, or detecting falsehoods through intuition and perception."}}
 {"_id":"aura-control","name":"Aura Control","type":"skill","img":"icons/svg/mystery-man.svg","system":{"skillType":"general","attribute":"spirit","description":"Manipulating one’s own spiritual energy — suppressing, amplifying, or stabilizing aura flow for magic or defense."}}
-{"_id":"meditation","name":"Meditation","type":"skill","img":"icons/svg/sun.svg","system":{"skillType":"general","attribute":"spirit","description":"Calming the mind and spirit to restore mana, balance inner energy, or recover from spiritual fatigue."}}
 {"_id":"research","name":"Research","type":"skill","img":"icons/svg/scroll.svg","system":{"skillType":"general","attribute":"spirit","description":"Studying written or arcane records to extract magical or historical knowledge."}}
-
