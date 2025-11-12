@@ -1,102 +1,81 @@
 // ============================================================================
-// HWFWM-D20 SYSTEM | Foundry VTT v13 Compatible
-// Author: Scott Anderson (Shaladar)
-// Description: Custom d20-based system using Power, Speed, Spirit, and Recovery
+// HWFWM-D20 SYSTEM | Foundry VTT v13
 // ============================================================================
 
 const { DocumentSheetV2 } = foundry.applications.api;
 
-// ============================================================================
-// PC SHEET CLASS
-// ============================================================================
+/**
+ * PC Actor Sheet (ApplicationV2 + Handlebars)
+ */
 class HWFWMPCSheet extends HandlebarsApplicationMixin(DocumentSheetV2) {
-  /** Default sheet settings */
   static DEFAULT_OPTIONS = {
     ...super.DEFAULT_OPTIONS,
     id: "hwfwm-pc-sheet",
     classes: ["hwfwm", "sheet", "actor", "pc"],
     window: {
       title: "HWFWM PC Sheet",
-      resizable: true,
+      resizable: true
     },
     position: {
-      width: 960,
-      height: "auto",
-    },
+      width: 960
+    }
   };
 
-  /** Template parts */
+  /** The main template for this sheet */
   static PARTS = {
     form: {
-      template: "systems/hwfwm-d20/templates/actors/actor-sheet.hbs",
-    },
+      template: "systems/hwfwm-d20/templates/actors/actor-sheet.hbs"
+    }
   };
 
-  /** Dynamic window title */
   get title() {
-    return this.document.name || "HWFWM Character";
+    return this.document?.name ?? "HWFWM Character";
   }
 
-  /** Prepare context for Handlebars template */
+  /**
+   * Supply additional data for the template.
+   * For ApplicationV2 + Handlebars, _prepareContext is the right hook.
+   */
   async _prepareContext(options) {
     const context = await super._prepareContext(options);
 
-    // Access actor data safely
+    // Safely read rank and compute Willpower visibility
     const sys = this.document.system ?? {};
-    const rankStr = (sys.details?.rank ?? "").toString().toLowerCase();
+    const rank = (sys.details?.rank ?? "").toString().trim().toLowerCase();
+    context.showWillpower = rank.includes("gold") || rank.includes("diamond");
 
-    // Show Willpower only for Gold and Diamond rank characters
-    context.showWillpower =
-      rankStr.includes("gold") || rankStr.includes("diamond");
-
-    // Expose item collections (skills, etc.)
+    // Optional: expose itemTypes if you use them in other tabs
     context.itemTypes = this.document.itemTypes ?? {};
 
     return context;
   }
 
-  /** Optional event listeners */
+  /**
+   * Wire any listeners you want (kept minimal here).
+   */
   activateListeners(html) {
     super.activateListeners(html);
-
-    // Example: Rollable attributes (future feature)
-    html.find(".attribute-roll").on("click", (ev) => {
-      const attr = ev.currentTarget.dataset.attr;
-      ui.notifications.info(`Rolling for ${attr} (Coming soon!)`);
-    });
+    // Example future hook:
+    // html.find("[data-action='roll-attr']").on("click", this._onRollAttr.bind(this));
   }
 }
 
-// ============================================================================
-// SYSTEM INITIALIZATION
-// ============================================================================
+/* ----------------------------------------------------------------------------
+ * System Init: register our sheet for type "pc"
+ * ------------------------------------------------------------------------- */
 Hooks.once("init", () => {
-  console.log("Initializing HWFWM-D20 System for Foundry VTT v13");
+  console.log("HWFWM-D20 | init");
 
-  // Register Actor Sheet
-  Actors.unregisterSheet("core", ActorSheet);
+  // Register our sheet for only the "pc" type and make it default for that type.
   Actors.registerSheet("hwfwm-d20", HWFWMPCSheet, {
     types: ["pc"],
-    makeDefault: true,
+    makeDefault: true
   });
-
-  // Define custom document classes (if needed later)
-  CONFIG.Actor.documentClass = Actor;
-  CONFIG.Item.documentClass = Item;
-
-  console.log("✅ HWFWM-D20 System Loaded Successfully");
 });
 
-// ============================================================================
-// FUTURE HOOKS & UTILITY REGISTRATION
-// ============================================================================
+/* ----------------------------------------------------------------------------
+ * Ready (for quick sanity logging)
+ * ------------------------------------------------------------------------- */
 Hooks.once("ready", () => {
-  console.log("🎲 HWFWM-D20 System Ready");
-});
-
-// Optional: Add hot reload for development
-Hooks.on("hotReload", (module) => {
-  if (module === "hwfwm-d20") {
-    ui.notifications.info("♻️ HWFWM-D20 system reloaded.");
-  }
+  console.log("HWFWM-D20 | ready");
 });
