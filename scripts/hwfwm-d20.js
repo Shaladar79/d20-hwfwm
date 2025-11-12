@@ -110,8 +110,3 @@ Hooks.once("init", () => {
 Hooks.once("ready", () => {
   console.log("HWFWM-D20 | ready");
 });
-
-
-
-
-
