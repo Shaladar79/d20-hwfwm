@@ -5,11 +5,13 @@
       <h1 class="charname">
         <input name="name" type="text" value="{{item.name}}" placeholder="Skill Name" {{#unless editable}}readonly{{/unless}}/>
       </h1>
+
       <div class="grid-2col">
         <div class="field">
           <label>Category</label>
           <input type="text" name="system.category" value="{{systemView.category}}" placeholder="e.g. Combat, Power, Speed" {{#unless editable}}readonly{{/unless}}/>
         </div>
+
         <div class="field">
           <label>Associated Attribute</label>
           <select name="system.attribute" {{#unless editable}}disabled{{/unless}}>
@@ -24,14 +26,14 @@
       <div class="grid-3col">
         <div class="field">
           <label>Rank</label>
-          <input type="text" name="system.rank" value="{{system.rank}}"
-                 placeholder="" {{#unless editable}}readonly{{/unless}}/>
+          <input type="text" name="system.rank" value="{{system.rank}}" placeholder="" {{#unless editable}}readonly{{/unless}}/>
         </div>
+
         <div class="field">
           <label>Modifier</label>
-          <input type="number" name="system.mod" value="{{system.mod}}"
-                 step="1" {{#unless editable}}readonly{{/unless}}/>
+          <input type="number" name="system.mod" value="{{system.mod}}" step="1" {{#unless editable}}readonly{{/unless}}/>
         </div>
+
         <div class="field checkbox">
           <label>Trained</label>
           <input type="checkbox" name="system.trained" {{checked system.trained}} {{#unless editable}}disabled{{/unless}}/>
@@ -40,8 +42,7 @@
 
       <div class="field">
         <label>Specialization</label>
-        <input type="text" name="system.specialization" value="{{system.specialization}}"
-               placeholder="(optional)" {{#unless editable}}readonly{{/unless}}/>
+        <input type="text" name="system.specialization" value="{{system.specialization}}" placeholder="(optional)" {{#unless editable}}readonly{{/unless}}/>
       </div>
     </div>
   </header>
