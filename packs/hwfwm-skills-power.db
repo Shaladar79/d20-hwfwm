@@ -1,1 +1,4 @@
-
+{"_id":"athletics","name":"Athletics","type":"skill","img":"icons/svg/unarmed.svg","system":{"skillType":"general","attribute":"power","description":"Physical performance such as running, jumping, climbing, or swimming. Used for most raw strength-based movement challenges."}}
+{"_id":"endurance","name":"Endurance","type":"skill","img":"icons/svg/shield.svg","system":{"skillType":"general","attribute":"power","description":"Resisting fatigue, pushing through exhaustion, and enduring harsh conditions through stamina."}}
+{"_id":"might","name":"Might","type":"skill","img":"icons/svg/hammer.svg","system":{"skillType":"general","attribute":"power","description":"Brute force—breaking, lifting, forcing, or carrying massive loads; overpowering physical obstacles."}}
+{"_id":"intimidation","name":"Intimidation","type":"skill","img":"icons/svg/skull.svg","system":{"skillType":"general","attribute":"power","description":"Coercing or influencing others through physical presence, threat, or sheer dominance."}}
