@@ -1,1 +1,5 @@
-
+{"_id":"healing","name":"Healing","type":"skill","img":"icons/svg/sun.svg","system":{"skillType":"general","attribute":"recovery","description":"Treating wounds, curing disease, and stabilizing the injured using medical, herbal, or magical means."}}
+{"_id":"tracking","name":"Tracking","type":"skill","img":"icons/svg/compass.svg","system":{"skillType":"general","attribute":"recovery","description":"Following tracks, trails, or residual traces across terrain or through lingering energies."}}
+{"_id":"survival","name":"Survival","type":"skill","img":"icons/svg/shield.svg","system":{"skillType":"general","attribute":"recovery","description":"Finding food and shelter, navigating wilds, enduring harsh weather, and resisting exposure."}}
+{"_id":"animal-handling","name":"Animal Handling","type":"skill","img":"icons/svg/horse.svg","system":{"skillType":"general","attribute":"recovery","description":"Calming, training, and directing animals or magical beasts through empathy and control."}}
+{"_id":"meditation","name":"Meditation","type":"skill","img":"icons/svg/mystery-man.svg","system":{"skillType":"general","attribute":"recovery","description":"Restoring mana or stamina through focused breathing and mental discipline; rebalancing mind and body for recovery."}}
