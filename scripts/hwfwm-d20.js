@@ -2,7 +2,8 @@
 // HWFWM-D20 SYSTEM | Foundry VTT v13
 // ============================================================================
 
-const { DocumentSheetV2 } = foundry.applications.api;
+// Pull both API symbols from v13's namespace
+const { DocumentSheetV2, HandlebarsApplicationMixin } = foundry.applications.api;
 
 /**
  * PC Actor Sheet (ApplicationV2 + Handlebars)
@@ -23,9 +24,7 @@ class HWFWMPCSheet extends HandlebarsApplicationMixin(DocumentSheetV2) {
 
   /** The main template for this sheet */
   static PARTS = {
-    form: {
-      template: "systems/hwfwm-d20/templates/actors/actor-sheet.hbs"
-    }
+    form: { template: "systems/hwfwm-d20/templates/actors/actor-sheet.hbs" }
   };
 
   get title() {
@@ -50,13 +49,9 @@ class HWFWMPCSheet extends HandlebarsApplicationMixin(DocumentSheetV2) {
     return context;
   }
 
-  /**
-   * Wire any listeners you want (kept minimal here).
-   */
   activateListeners(html) {
     super.activateListeners(html);
-    // Example future hook:
-    // html.find("[data-action='roll-attr']").on("click", this._onRollAttr.bind(this));
+    // future hooks here
   }
 }
 
@@ -66,7 +61,6 @@ class HWFWMPCSheet extends HandlebarsApplicationMixin(DocumentSheetV2) {
 Hooks.once("init", () => {
   console.log("HWFWM-D20 | init");
 
-  // Register our sheet for only the "pc" type and make it default for that type.
   Actors.registerSheet("hwfwm-d20", HWFWMPCSheet, {
     types: ["pc"],
     makeDefault: true
@@ -74,7 +68,7 @@ Hooks.once("init", () => {
 });
 
 /* ----------------------------------------------------------------------------
- * Ready (for quick sanity logging)
+ * Ready
  * ------------------------------------------------------------------------- */
 Hooks.once("ready", () => {
   console.log("HWFWM-D20 | ready");
