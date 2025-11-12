@@ -210,46 +210,65 @@
     </div>
 
     <!-- Other tabs can be filled later -->
-   <!-- ===================== TAB: SKILLS ===================== -->
+  <!-- ===================== TAB: SKILLS ===================== -->
 <div class="tab skills" data-group="primary" data-tab="skills">
   <section class="card">
-    <div class="flexrow" style="justify-content:space-between; align-items:center;">
-      <h2>Skills</h2>
-      <button type="button" class="item-create" data-type="skill">+ Add Skill</button>
-    </div>
+    <h2>Skills</h2>
 
-    <table class="skills-table">
-      <thead>
-        <tr>
-          <th style="width:18%">Name</th>
-          <th style="width:12%">Category</th>
-          <th style="width:12%">Attribute</th>
-          <th style="width:10%">Rank</th>
-          <th style="width:8%">Mod</th>
-          <th style="width:18%">Specialization</th>
-          <th style="width:8%">Trained</th>
-          <th style="width:10%">Edit</th>
-          <th style="width:4%">🗑️</th>
-        </tr>
-      </thead>
-      <tbody>
-        {{#each itemTypes.skill as |skill|}}
-          <tr class="item" data-item-id="{{skill._id}}">
-            <td><a class="item-edit">{{skill.name}}</a></td>
-            <td>{{skill.system.category}}</td>
-            <td>{{skill.system.associatedAttribute}}</td>
-            <td>{{skill.system.rank}}</td>
-            <td>{{skill.system.mod}}</td>
-            <td>{{skill.system.specialization}}</td>
-            <td><input type="checkbox" disabled {{#if skill.system.trained}}checked{{/if}} /></td>
-            <td><button type="button" class="item-edit">Open</button></td>
-            <td><button type="button" class="item-delete" aria-label="Delete">&times;</button></td>
-          </tr>
-        {{/each}}
-      </tbody>
-    </table>
+    {{!-- We’ll render groups in this fixed order --}}
+    {{#each (array "Power" "Speed" "Spirit" "Recovery" "Crafting" "Knowledge" "Combat") as |cat|}}
+      <div class="skill-group" style="margin-top:12px;">
+        <div class="flexrow" style="justify-content:space-between; align-items:center;">
+          <h3 style="margin:0;">{{cat}}</h3>
+          <button type="button"
+                  class="item-create"
+                  data-type="skill"
+                  data-category="{{cat}}"
+                  data-attr="{{#if (eq cat "Power")}}power{{else if (eq cat "Speed")}}speed{{else if (eq cat "Spirit")}}spirit{{else if (eq cat "Recovery")}}recovery{{else if (eq cat "Knowledge")}}spirit{{else}}power{{/if}}">
+            + Add {{cat}} Skill
+          </button>
+        </div>
+
+        <table class="skills-table" style="margin-top:6px;">
+          <thead>
+            <tr>
+              <th style="width:22%">Name</th>
+              <th style="width:12%">Attribute</th>
+              <th style="width:10%">Rank</th>
+              <th style="width:8%">Mod</th>
+              <th style="width:28%">Specialization</th>
+              <th style="width:10%">Trained</th>
+              <th style="width:6%">Edit</th>
+              <th style="width:4%">🗑️</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each ../itemTypes.skill as |skill|}}
+              {{#if (eq skill.system.category cat)}}
+                <tr class="item" data-item-id="{{skill._id}}">
+                  <td><a class="item-edit">{{skill.name}}</a></td>
+                  <td>{{skill.system.associatedAttribute}}</td>
+                  <td>{{skill.system.rank}}</td>
+                  <td>{{skill.system.mod}}</td>
+                  <td>{{skill.system.specialization}}</td>
+                  <td>
+                    <input class="skill-trained"
+                           type="checkbox"
+                           data-item-id="{{skill._id}}"
+                           {{#if skill.system.trained}}checked{{/if}} />
+                  </td>
+                  <td><button type="button" class="item-edit">Open</button></td>
+                  <td><button type="button" class="item-delete" aria-label="Delete">&times;</button></td>
+                </tr>
+              {{/if}}
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+    {{/each}}
   </section>
 </div>
+
 
     <div class="tab abilities" data-group="primary" data-tab="abilities">
       <section class="card"><h2>Abilities</h2><p>Coming soon.</p></section>
@@ -269,5 +288,6 @@
     </div>
   </section>
 </form>
+
 
 
