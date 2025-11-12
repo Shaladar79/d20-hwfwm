@@ -106,6 +106,16 @@ Hooks.once("init", () => {
   Handlebars.registerHelper("array", (...args) => args.slice(0, -1)); // Allows (array "a" "b" "c") in HBS
   Handlebars.registerHelper("eq", (a, b) => a === b); // Simple equality check
 
+  // Sort an array of objects by a given property (e.g., name)
+Handlebars.registerHelper("sortBy", (array, key) => {
+  if (!Array.isArray(array)) return [];
+  return [...array].sort((a, b) => {
+    const aVal = getProperty(a, key) ?? "";
+    const bVal = getProperty(b, key) ?? "";
+    return aVal.toString().localeCompare(bVal.toString(), undefined, { sensitivity: "base" });
+  });
+});
+
   // Actor sheet (PC)
   Actors.unregisterSheet("core", ActorSheet);
   Actors.registerSheet("hwfwm-d20", HWFWMPCSheet, { makeDefault: true, types: ["pc"] });
@@ -120,4 +130,5 @@ Hooks.once("init", () => {
 Hooks.once("ready", () => {
   console.log("HWFWM-D20 | ready");
 });
+
 
