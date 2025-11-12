@@ -41,23 +41,43 @@ class HWFWMPCSheet extends ActorSheet {
     // Show Willpower only for Gold/Diamond
     data.showWillpower = rank.includes("gold") || rank.includes("diamond");
 
-    // Ensure essences structure exists and has 5 slots each (view-only; does not persist)
+    // Normalize essences + abilities (accept Array or Object) for view
     const essenceKeys = ["e1", "e2", "e3", "confluence"];
     sys.essences = sys.essences || {};
     for (const key of essenceKeys) {
-      const e = sys.essences[key] || {};
-      e.itemId = e.itemId || "";
-      e.attribute = e.attribute || "";
-      e.abilities = Array.isArray(e.abilities) ? e.abilities : [];
-      for (let i = 0; i < 5; i++) {
-        e.abilities[i] = e.abilities[i] || {
-          itemId: "",
-          score: 0,
-          isActive: false,
-          isAttack: false
-        };
+      const raw = sys.essences[key] || {};
+
+      // abilities may be an array OR an object { "0": {...}, "1": {...} }
+      let abilitiesRaw = raw.abilities ?? [];
+      let abilitiesArr = [];
+
+      if (Array.isArray(abilitiesRaw)) {
+        abilitiesArr = abilitiesRaw;
+      } else if (abilitiesRaw && typeof abilitiesRaw === "object") {
+        // Convert numeric keys into array positions
+        for (const [k, v] of Object.entries(abilitiesRaw)) {
+          const idx = Number(k);
+          if (!Number.isNaN(idx)) abilitiesArr[idx] = v;
+        }
       }
-      sys.essences[key] = e;
+
+      // Ensure 5 slots with defaults
+      for (let i = 0; i < 5; i++) {
+        abilitiesArr[i] =
+          abilitiesArr[i] || {
+            itemId: "",
+            score: 0,
+            isActive: false,
+            isAttack: false
+          };
+      }
+
+      const e = {
+        ...raw,
+        itemId: raw.itemId || "",
+        attribute: raw.attribute || "",
+        abilities: abilitiesArr
+      };
 
       // Resolve essence item name/img for display
       if (e.itemId) {
@@ -71,7 +91,7 @@ class HWFWMPCSheet extends ActorSheet {
       // Resolve each ability slot's name/img for display
       for (let i = 0; i < e.abilities.length; i++) {
         const slot = e.abilities[i];
-        if (slot.itemId) {
+        if (slot?.itemId) {
           const aItem = this.actor.items.get(slot.itemId);
           if (aItem) {
             slot.name = aItem.name;
@@ -79,7 +99,10 @@ class HWFWMPCSheet extends ActorSheet {
           }
         }
       }
+
+      sys.essences[key] = e;
     }
+
     data.system = sys;
 
     // Expose itemTypes for easy tab rendering (skills, etc.)
