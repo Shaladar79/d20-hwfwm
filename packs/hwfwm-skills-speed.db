@@ -1,1 +1,6 @@
-
+{"_id":"acrobatics","name":"Acrobatics","type":"skill","img":"icons/svg/wing.svg","system":{"skillType":"general","attribute":"speed","description":"Balancing, tumbling, flips, vaulting, and parkour-style movement. Used for most agility-based movement or physical grace challenges."}}
+{"_id":"stealth","name":"Stealth","type":"skill","img":"icons/svg/conditional.svg","system":{"skillType":"general","attribute":"speed","description":"Moving silently, hiding effectively, and avoiding detection by sight or sound. Includes dodging awareness and quick evasive movement."}}
+{"_id":"sleight-of-hand","name":"Sleight of Hand","type":"skill","img":"icons/svg/hand.svg","system":{"skillType":"general","attribute":"speed","description":"Fine manual control such as pickpocketing, palming, or delicate work requiring steady hands."}}
+{"_id":"lockpicking","name":"Lockpicking","type":"skill","img":"icons/svg/padlock.svg","system":{"skillType":"general","attribute":"speed","description":"Bypassing locks, disabling traps, or cracking mechanical security devices."}}
+{"_id":"piloting","name":"Piloting","type":"skill","img":"icons/svg/compass.svg","system":{"skillType":"general","attribute":"speed","description":"Operating vehicles, airships, or other craft that rely on reflexes and spatial control."}}
+{"_id":"riding","name":"Riding","type":"skill","img":"icons/svg/horse.svg","system":{"skillType":"general","attribute":"speed","description":"Controlling and maneuvering mounts of any kind, including animals, magical beasts, or summoned creatures."}}
