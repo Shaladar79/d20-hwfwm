@@ -1,59 +1,182 @@
-<form class="hwfwm sheet item" autocomplete="off">
-  <header class="sheet-header flexrow" style="gap:12px;">
-    <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}" style="width:64px;height:64px;border:3px solid #000;border-radius:8px;object-fit:cover;" />
-    <div class="header-fields" style="flex:1;">
-      <input name="name" type="text" value="{{item.name}}" placeholder="Skill Name" style="width:100%;font-size:18px;font-weight:700;border:3px solid #000;border-radius:8px;padding:6px 8px;" />
-      <div style="display:flex; gap:12px; margin-top:8px;">
-        <div style="flex:1;">
-          <label>Category</label>
-          <select name="system.category" style="width:100%;">
-            <option value="">(select)</option>
-            <option {{#if (eq system.category "Power")}}selected{{/if}}>Power</option>
-            <option {{#if (eq system.category "Speed")}}selected{{/if}}>Speed</option>
-            <option {{#if (eq system.category "Spirit")}}selected{{/if}}>Spirit</option>
-            <option {{#if (eq system.category "Recovery")}}selected{{/if}}>Recovery</option>
-            <option {{#if (eq system.category "Crafting")}}selected{{/if}}>Crafting</option>
-            <option {{#if (eq system.category "Knowledge")}}selected{{/if}}>Knowledge</option>
-            <option {{#if (eq system.category "Combat")}}selected{{/if}}>Combat</option>
-          </select>
+{{!-- =========================================================================
+     HWFWM-D20 | Generic Item Sheet (fallback)
+     - Used for all item types EXCEPT "skill" (which has its own skill-sheet.hbs)
+     - Displays common/base fields, then type-specific sections for weapon/armor.
+     - Keep it simple and robust; other item types will at least have Base + Description.
+   ========================================================================= --}}
+
+<form class="hwfwm item-sheet" autocomplete="off">
+  <header class="sheet-header">
+    <div class="header-grid">
+      <div class="name-block">
+        <h1 class="item-name">
+          <input name="name" type="text" value="{{item.name}}" placeholder="Item Name"/>
+        </h1>
+        <div class="subline">
+          <span class="pill">Type: {{item.type}}</span>
         </div>
-        <div style="flex:1;">
-          <label>Associated Attribute</label>
-          <select name="system.associatedAttribute" style="width:100%;">
-            <option value="">(select)</option>
-            <option {{#if (eq system.associatedAttribute "power")}}selected{{/if}} value="power">Power</option>
-            <option {{#if (eq system.associatedAttribute "speed")}}selected{{/if}} value="speed">Speed</option>
-            <option {{#if (eq system.associatedAttribute "spirit")}}selected{{/if}} value="spirit">Spirit</option>
-            <option {{#if (eq system.associatedAttribute "recovery")}}selected{{/if}} value="recovery">Recovery</option>
-          </select>
-        </div>
-        <div style="width:120px;">
-          <label>Rank</label>
-          <input type="text" name="system.rank" value="{{system.rank}}" />
-        </div>
-        <div style="width:100px;">
-          <label>Mod</label>
-          <input type="number" name="system.mod" value="{{system.mod}}" />
-        </div>
+      </div>
+      <div class="thumb-block">
+        <img class="item-image" src="{{item.img}}" data-edit="img" title="{{item.name}}" />
       </div>
     </div>
   </header>
 
-  <section class="sheet-body" style="background:#fff;border:3px solid #000;border-radius:10px;padding:10px;margin-top:12px;">
-    <div style="display:flex; gap:12px; align-items:flex-end;">
-      <div style="flex:1;">
-        <label>Specialization</label>
-        <input type="text" name="system.specialization" value="{{system.specialization}}" />
+  <nav class="sheet-tabs tabs" data-group="primary">
+    <a class="item" data-tab="base">Base</a>
+    {{#if (eq item.type "weapon")}}<a class="item" data-tab="weapon">Weapon</a>{{/if}}
+    {{#if (eq item.type "armor")}}<a class="item" data-tab="armor">Armor</a>{{/if}}
+    <a class="item" data-tab="description">Description</a>
+    <a class="item" data-tab="advanced">Advanced</a>
+  </nav>
+
+  <section class="sheet-content">
+    {{!-- ========================== BASE TAB ========================== --}}
+    <div class="tab" data-group="primary" data-tab="base">
+      <div class="form-grid two-col">
+        <div class="form-group">
+          <label>Source</label>
+          <input type="text" name="system.source" value="{{system.source}}" placeholder="Book / Module / Author"/>
+        </div>
+
+        <div class="form-group">
+          <label>Rarity</label>
+          <input type="text" name="system.rarity" value="{{system.rarity}}" placeholder="Common / Uncommon / Rare..."/>
+        </div>
+
+        <div class="form-group">
+          <label>Rank</label>
+          <input type="text" name="system.rank" value="{{system.rank}}" placeholder="e.g., Iron / Bronze / Silver..."/>
+        </div>
+
+        <div class="form-group">
+          <label>Cost</label>
+          <input type="number" step="0.01" name="system.cost" value="{{system.cost}}" placeholder="0"/>
+        </div>
+
+        <div class="form-group">
+          <label>Weight</label>
+          <input type="number" step="0.01" name="system.weight" value="{{system.weight}}" placeholder="0"/>
+        </div>
       </div>
-      <label style="display:flex; gap:6px; align-items:center; margin-bottom:2px;">
-        <input type="checkbox" name="system.trained" {{#if system.trained}}checked{{/if}} />
-        Trained
-      </label>
     </div>
 
-    <div style="margin-top:10px;">
-      <label>Description</label>
-      <textarea name="system.description" rows="6" style="width:100%;"></textarea>
+    {{!-- ======================== WEAPON TAB ========================= --}}
+    {{#if (eq item.type "weapon")}}
+    <div class="tab" data-group="primary" data-tab="weapon">
+      <div class="form-grid two-col">
+        <div class="form-group">
+          <label>Damage</label>
+          <input type="text" name="system.damage" value="{{system.damage}}" placeholder="e.g., 1d6"/>
+        </div>
+
+        <div class="form-group">
+          <label>Governing Attribute</label>
+          <input type="text" name="system.ability" value="{{system.ability}}" placeholder="power | speed | spirit | recovery"/>
+        </div>
+
+        <div class="form-group span-2">
+          <label>Range</label>
+          <input type="text" name="system.range" value="{{system.range}}" placeholder="e.g., 30/120 or melee"/>
+        </div>
+
+        <div class="form-group span-2">
+          <label>Properties (comma-separated)</label>
+          <input type="text" name="system.propertiesCSV" value="{{join system.properties ", "}}"
+                 data-d20-props="weapon"
+                 placeholder="e.g., light, two-handed, finesse"/>
+          {{!-- NOTE: If you want auto-sync CSV <-> array in code, hook this in your sheet class. --}}
+        </div>
+      </div>
+    </div>
+    {{/if}}
+
+    {{!-- ========================= ARMOR TAB ========================= --}}
+    {{#if (eq item.type "armor")}}
+    <div class="tab" data-group="primary" data-tab="armor">
+      <div class="form-grid two-col">
+        <div class="form-group">
+          <label>Defense</label>
+          <input type="number" name="system.defense" value="{{system.defense}}" />
+        </div>
+
+        <div class="form-group">
+          <label>Defense Bonus</label>
+          <input type="number" name="system.defenseBonus" value="{{system.defenseBonus}}" />
+        </div>
+
+        <div class="form-group">
+          <label>Armor Points</label>
+          <input type="number" name="system.armorPoints" value="{{system.armorPoints}}" />
+        </div>
+
+        <div class="form-group">
+          <label>Penalty</label>
+          <input type="number" name="system.penalty" value="{{system.penalty}}" />
+        </div>
+
+        <div class="form-group checkbox">
+          <label>Depleted?</label>
+          <input type="checkbox" name="system.armorDepleted" {{checked system.armorDepleted}} />
+        </div>
+
+        <div class="form-group span-2">
+          <label>Properties (comma-separated)</label>
+          <input type="text" name="system.propertiesCSV" value="{{join system.properties ", "}}"
+                 data-d20-props="armor"
+                 placeholder="e.g., heavy, shield, magical"/>
+        </div>
+      </div>
+    </div>
+    {{/if}}
+
+    {{!-- ======================= DESCRIPTION TAB ===================== --}}
+    <div class="tab" data-group="primary" data-tab="description">
+      <div class="form-group">
+        <label>Description</label>
+        <textarea name="system.description" rows="10" placeholder="Describe the item...">{{system.description}}</textarea>
+      </div>
+    </div>
+
+    {{!-- ========================= ADVANCED TAB ====================== --}}
+    <div class="tab" data-group="primary" data-tab="advanced">
+      <p class="muted">Advanced data (debug view). Useful while developing schemas.</p>
+      <pre class="code-block">{{json system}}</pre>
     </div>
   </section>
 </form>
+
+{{!-- ============================== STYLES ============================== --}}
+<style>
+  .hwfwm.item-sheet .header-grid {
+    display: grid;
+    grid-template-columns: 1fr 96px;
+    gap: 12px;
+    align-items: center;
+  }
+  .hwfwm.item-sheet .item-image {
+    width: 96px; height: 96px; border: 3px solid #000; border-radius: 10px; object-fit: cover;
+    background: #fff;
+  }
+  .hwfwm.item-sheet .subline .pill {
+    display: inline-block; padding: 2px 8px; border: 2px solid #000; border-radius: 8px; background: #fff;
+    font-size: 12px; line-height: 1;
+  }
+  .hwfwm.item-sheet .form-grid.two-col {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+  }
+  .hwfwm.item-sheet .form-group { display: flex; flex-direction: column; gap: 6px; }
+  .hwfwm.item-sheet .form-group.checkbox { flex-direction: row; align-items: center; gap: 8px; }
+  .hwfwm.item-sheet .form-group span-2,
+  .hwfwm.item-sheet .form-group.span-2 { grid-column: span 2; }
+  .hwfwm.item-sheet input[type="text"],
+  .hwfwm.item-sheet input[type="number"],
+  .hwfwm.item-sheet textarea {
+    border: 3px solid #000; border-radius: 10px; padding: 6px 8px; background: #fff; font: inherit;
+  }
+  .hwfwm.item-sheet textarea { min-height: 140px; }
+  .hwfwm.item-sheet .code-block {
+    border: 3px dashed #000; border-radius: 10px; padding: 10px; background: #f6f6f6; max-height: 320px; overflow: auto;
+  }
+</style>
+
