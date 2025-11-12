@@ -102,6 +102,10 @@ class HWFWMItemSheet extends ItemSheet {
 Hooks.once("init", () => {
   console.log("HWFWM-D20 | init");
 
+   // Helpers for Handlebars templates
+  Handlebars.registerHelper("array", (...args) => args.slice(0, -1)); // Allows (array "a" "b" "c") in HBS
+  Handlebars.registerHelper("eq", (a, b) => a === b); // Simple equality check
+
   // Actor sheet (PC)
   Actors.unregisterSheet("core", ActorSheet);
   Actors.registerSheet("hwfwm-d20", HWFWMPCSheet, { makeDefault: true, types: ["pc"] });
@@ -116,3 +120,4 @@ Hooks.once("init", () => {
 Hooks.once("ready", () => {
   console.log("HWFWM-D20 | ready");
 });
+
