@@ -1,7 +1,7 @@
 /* =====================================================
-   HWFWM v13 | PC Sheet Styling (Compact, 2-Column Stats)
-   Clean white cards, bold black borders, gradient bg
-   Narrow centered sheet with full vertical scroll
+   HWFWM v13 | PC Sheet Styling (Compact, Modern Layout)
+   White cards, bold borders, gradient background
+   Now with 2×2 Attribute Grid
    ===================================================== */
 
 /* ----- Root Layout ----- */
@@ -15,19 +15,17 @@
   background-attachment: fixed;
   background-size: cover;
 
-  /* Center the whole sheet and keep it narrower */
   max-width: 940px;
   width: min(940px, 92vw);
   margin: 0 auto;
 }
 
-/* Remove extra padding from the window content */
 .hwfwm.sheet .window-content {
   background: transparent;
   padding: 0;
 }
 
-/* White panels with strong borders */
+/* Panels */
 .hwfwm.sheet .sheet-body,
 .hwfwm.sheet .sheet-header {
   background: #fff;
@@ -50,19 +48,21 @@
   width: 110px; height: 110px;
   border: var(--border);
   border-radius: var(--radius);
-  object-fit: cover;
   background: #fff;
+  object-fit: cover;
 }
 
 .hwfwm.sheet .header-fields { display: grid; gap: 8px; }
 
 .hwfwm.sheet .header-fields .name-row input {
   width: 100%;
-  font-size: 20px; font-weight: 700;
+  font-size: 20px;
+  font-weight: 700;
   border: var(--border);
   border-radius: var(--radius);
   padding: 7px 9px;
-  background: #fff; color: #000;
+  background: #fff;
+  color: #000;
 }
 
 .hwfwm.sheet .meta-row {
@@ -70,15 +70,24 @@
   grid-template-columns: repeat(4, 1fr);
   gap: var(--gap);
 }
-.hwfwm.sheet .meta-row .field { display: grid; gap: 4px; }
+
+.hwfwm.sheet .meta-row .field {
+  display: grid;
+  gap: 4px;
+}
+
 .hwfwm.sheet .meta-row .field input {
-  border: var(--border); border-radius: var(--radius);
-  padding: 5px 7px; background: #fff; color: #000;
+  border: var(--border);
+  border-radius: var(--radius);
+  padding: 5px 7px;
+  background: #fff;
+  color: #000;
 }
 
 /* ----- Tabs Bar ----- */
 .hwfwm.sheet .sheet-tabs {
-  display: flex; gap: var(--gap);
+  display: flex;
+  gap: var(--gap);
   padding: 8px var(--pad);
   background: #fff;
   border-left: var(--border);
@@ -87,11 +96,14 @@
   border-radius: 0 0 var(--radius) var(--radius);
   justify-content: center;
 }
+
 .hwfwm.sheet .sheet-tabs .item {
   padding: 6px 12px;
   border: var(--border);
   border-radius: var(--radius);
-  background: #fff; font-weight: 600; cursor: pointer;
+  background: #fff;
+  font-weight: 600;
+  cursor: pointer;
 }
 
 /* ----- Content Area (scrollable) ----- */
@@ -104,15 +116,15 @@
   width: 100%;
   box-sizing: border-box;
 
-  /* Reliable vertical scroll; extra bottom padding so nothing clips */
   max-height: calc(100vh - 210px);
   overflow-y: auto;
   padding-bottom: 24px;
 }
+
 .hwfwm.sheet .tab { display: none; }
 .hwfwm.sheet .tab.active { display: block; }
 
-/* Section card appearance */
+/* Section cards */
 .hwfwm.sheet .card {
   background: #fff;
   border: var(--border);
@@ -122,48 +134,41 @@
 }
 
 /* =====================================================
-   STATS TAB LAYOUT: 2 columns
-   Left column:  Attributes (narrow, stacked)
-   Right column: Resources + Defenses
+   STATS TAB — 2×2 Attribute Grid
    ===================================================== */
+
 .hwfwm.sheet .stats .flexrow {
-  display: grid;
-  grid-template-columns: 520px 1fr;   /* left (attributes) / right (resources) */
-  gap: var(--gap);
-  align-items: start;
-}
-
-/* ---------- Attributes (narrower, inline rank, smaller fields) ---------- */
-
-/* Left column is a single vertical list of attribute cards */
-.hwfwm.sheet .attributes.card {
-  margin: 0;
-}
-
-.hwfwm.sheet .attributes-grid {
   display: flex;
   flex-direction: column;
   gap: var(--gap);
 }
 
-/* Each attribute card fits the left column width */
-.hwfwm.sheet .attribute {
-  width: 100%;                 /* fill the left column width (520px) */
-  border: var(--border);
-  border-radius: var(--radius);
-  padding: 8px;                /* tighter padding */
-  background: #fff;
+/* ATTRIBUTES SECTION */
+.hwfwm.sheet .attributes.card { margin: 0; }
 
+/* 2×2 grid for Power, Speed, Spirit, Recovery */
+.hwfwm.sheet .attributes-grid {
   display: grid;
-  grid-template-columns: 90px auto;  /* compact label column */
-  gap: 4px 8px;                       /* less space between label & field */
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--gap);
 }
 
-/* Header row with name (left) and Rank (right) */
+/* Attribute box */
+.hwfwm.sheet .attribute {
+  background: #fff;
+  border: var(--border);
+  border-radius: var(--radius);
+  padding: 8px;
+
+  display: grid;
+  grid-template-columns: 90px auto;
+  gap: 4px 8px;
+}
+
 .hwfwm.sheet .attribute .attr-header {
   grid-column: 1 / -1;
   display: grid;
-  grid-template-columns: 1fr auto 100px; /* name | "Rank" | input */
+  grid-template-columns: 1fr auto 100px;
   align-items: center;
   margin-bottom: 2px;
 }
@@ -171,91 +176,67 @@
 .hwfwm.sheet .attribute .attr-label {
   font-size: 16px;
   font-weight: 700;
-  margin: 0;
 }
 
-.hwfwm.sheet .attribute .mini {
-  font-size: 11px;
-  opacity: 0.85;
-  margin-right: 6px;
-}
-
-.hwfwm.sheet .attribute .attr-rank {
+.hwfwm.sheet .attribute input {
   border: var(--border);
   border-radius: var(--radius);
   padding: 4px 6px;
   height: 26px;
-  width: 100%;
+  background: #fff;
+  color: #000;
+  max-width: 260px;
 }
 
-/* Compact labels & inputs; inputs don’t stretch full width */
-.hwfwm.sheet .attribute label {
-  font-size: 11px;
-  align-self: center;
-  margin: 0;
-}
+/* =====================================================
+   STATUS SECTION (formerly Resources)
+   ===================================================== */
 
-.hwfwm.sheet .attribute input[type="number"],
-.hwfwm.sheet .attribute input[type="text"] {
-  border: var(--border);
-  border-radius: var(--radius);
-  padding: 4px 6px;
-  height: 26px;
-  background: #fff; color: #000;
-  max-width: 260px;            /* <- keep fields modest in width */
-  justify-self: start;         /* align to the left, not full stretch */
-}
+.hwfwm.sheet .status.card { margin-top: var(--gap); }
 
-/* ---------- Resources & Defenses on the right ---------- */
-.hwfwm.sheet .resources-and-defenses.card {
-  margin: 0;                   /* aligns with attributes card */
-}
-
-/* Make resource rows full-width of the right column */
-.hwfwm.sheet .resources-grid {
+.hwfwm.sheet .status-grid {
   display: grid;
-  grid-template-columns: 1fr;  /* single column rows */
+  grid-template-columns: 1fr;
   gap: var(--gap);
 }
 
-/* Resource / defense rows */
-.hwfwm.sheet .res,
-.hwfwm.sheet .def {
+/* Row style */
+.hwfwm.sheet .status-row {
   background: #fff;
   border: var(--border);
   border-radius: var(--radius);
   padding: 7px;
   display: grid;
   grid-template-columns: auto 1fr auto 1fr;
-  align-items: center;
   gap: 6px 8px;
+  align-items: center;
 }
-.hwfwm.sheet .res label,
-.hwfwm.sheet .def label { font-weight: 700; }
 
-.hwfwm.sheet .res input[type="number"],
-.hwfwm.sheet .def input[type="number"] {
+.hwfwm.sheet .status-row label {
+  font-weight: 700;
+}
+
+.hwfwm.sheet .status-row input {
   width: 100%;
   border: var(--border);
   border-radius: var(--radius);
   padding: 5px 7px;
-  background: #fff; color: #000;
+  background: #fff;
+  color: #000;
 }
 
-/* Defenses grid: two lines stacked */
-.hwfwm.sheet .defenses-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--gap);
-}
+/* =====================================================
+   Scrollbar Style
+   ===================================================== */
 
-/* ----- Optional nicer scrollbar ----- */
 .hwfwm.sheet .sheet-content::-webkit-scrollbar { width: 10px; }
 .hwfwm.sheet .sheet-content::-webkit-scrollbar-track {
-  background: #f0f0f0; border-left: 1px solid #ccc;
+  background: #f0f0f0;
+  border-left: 1px solid #ccc;
 }
 .hwfwm.sheet .sheet-content::-webkit-scrollbar-thumb {
-  background: #888; border-radius: 5px;
+  background: #888;
+  border-radius: 5px;
 }
 .hwfwm.sheet .sheet-content::-webkit-scrollbar-thumb:hover {
   background: #555;
@@ -267,5 +248,3 @@
   margin: 0 0 8px 0;
   color: #000;
 }
-
-
