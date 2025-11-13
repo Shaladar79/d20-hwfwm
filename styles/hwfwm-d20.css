@@ -189,38 +189,64 @@
 }
 
 /* =====================================================
-   STATUS SECTION (formerly Resources)
+   STATUS SECTION (Resources + Defenses side-by-side)
    ===================================================== */
 
-.hwfwm.sheet .status.card { margin-top: var(--gap); }
+.hwfwm.sheet .status.card {
+  margin-top: var(--gap);
+}
 
-.hwfwm.sheet .status-grid {
+/* Two big columns like your sketch */
+.hwfwm.sheet .status-columns {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: 1.6fr 1.2fr; /* Resources | Defenses */
   gap: var(--gap);
 }
 
-/* Row style */
-.hwfwm.sheet .status-row {
-  background: #fff;
+/* Each column panel */
+.hwfwm.sheet .status-panel {
   border: var(--border);
   border-radius: var(--radius);
-  padding: 7px;
+  padding: 8px;
+  background: #fff;
+}
+
+.hwfwm.sheet .status-panel h3 {
+  margin: 0 0 6px 0;
+}
+
+/* Vertical list inside each panel */
+.hwfwm.sheet .status-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* Row with label + value [+ "/" + max] */
+.hwfwm.sheet .status-row {
   display: grid;
-  grid-template-columns: auto 1fr auto 1fr;
-  gap: 6px 8px;
+  grid-template-columns: auto 1fr auto 1fr; /* label | val | / | max */
+  gap: 4px 6px;
   align-items: center;
+}
+
+.hwfwm.sheet .status-row.single {
+  grid-template-columns: auto 1fr; /* label | value */
 }
 
 .hwfwm.sheet .status-row label {
   font-weight: 700;
 }
 
-.hwfwm.sheet .status-row input {
+.hwfwm.sheet .status-row span {
+  text-align: center;
+}
+
+.hwfwm.sheet .status-row input[type="number"] {
   width: 100%;
   border: var(--border);
   border-radius: var(--radius);
-  padding: 5px 7px;
+  padding: 4px 6px;
   background: #fff;
   color: #000;
 }
@@ -248,3 +274,4 @@
   margin: 0 0 8px 0;
   color: #000;
 }
+
