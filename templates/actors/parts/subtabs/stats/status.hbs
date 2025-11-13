@@ -1,124 +1,146 @@
-<section class="card status">
+{{!-- templates/actors/parts/subtabs/stats/status.hbs --}}
+
+<section class="card">
   <h2>Status</h2>
 
-  <div class="status-columns">
-    {{!-- ================= ROW 1, LEFT: RESOURCES ================= --}}
-    <section class="status-panel">
-      <h3>Resources</h3>
-      <div class="status-grid">
+  <div class="status-grid">
+
+    {{!-- ================= LEFT COLUMN ================= --}}
+    <div class="status-column">
+
+      <div class="status-section">
+        <h3>Resources</h3>
 
         <div class="status-row">
           <label>Life Force</label>
           <input type="number" name="system.resources.lifeforce.value" value="{{system.resources.lifeforce.value}}" />
-          <span>/</span>
+          <span class="slash">/</span>
           <input type="number" name="system.resources.lifeforce.max" value="{{system.resources.lifeforce.max}}" />
         </div>
 
         <div class="status-row">
-          <label>Armor</label>
-          <input type="number" name="system.resources.armor.value" value="{{system.resources.armor.value}}" />
-          <span>/</span>
-          <input type="number" name="system.resources.armor.max" value="{{system.resources.armor.max}}" />
-        </div>
-
-        <div class="status-row single">
           <label>Shielding</label>
           <input type="number" name="system.resources.shielding.value" value="{{system.resources.shielding.value}}" />
-        </div>
-
-        <div class="status-row">
-          <label>Mana</label>
-          <input type="number" name="system.resources.mana.value" value="{{system.resources.mana.value}}" />
-          <span>/</span>
-          <input type="number" name="system.resources.mana.max" value="{{system.resources.mana.max}}" />
+          <span class="slash"></span>
+          <span></span>
         </div>
 
         <div class="status-row">
           <label>Stamina</label>
           <input type="number" name="system.resources.stamina.value" value="{{system.resources.stamina.value}}" />
-          <span>/</span>
+          <span class="slash">/</span>
           <input type="number" name="system.resources.stamina.max" value="{{system.resources.stamina.max}}" />
-        </div>
-
-        <div class="status-row">
-          <label>Trauma</label>
-          <input type="number" name="system.resources.trauma.value" value="{{system.resources.trauma.value}}" />
-          <span>/</span>
-          <input type="number" name="system.resources.trauma.max" value="{{system.resources.trauma.max}}" />
         </div>
 
         <div class="status-row">
           <label>Resolve</label>
           <input type="number" name="system.resources.resolve.value" value="{{system.resources.resolve.value}}" />
-          <span>/</span>
+          <span class="slash">/</span>
           <input type="number" name="system.resources.resolve.max" value="{{system.resources.resolve.max}}" />
         </div>
+      </div>
 
+      <div class="status-section">
+        <h3>Affinities</h3>
+        <div class="status-block">
+          {{!-- future affinity tags/lines go here --}}
+        </div>
+      </div>
+
+    </div>
+
+    {{!-- ================= RIGHT COLUMN ================= --}}
+    <div class="status-column">
+
+      <div class="status-section">
+        <h3>Resources</h3>
+
+        <div class="status-row">
+          <label>Armor</label>
+          <input type="number" name="system.resources.armor.value" value="{{system.resources.armor.value}}" />
+          <span class="slash">/</span>
+          <input type="number" name="system.resources.armor.max" value="{{system.resources.armor.max}}" />
+        </div>
+
+        <div class="status-row">
+          <label>Mana</label>
+          <input type="number" name="system.resources.mana.value" value="{{system.resources.mana.value}}" />
+          <span class="slash">/</span>
+          <input type="number" name="system.resources.mana.max" value="{{system.resources.mana.max}}" />
+        </div>
+
+        <div class="status-row">
+          <label>Trauma</label>
+          <input type="number" name="system.resources.trauma.value" value="{{system.resources.trauma.value}}" />
+          <span class="slash">/</span>
+          <input type="number" name="system.resources.trauma.max" value="{{system.resources.trauma.max}}" />
+        </div>
+
+        {{!-- Only show Willpower for Gold / Diamond ranks --}}
         {{#if showWillpower}}
         <div class="status-row">
           <label>Willpower</label>
           <input type="number" name="system.resources.willpower.value" value="{{system.resources.willpower.value}}" />
-          <span>/</span>
+          <span class="slash">/</span>
           <input type="number" name="system.resources.willpower.max" value="{{system.resources.willpower.max}}" />
         </div>
         {{/if}}
-
       </div>
-    </section>
 
-    {{!-- ================= ROW 1, RIGHT: DEFENSES ================= --}}
-    <section class="status-panel">
-      <h3>Defenses</h3>
-      <div class="status-grid">
+      <div class="status-section">
+        <h3>Defenses</h3>
 
-        <div class="status-row single">
+        <div class="status-row">
           <label>Life Force Regen</label>
-          <input type="number" name="system.defenses.lifeforceRegen.value" value="{{system.defenses.lifeforceRegen.value}}" />
+          <input type="number" name="system.defenses.lifeforceRegen" value="{{system.defenses.lifeforceRegen}}" />
+          <span class="slash"></span>
+          <span></span>
         </div>
 
-        <div class="status-row single">
+        <div class="status-row">
           <label>Mana Regen</label>
-          <input type="number" name="system.defenses.manaRegen.value" value="{{system.defenses.manaRegen.value}}" />
+          <input type="number" name="system.defenses.manaRegen" value="{{system.defenses.manaRegen}}" />
+          <span class="slash"></span>
+          <span></span>
         </div>
 
-        <div class="status-row single">
+        <div class="status-row">
           <label>Stamina Regen</label>
-          <input type="number" name="system.defenses.staminaRegen.value" value="{{system.defenses.staminaRegen.value}}" />
+          <input type="number" name="system.defenses.staminaRegen" value="{{system.defenses.staminaRegen}}" />
+          <span class="slash"></span>
+          <span></span>
         </div>
 
-        <div class="status-row single">
+        <div class="status-row">
           <label>Defense</label>
           <input type="number" name="system.defenses.defense.value" value="{{system.defenses.defense.value}}" />
+          <span class="slash"></span>
+          <span></span>
         </div>
 
-        <div class="status-row single">
+        <div class="status-row">
           <label>Reaction</label>
           <input type="number" name="system.defenses.reaction.value" value="{{system.defenses.reaction.value}}" />
+          <span class="slash"></span>
+          <span></span>
         </div>
 
-        <div class="status-row single">
+        <div class="status-row">
           <label>Pace</label>
           <input type="number" name="system.defenses.pace.value" value="{{system.defenses.pace.value}}" />
+          <span class="slash"></span>
+          <span></span>
         </div>
-
       </div>
-    </section>
 
-    {{!-- ================= ROW 2, LEFT: AFFINITIES (placeholder) ================= --}}
-    <section class="status-panel">
-      <h3>Affinities</h3>
-      <div class="status-grid">
-        {{!-- Empty block for now; we’ll wire fields later --}}
+      <div class="status-section">
+        <h3>Resistances</h3>
+        <div class="status-block">
+          {{!-- future resistance entries go here --}}
+        </div>
       </div>
-    </section>
 
-    {{!-- ================= ROW 2, RIGHT: RESISTANCES (placeholder) ================= --}}
-    <section class="status-panel">
-      <h3>Resistances</h3>
-      <div class="status-grid">
-        {{!-- Empty block for now; we’ll wire fields later --}}
-      </div>
-    </section>
+    </div>
 
   </div>
 </section>
