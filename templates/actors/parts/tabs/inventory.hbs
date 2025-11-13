@@ -1,1 +1,21 @@
+<section class="card">
+  <h2>Inventory</h2>
 
+  <nav class="sheet-tabs tabs" data-group="inv">
+    <a class="item" data-tab="weapons">Weapons</a>
+    <a class="item" data-tab="armor">Armor</a>
+    <a class="item" data-tab="gear">Gear</a>
+  </nav>
+
+  <section class="tab-body" style="margin-top:8px;">
+    <div class="tab active" data-group="inv" data-tab="weapons">
+      {{> "systems/hwfwm-d20/templates/partials/subtabs/inventory/weapons.hbs" actor=actor itemTypes=itemTypes }}
+    </div>
+    <div class="tab" data-group="inv" data-tab="armor">
+      {{> "systems/hwfwm-d20/templates/partials/subtabs/inventory/armor.hbs" actor=actor itemTypes=itemTypes }}
+    </div>
+    <div class="tab" data-group="inv" data-tab="gear">
+      {{> "systems/hwfwm-d20/templates/partials/subtabs/inventory/gear.hbs" actor=actor itemTypes=itemTypes }}
+    </div>
+  </section>
+</section>
