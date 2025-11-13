@@ -3,29 +3,28 @@
      Contains 2 subtabs:
        • Attributes
        • Status
+     Actor-sheet.hbs already wraps this in the primary
+     .tab[data-group="primary"][data-tab="stats"], so we do NOT
+     create another .tab wrapper here.
      =========================================================== -->
 
-<div class="tab stats" data-group="primary" data-tab="stats">
+<!-- ===== Subtab Navigation ===== -->
+<nav class="sheet-tabs" data-group="stats">
+  <a class="item" data-tab="attributes">Attributes</a>
+  <a class="item" data-tab="status">Status</a>
+</nav>
 
-  <!-- ===== Subtab Navigation ===== -->
-  <nav class="sheet-tabs" data-group="stats">
-    <a class="item" data-tab="attributes">Attributes</a>
-    <a class="item" data-tab="status">Status</a>
-  </nav>
+<!-- ===== Subtab Content Wrapper ===== -->
+<section class="stats-subtabs">
 
-  <!-- ===== Subtab Content Wrapper ===== -->
-  <section class="stats-subtabs">
+  <!-- ATTRIBUTES SUBTAB -->
+  <div class="tab" data-group="stats" data-tab="attributes">
+    {{> "systems/hwfwm-d20/templates/actors/parts/subtabs/stats/attributes.hbs"}}
+  </div>
 
-    <!-- ATTRIBUTES SUBTAB -->
-    <div class="tab" data-group="stats" data-tab="attributes">
-      {{> "systems/hwfwm-d20/templates/actors/parts/subtabs/stats/attributes.hbs"}}
-    </div>
+  <!-- STATUS SUBTAB -->
+  <div class="tab" data-group="stats" data-tab="status">
+    {{> "systems/hwfwm-d20/templates/actors/parts/subtabs/stats/status.hbs"}}
+  </div>
 
-    <!-- STATUS SUBTAB -->
-    <div class="tab" data-group="stats" data-tab="status">
-      {{> "systems/hwfwm-d20/templates/actors/parts/subtabs/stats/status.hbs"}}
-    </div>
-
-  </section>
-
-</div>
+</section>
