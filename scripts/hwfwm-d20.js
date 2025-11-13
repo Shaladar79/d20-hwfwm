@@ -28,7 +28,6 @@ class HWFWMPCSheet extends ActorSheet {
           initial: "stats"
         }
       ],
-      // Make the whole content area a drop target
       dragDrop: [{ dragSelector: ".item", dropSelector: ".sheet-content" }]
     });
   }
@@ -41,68 +40,64 @@ class HWFWMPCSheet extends ActorSheet {
     // Show Willpower only for Gold/Diamond
     data.showWillpower = rank.includes("gold") || rank.includes("diamond");
 
-    // Normalize essences + abilities (accept Array or Object) for view
+    // ---------- Build a VIEW-ONLY essences structure ----------
+    const essRaw = this.actor.system.essences ?? {};
+    const view = {};
     const essenceKeys = ["e1", "e2", "e3", "confluence"];
-    sys.essences = sys.essences || {};
+
     for (const key of essenceKeys) {
-      const raw = sys.essences[key] || {};
-
-      // abilities may be an array OR an object { "0": {...}, "1": {...} }
-      let abilitiesRaw = raw.abilities ?? [];
-      let abilitiesArr = [];
-
-      if (Array.isArray(abilitiesRaw)) {
-        abilitiesArr = abilitiesRaw;
-      } else if (abilitiesRaw && typeof abilitiesRaw === "object") {
-        // Convert numeric keys into array positions
-        for (const [k, v] of Object.entries(abilitiesRaw)) {
-          const idx = Number(k);
-          if (!Number.isNaN(idx)) abilitiesArr[idx] = v;
-        }
-      }
-
-      // Ensure 5 slots with defaults
-      for (let i = 0; i < 5; i++) {
-        abilitiesArr[i] =
-          abilitiesArr[i] || {
-            itemId: "",
-            score: 0,
-            isActive: false,
-            isAttack: false
-          };
-      }
-
-      const e = {
-        ...raw,
+      const raw = foundry.utils.duplicate(essRaw[key] ?? {});
+      const eView = {
         itemId: raw.itemId || "",
         attribute: raw.attribute || "",
-        abilities: abilitiesArr
+        name: "",
+        img: "",
+        abilities: []
       };
 
-      // Resolve essence item name/img for display
-      if (e.itemId) {
-        const item = this.actor.items.get(e.itemId);
+      // Essence item info
+      if (eView.itemId) {
+        const item = this.actor.items.get(eView.itemId);
         if (item) {
-          e.name = item.name;
-          e.img = item.img;
+          eView.name = item.name;
+          eView.img = item.img;
         }
       }
 
-      // Resolve each ability slot's name/img for display
-      for (let i = 0; i < e.abilities.length; i++) {
-        const slot = e.abilities[i];
-        if (slot?.itemId) {
-          const aItem = this.actor.items.get(slot.itemId);
+      const abilitiesRaw = raw.abilities ?? {};
+      const abilArr = [];
+
+      for (let i = 0; i < 5; i++) {
+        const slotRaw =
+          (Array.isArray(abilitiesRaw)
+            ? abilitiesRaw[i]
+            : abilitiesRaw[i] ?? abilitiesRaw[String(i)]) || {};
+
+        const slotView = {
+          itemId: slotRaw.itemId || "",
+          score: slotRaw.score ?? 0,
+          isActive: !!slotRaw.isActive,
+          isAttack: !!slotRaw.isAttack,
+          name: "",
+          img: ""
+        };
+
+        if (slotView.itemId) {
+          const aItem = this.actor.items.get(slotView.itemId);
           if (aItem) {
-            slot.name = aItem.name;
-            slot.img = aItem.img;
+            slotView.name = aItem.name;
+            slotView.img = aItem.img;
           }
         }
+
+        abilArr[i] = slotView;
       }
 
-      sys.essences[key] = e;
+      eView.abilities = abilArr;
+      view[key] = eView;
     }
 
+    sys.essencesView = view;
     data.system = sys;
 
     // Expose itemTypes for easy tab rendering (skills, etc.)
@@ -116,7 +111,6 @@ class HWFWMPCSheet extends ActorSheet {
   async _onDropItem(event, data) {
     const dropTarget = event.target.closest?.(".essence-drop, .ability-drop");
 
-    // Helper for fromDropData across versions
     const fromDrop =
       Item.implementation?.fromDropData ||
       Item.fromDropData ||
@@ -127,7 +121,7 @@ class HWFWMPCSheet extends ActorSheet {
       const dropped = await fromDrop.call(Item, data);
       if (!dropped) return false;
 
-      // Ensure the dropped doc is embedded on this actor (clone if coming from compendium/world)
+      // Ensure the dropped doc is embedded on this actor
       const ensureEmbedded = async (doc) => {
         if (doc.parent === this.actor) return doc;
         const docData = doc.toObject();
@@ -196,7 +190,6 @@ class HWFWMPCSheet extends ActorSheet {
 
     if (item.type === "skill") {
       const s = foundry.utils.duplicate(item.system ?? {});
-      // Mirror both pairs so sheets & template.json stay happy
       if (s.skillType && !s.category) s.category = s.skillType;
       if (s.attribute && !s.associatedAttribute) s.associatedAttribute = s.attribute;
       if (s.category && !s.skillType) s.skillType = s.category;
@@ -204,7 +197,6 @@ class HWFWMPCSheet extends ActorSheet {
       try {
         await item.update({ system: s }, { diff: false, recursive: false });
       } catch (e) {
-        // Compendium items are read-only; ignore update errors from drops
         console.warn("HWFWM-D20 | Could not normalize dropped skill fields:", e);
       }
     }
@@ -216,7 +208,7 @@ class HWFWMPCSheet extends ActorSheet {
     super.activateListeners(html);
     if (!this.isEditable) return;
 
-    // ---- Create embedded Item (with default category/attribute) ----
+    // ---- Create embedded Item ----
     html.find(".item-create").on("click", async (ev) => {
       const btn = ev.currentTarget;
       const type = btn.dataset.type;
@@ -230,13 +222,10 @@ class HWFWMPCSheet extends ActorSheet {
           name: `New ${category || type}`,
           type,
           system: {
-            // current keys
             skillType: category,
             attribute: attr,
-            // legacy aliases
             category,
             associatedAttribute: attr,
-            // common fields
             rank: "",
             mod: 0,
             specialization: "",
@@ -247,7 +236,7 @@ class HWFWMPCSheet extends ActorSheet {
       ]);
     });
 
-    // ---- Edit embedded Item ----
+    // ---- Edit / Delete embedded Item ----
     html.find(".item-edit").on("click", (ev) => {
       const li = ev.currentTarget.closest("[data-item-id]");
       if (!li) return;
@@ -255,7 +244,6 @@ class HWFWMPCSheet extends ActorSheet {
       if (item) item.sheet.render(true);
     });
 
-    // ---- Delete embedded Item ----
     html.find(".item-delete").on("click", async (ev) => {
       const li = ev.currentTarget.closest("[data-item-id]");
       if (!li) return;
@@ -271,66 +259,7 @@ class HWFWMPCSheet extends ActorSheet {
       await item.update({ "system.trained": cb.checked });
     });
 
-    // ===================== Essence-specific listeners =====================
-
-    // Change bound attribute select
-    html.find(".essence-attr-select").on("change", async (ev) => {
-      ev.preventDefault();
-      ev.stopPropagation();
-
-      const select = ev.currentTarget;
-      const essenceKey = select.dataset.essenceKey;
-      if (!essenceKey) return;
-      const value = select.value || "";
-      await this.actor.update({
-        [`system.essences.${essenceKey}.attribute`]: value
-      });
-    });
-
-    // Change ability score
-    html.find(".ability-score").on("change", async (ev) => {
-      ev.preventDefault();
-      ev.stopPropagation();
-
-      const input = ev.currentTarget;
-      const essenceKey = input.dataset.essenceKey;
-      const slotIndex = input.dataset.slotIndex;
-      if (!essenceKey || slotIndex === undefined) return;
-      const value = Number(input.value) || 0;
-      await this.actor.update({
-        [`system.essences.${essenceKey}.abilities.${slotIndex}.score`]: value
-      });
-    });
-
-    // Toggle Active
-    html.find(".ability-active").on("change", async (ev) => {
-      ev.preventDefault();
-      ev.stopPropagation();
-
-      const cb = ev.currentTarget;
-      const essenceKey = cb.dataset.essenceKey;
-      const slotIndex = cb.dataset.slotIndex;
-      if (!essenceKey || slotIndex === undefined) return;
-      const value = cb.checked;
-      await this.actor.update({
-        [`system.essences.${essenceKey}.abilities.${slotIndex}.isActive`]: value
-      });
-    });
-
-    // Toggle Attack Ability
-    html.find(".ability-attack").on("change", async (ev) => {
-      ev.preventDefault();
-      ev.stopPropagation();
-
-      const cb = ev.currentTarget;
-      const essenceKey = cb.dataset.essenceKey;
-      const slotIndex = cb.dataset.slotIndex;
-      if (!essenceKey || slotIndex === undefined) return;
-      const value = cb.checked;
-      await this.actor.update({
-        [`system.essences.${essenceKey}.abilities.${slotIndex}.isAttack`]: value
-      });
-    });
+    // ===================== Essence-specific listeners (no form overrides) =====================
 
     // Essence edit button
     html.find(".essence-edit").on("click", (ev) => {
@@ -356,6 +285,7 @@ class HWFWMPCSheet extends ActorSheet {
         updates[`system.essences.${essenceKey}.abilities.${i}.itemId`] = "";
         updates[`system.essences.${essenceKey}.abilities.${i}.isActive`] = false;
         updates[`system.essences.${essenceKey}.abilities.${i}.isAttack`] = false;
+        updates[`system.essences.${essenceKey}.abilities.${i}.score`] = 0;
       }
 
       await this.actor.update(updates);
@@ -369,7 +299,11 @@ class HWFWMPCSheet extends ActorSheet {
       if (!essenceKey || Number.isNaN(slotIndex)) return;
 
       const ess = this.actor.system.essences?.[essenceKey];
-      const slot = ess?.abilities?.[slotIndex];
+      const abilities = ess?.abilities ?? {};
+      const slot =
+        Array.isArray(abilities)
+          ? abilities[slotIndex]
+          : abilities[slotIndex] ?? abilities[String(slotIndex)];
       if (!slot?.itemId) return;
 
       const item = this.actor.items.get(slot.itemId);
@@ -386,7 +320,8 @@ class HWFWMPCSheet extends ActorSheet {
       await this.actor.update({
         [`system.essences.${essenceKey}.abilities.${slotIndex}.itemId`]: "",
         [`system.essences.${essenceKey}.abilities.${slotIndex}.isActive`]: false,
-        [`system.essences.${essenceKey}.abilities.${slotIndex}.isAttack`]: false
+        [`system.essences.${essenceKey}.abilities.${slotIndex}.isAttack`]: false,
+        [`system.essences.${essenceKey}.abilities.${slotIndex}.score`]: 0
       });
     });
 
@@ -401,7 +336,11 @@ class HWFWMPCSheet extends ActorSheet {
       const ess = sys.essences?.[essenceKey];
       if (!ess) return;
 
-      const slot = ess.abilities?.[slotIndex];
+      const abilities = ess.abilities ?? {};
+      const slot =
+        Array.isArray(abilities)
+          ? abilities[slotIndex]
+          : abilities[slotIndex] ?? abilities[String(slotIndex)];
       if (!slot) return;
 
       const attrKey = ess.attribute || "power";
@@ -425,7 +364,6 @@ class HWFWMPCSheet extends ActorSheet {
 }
 
 /* ------------------------------ Item Sheets ------------------------------- */
-// Generic Item sheet (fallback)
 class HWFWMItemSheet extends ItemSheet {
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
@@ -453,22 +391,18 @@ class HWFWMSkillSheet extends ItemSheet {
 
   getData(options) {
     const data = super.getData(options);
-
-    // Editable for owned/world items; read-only in compendiums
     data.editable = this.isEditable && !this.item.pack;
 
-    // Build a normalized, non-destructive view for the template (compendium-safe)
     const s = foundry.utils.duplicate(data.item.system ?? {});
     if (s.skillType && !s.category) s.category = s.skillType;
     if (s.attribute && !s.associatedAttribute) s.associatedAttribute = s.attribute;
     if (s.category && !s.skillType) s.skillType = s.category;
     if (s.associatedAttribute && !s.attribute) s.attribute = s.associatedAttribute;
 
-    data.systemView = s; // used by the HBS for display
+    data.systemView = s;
     return data;
   }
 
-  /** On submit, mirror fields so both are always in-sync (for editable docs) */
   async _updateObject(event, formData) {
     const s = foundry.utils.expandObject(formData).system ?? {};
     if (s.skillType && !s.category) s.category = s.skillType;
@@ -485,10 +419,8 @@ class HWFWMSkillSheet extends ItemSheet {
 Hooks.once("init", () => {
   console.log("HWFWM-D20 | init");
 
-  // Preload templates so compendium items can open immediately
   preloadHWFWMTemplates();
 
-  // Handlebars helpers
   Handlebars.registerHelper("array", (...args) => args.slice(0, -1));
   Handlebars.registerHelper("eq", (a, b) => a === b);
   Handlebars.registerHelper("sortBy", (array, key) => {
@@ -502,20 +434,18 @@ Hooks.once("init", () => {
     });
   });
 
-  // Actor sheet (PC)
   Actors.unregisterSheet("core", ActorSheet);
   Actors.registerSheet("hwfwm-d20", HWFWMPCSheet, { makeDefault: true, types: ["pc"] });
 
-  // Item sheets
   Items.unregisterSheet("core", ItemSheet);
   Items.registerSheet("hwfwm-d20", HWFWMSkillSheet, {
     types: ["skill"],
     makeDefault: true
-  }); // dedicated Skill sheet
+  });
   Items.registerSheet("hwfwm-d20", HWFWMItemSheet, {
     types: [],
     makeDefault: false
-  }); // fallback for others
+  });
 
   console.log("HWFWM-D20 | sheets registered");
 });
