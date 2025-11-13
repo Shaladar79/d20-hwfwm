@@ -4,16 +4,18 @@
 
 async function preloadHWFWMTemplates() {
   const paths = [
-    "systems/hwfwm-d20/templates/partials/tabs/stats.hbs",
-    "systems/hwfwm-d20/templates/partials/tabs/skills.hbs",
-    "systems/hwfwm-d20/templates/partials/tabs/abilities.hbs",
-    "systems/hwfwm-d20/templates/partials/tabs/inventory.hbs",
-    "systems/hwfwm-d20/templates/partials/tabs/notes.hbs",
-    "systems/hwfwm-d20/templates/partials/subtabs/inventory/weapons.hbs",
-    "systems/hwfwm-d20/templates/partials/subtabs/inventory/armor.hbs",
-    "systems/hwfwm-d20/templates/partials/subtabs/inventory/gear.hbs"
+    "systems/hwfwm-d20/templates/parts/tabs/stats.hbs",
+    "systems/hwfwm-d20/templates/parts/tabs/skills.hbs",
+    "systems/hwfwm-d20/templates/parts/tabs/abilities.hbs",
+    "systems/hwfwm-d20/templates/parts/tabs/inventory.hbs",
+    "systems/hwfwm-d20/templates/parts/tabs/notes.hbs",
+    "systems/hwfwm-d20/templates/parts/subtabs/inventory/weapons.hbs",
+    "systems/hwfwm-d20/templates/parts/subtabs/inventory/armor.hbs",
+    "systems/hwfwm-d20/templates/parts/subtabs/inventory/gear.hbs"
   ];
   return loadTemplates(paths);
+}
+
 }
 
 Hooks.once("init", async () => {
@@ -431,4 +433,5 @@ Hooks.once("init", () => {
 Hooks.once("ready", () => {
   console.log("HWFWM-D20 | ready");
 });
+
 
