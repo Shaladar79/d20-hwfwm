@@ -1,1 +1,29 @@
+<div class="flexrow" style="justify-content:space-between; align-items:center;">
+  <h3 style="margin:0;">Gear</h3>
+  <button type="button" class="item-create" data-type="equipment">+ Add Gear</button>
+</div>
 
+<table class="gear-table" style="margin-top:6px;">
+  <thead>
+    <tr>
+      <th style="width:34%">Name</th>
+      <th style="width:22%">Category</th>
+      <th style="width:14%">Weight</th>
+      <th style="width:14%">Cost</th>
+      <th style="width:8%">Edit</th>
+      <th style="width:8%">🗑️</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each (sortBy itemTypes.equipment "name") as |e|}}
+      <tr class="item" data-item-id="{{e._id}}">
+        <td><a class="item-edit">{{e.name}}</a></td>
+        <td>{{e.system.category}}</td>
+        <td>{{e.system.weight}}</td>
+        <td>{{e.system.cost}}</td>
+        <td><button type="button" class="item-edit">Open</button></td>
+        <td><button type="button" class="item-delete" aria-label="Delete">&times;</button></td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>
