@@ -1,81 +1,183 @@
-<section class="card">
-  <h2>Abilities</h2>
+<!-- ===================== TAB: ABILITIES ===================== -->
+<div class="tab abilities" data-group="primary" data-tab="abilities">
+  <section class="card abilities-root">
+    <h2>Abilities</h2>
 
-  <div class="ability-group" style="margin-top:12px;">
-    <div class="flexrow" style="justify-content:space-between; align-items:center;">
-      <h3 style="margin:0;">Essence Abilities</h3>
-      <button type="button" class="item-create" data-type="essenceAbility">+ Add Essence Ability</button>
-    </div>
-    <table class="abilities-table" style="margin-top:6px;">
-      <thead>
-        <tr>
-          <th style="width:22%">Name</th>
-          <th style="width:12%">Category</th>
-          <th style="width:10%">Resource</th>
-          <th style="width:8%">Cost</th>
-          <th style="width:10%">Action</th>
-          <th style="width:10%">Cooldown</th>
-          <th style="width:8%">Dmg</th>
-          <th style="width:8%">Heal</th>
-          <th style="width:8%">Shield</th>
-          <th style="width:4%">Edit</th>
-          <th style="width:4%">🗑️</th>
-        </tr>
-      </thead>
-      <tbody>
-        {{#each (sortBy itemTypes.essenceAbility "name") as |ab|}}
-          <tr class="item" data-item-id="{{ab._id}}">
-            <td><a class="item-edit">{{ab.name}}</a></td>
-            <td>{{ab.system.category}}</td>
-            <td>{{ab.system.resource}}</td>
-            <td>{{ab.system.cost}}</td>
-            <td>{{ab.system.actionCost}}</td>
-            <td>{{ab.system.cooldown}}</td>
-            <td>{{ab.system.damage}}</td>
-            <td>{{ab.system.healing}}</td>
-            <td>{{ab.system.shielding}}</td>
-            <td><button type="button" class="item-edit">Open</button></td>
-            <td><button type="button" class="item-delete" aria-label="Delete">&times;</button></td>
-          </tr>
-        {{/each}}
-      </tbody>
-    </table>
-  </div>
+    <!-- Essence layout: 3 Essences + 1 Confluence, left to right -->
+    <div class="essence-grid">
 
-  <div class="ability-group" style="margin-top:18px;">
-    <div class="flexrow" style="justify-content:space-between; align-items:center;">
-      <h3 style="margin:0;">Racial Abilities</h3>
-      <button type="button" class="item-create" data-type="racialAbility">+ Add Racial Ability</button>
+      <!-- Essence 1 -->
+      <section class="essence-block">
+        <div class="essence-header essence-slot" data-essence-slot="essence1">
+          <h3>Essence 1</h3>
+          <div class="essence-placeholder">
+            Drop <strong>Essence</strong> item here
+          </div>
+        </div>
+
+        <div class="essence-abilities">
+          <div class="ability-slot essence-ability-slot"
+               data-essence-slot="essence1" data-ability-index="0">
+            <span class="ability-placeholder">
+              Drop <strong>Essence Ability</strong> here
+            </span>
+          </div>
+          <div class="ability-slot essence-ability-slot"
+               data-essence-slot="essence1" data-ability-index="1">
+            <span class="ability-placeholder">
+              Drop <strong>Essence Ability</strong> here
+            </span>
+          </div>
+          <div class="ability-slot essence-ability-slot"
+               data-essence-slot="essence1" data-ability-index="2">
+            <span class="ability-placeholder">
+              Drop <strong>Essence Ability</strong> here
+            </span>
+          </div>
+          <div class="ability-slot essence-ability-slot"
+               data-essence-slot="essence1" data-ability-index="3">
+            <span class="ability-placeholder">
+              Drop <strong>Essence Ability</strong> here
+            </span>
+          </div>
+          <div class="ability-slot essence-ability-slot"
+               data-essence-slot="essence1" data-ability-index="4">
+            <span class="ability-placeholder">
+              Drop <strong>Essence Ability</strong> here
+            </span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Essence 2 -->
+      <section class="essence-block">
+        <div class="essence-header essence-slot" data-essence-slot="essence2">
+          <h3>Essence 2</h3>
+          <div class="essence-placeholder">
+            Drop <strong>Essence</strong> item here
+          </div>
+        </div>
+
+        <div class="essence-abilities">
+          <div class="ability-slot essence-ability-slot"
+               data-essence-slot="essence2" data-ability-index="0">
+            <span class="ability-placeholder">
+              Drop <strong>Essence Ability</strong> here
+            </span>
+          </div>
+          <div class="ability-slot essence-ability-slot"
+               data-essence-slot="essence2" data-ability-index="1">
+            <span class="ability-placeholder">
+              Drop <strong>Essence Ability</strong> here
+            </span>
+          </div>
+          <div class="ability-slot essence-ability-slot"
+               data-essence-slot="essence2" data-ability-index="2">
+            <span class="ability-placeholder">
+              Drop <strong>Essence Ability</strong> here
+            </span>
+          </div>
+          <div class="ability-slot essence-ability-slot"
+               data-essence-slot="essence2" data-ability-index="3">
+            <span class="ability-placeholder">
+              Drop <strong>Essence Ability</strong> here
+            </span>
+          </div>
+          <div class="ability-slot essence-ability-slot"
+               data-essence-slot="essence2" data-ability-index="4">
+            <span class="ability-placeholder">
+              Drop <strong>Essence Ability</strong> here
+            </span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Essence 3 -->
+      <section class="essence-block">
+        <div class="essence-header essence-slot" data-essence-slot="essence3">
+          <h3>Essence 3</h3>
+          <div class="essence-placeholder">
+            Drop <strong>Essence</strong> item here
+          </div>
+        </div>
+
+        <div class="essence-abilities">
+          <div class="ability-slot essence-ability-slot"
+               data-essence-slot="essence3" data-ability-index="0">
+            <span class="ability-placeholder">
+              Drop <strong>Essence Ability</strong> here
+            </span>
+          </div>
+          <div class="ability-slot essence-ability-slot"
+               data-essence-slot="essence3" data-ability-index="1">
+            <span class="ability-placeholder">
+              Drop <strong>Essence Ability</strong> here
+            </span>
+          </div>
+          <div class="ability-slot essence-ability-slot"
+               data-essence-slot="essence3" data-ability-index="2">
+            <span class="ability-placeholder">
+              Drop <strong>Essence Ability</strong> here
+            </span>
+          </div>
+          <div class="ability-slot essence-ability-slot"
+               data-essence-slot="essence3" data-ability-index="3">
+            <span class="ability-placeholder">
+              Drop <strong>Essence Ability</strong> here
+            </span>
+          </div>
+          <div class="ability-slot essence-ability-slot"
+               data-essence-slot="essence3" data-ability-index="4">
+            <span class="ability-placeholder">
+              Drop <strong>Essence Ability</strong> here
+            </span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Confluence Essence -->
+      <section class="essence-block">
+        <div class="essence-header essence-slot" data-essence-slot="confluence">
+          <h3>Confluence Essence</h3>
+          <div class="essence-placeholder">
+            Drop <strong>Essence</strong> item here
+          </div>
+        </div>
+
+        <div class="essence-abilities">
+          <div class="ability-slot essence-ability-slot"
+               data-essence-slot="confluence" data-ability-index="0">
+            <span class="ability-placeholder">
+              Drop <strong>Essence Ability</strong> here
+            </span>
+          </div>
+          <div class="ability-slot essence-ability-slot"
+               data-essence-slot="confluence" data-ability-index="1">
+            <span class="ability-placeholder">
+              Drop <strong>Essence Ability</strong> here
+            </span>
+          </div>
+          <div class="ability-slot essence-ability-slot"
+               data-essence-slot="confluence" data-ability-index="2">
+            <span class="ability-placeholder">
+              Drop <strong>Essence Ability</strong> here
+            </span>
+          </div>
+          <div class="ability-slot essence-ability-slot"
+               data-essence-slot="confluence" data-ability-index="3">
+            <span class="ability-placeholder">
+              Drop <strong>Essence Ability</strong> here
+            </span>
+          </div>
+          <div class="ability-slot essence-ability-slot"
+               data-essence-slot="confluence" data-ability-index="4">
+            <span class="ability-placeholder">
+              Drop <strong>Essence Ability</strong> here
+            </span>
+          </div>
+        </div>
+      </section>
+
     </div>
-    <table class="abilities-table" style="margin-top:6px;">
-      <thead>
-        <tr>
-          <th style="width:28%">Name</th>
-          <th style="width:14%">Category</th>
-          <th style="width:10%">Resource</th>
-          <th style="width:8%">Cost</th>
-          <th style="width:10%">Action</th>
-          <th style="width:10%">Cooldown</th>
-          <th style="width:12%">Notes</th>
-          <th style="width:4%">Edit</th>
-          <th style="width:4%">🗑️</th>
-        </tr>
-      </thead>
-      <tbody>
-        {{#each (sortBy itemTypes.racialAbility "name") as |ra|}}
-          <tr class="item" data-item-id="{{ra._id}}">
-            <td><a class="item-edit">{{ra.name}}</a></td>
-            <td>{{ra.system.category}}</td>
-            <td>{{ra.system.resource}}</td>
-            <td>{{ra.system.cost}}</td>
-            <td>{{ra.system.actionCost}}</td>
-            <td>{{ra.system.cooldown}}</td>
-            <td>{{ra.system.notes}}</td>
-            <td><button type="button" class="item-edit">Open</button></td>
-            <td><button type="button" class="item-delete" aria-label="Delete">&times;</button></td>
-          </tr>
-        {{/each}}
-      </tbody>
-    </table>
-  </div>
-</section>
+  </section>
+</div>
