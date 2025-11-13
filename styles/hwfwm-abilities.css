@@ -1,0 +1,67 @@
+/* =====================================================
+   HWFWM v13 | ABILITIES TAB
+   Essence + Ability Slots
+   ===================================================== */
+
+.hwfwm.sheet .tab.abilities .abilities-root .essence-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 3 Essences + 1 Confluence */
+  gap: var(--gap);
+}
+
+.hwfwm.sheet .tab.abilities .essence-block {
+  border: var(--border);
+  border-radius: var(--radius);
+  padding: var(--pad);
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.hwfwm.sheet .tab.abilities .essence-header {
+  border: var(--border);
+  border-radius: var(--radius);
+  padding: 6px;
+  background: #f7f7f7;
+  text-align: center;
+}
+
+.hwfwm.sheet .tab.abilities .essence-header h3 {
+  margin: 0 0 4px 0;
+  font-size: 14px;
+}
+
+.hwfwm.sheet .tab.abilities .essence-placeholder {
+  font-size: 11px;
+  font-style: italic;
+  opacity: 0.8;
+}
+
+.hwfwm.sheet .tab.abilities .essence-abilities {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.hwfwm.sheet .tab.abilities .ability-slot {
+  border: var(--border);
+  border-radius: var(--radius);
+  min-height: 26px;
+  padding: 4px 6px;
+  background: #fff;
+  display: flex;
+  align-items: center;
+}
+
+.hwfwm.sheet .tab.abilities .ability-placeholder {
+  font-size: 11px;
+  font-style: italic;
+  opacity: 0.8;
+}
+
+/* Highlighting for future drag-drop */
+.hwfwm.sheet .tab.abilities .essence-slot.dropping,
+.hwfwm.sheet .tab.abilities .ability-slot.dropping {
+  outline: 2px dashed #2e6cff;
+}
