@@ -1,115 +1,39 @@
-{{!-- STATS TAB with sub-tabs: Attributes | Status --}}
-<header class="sheet-header flexrow">
-  <div class="profile">
-    <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" />
-  </div>
+{{!-- ===================================================================== --}}
+{{!-- STATS TAB WRAPPER: sub-tabs -> Attributes | Status                   --}}
+{{!-- This file is included by actor-sheet.hbs inside the main Stats tab.  --}}
+{{!-- It only manages the internal navigation; actual content lives in     --}}
+{{!--   parts/subtabs/stats/attributes.hbs                                 --}}
+{{!--   parts/subtabs/stats/status.hbs                                     --}}
+{{!-- ===================================================================== --}}
 
-  <div class="header-fields">
-    <div class="name-row">
-      <input name="name" type="text" value="{{actor.name}}" placeholder="Name" />
-    </div>
-    <div class="meta-row flexrow">
-      <div class="field"><label>Rank</label><input type="text" name="system.details.rank" value="{{system.details.rank}}" /></div>
-      <div class="field"><label>Nature</label><input type="text" name="system.details.nature" value="{{system.details.nature}}" /></div>
-      <div class="field"><label>Role</label><input type="text" name="system.details.role" value="{{system.details.role}}" /></div>
-      <div class="field"><label>Background</label><input type="text" name="system.details.background" value="{{system.details.background}}" /></div>
-    </div>
-  </div>
-</header>
+<section class="card hwfwm-stats-wrapper">
 
-<section class="card" style="margin-top:12px;">
   {{!-- Sub-tab bar for the Stats page --}}
   <nav class="sheet-tabs tabs" data-group="stats">
     <a class="item" data-tab="attributes">Attributes</a>
     <a class="item" data-tab="status">Status</a>
   </nav>
 
+  {{!-- Container used by the stats tab controller in hwfwm-d20.js --}}
   <section class="tab-body" style="margin-top:8px;">
+
     {{!-- ================== ATTRIBUTES SUBTAB ================== --}}
     <div class="tab active" data-group="stats" data-tab="attributes">
-      <section class="stats flexrow">
-        <!-- Left: Attributes -->
-        <section class="attributes card">
-          <h2>Attributes</h2>
-          <div class="attributes-grid">
-            {{!-- Power --}}
-            <div class="attribute">
-              <div class="attr-header">
-                <div class="attr-label">Power</div>
-                <label class="mini">Rank</label>
-                <input class="attr-rank" type="text" name="system.attributes.power.rank" value="{{system.attributes.power.rank}}" />
-              </div>
-              <label>Base</label><input type="number" name="system.attributes.power.base" value="{{system.attributes.power.base}}" />
-              <label>Rank Score</label><input type="number" name="system.attributes.power.rankScore" value="{{system.attributes.power.rankScore}}" />
-              <label>Mod</label><input type="number" name="system.attributes.power.mod" value="{{system.attributes.power.mod}}" />
-            </div>
-
-            {{!-- Speed --}}
-            <div class="attribute">
-              <div class="attr-header">
-                <div class="attr-label">Speed</div>
-                <label class="mini">Rank</label>
-                <input class="attr-rank" type="text" name="system.attributes.speed.rank" value="{{system.attributes.speed.rank}}" />
-              </div>
-              <label>Base</label><input type="number" name="system.attributes.speed.base" value="{{system.attributes.speed.base}}" />
-              <label>Rank Score</label><input type="number" name="system.attributes.speed.rankScore" value="{{system.attributes.speed.rankScore}}" />
-              <label>Mod</label><input type="number" name="system.attributes.speed.mod" value="{{system.attributes.speed.mod}}" />
-            </div>
-
-            {{!-- Spirit --}}
-            <div class="attribute">
-              <div class="attr-header">
-                <div class="attr-label">Spirit</div>
-                <label class="mini">Rank</label>
-                <input class="attr-rank" type="text" name="system.attributes.spirit.rank" value="{{system.attributes.spirit.rank}}" />
-              </div>
-              <label>Base</label><input type="number" name="system.attributes.spirit.base" value="{{system.attributes.spirit.base}}" />
-              <label>Rank Score</label><input type="number" name="system.attributes.spirit.rankScore" value="{{system.attributes.spirit.rankScore}}" />
-              <label>Mod</label><input type="number" name="system.attributes.spirit.mod" value="{{system.attributes.spirit.mod}}" />
-            </div>
-
-            {{!-- Recovery --}}
-            <div class="attribute">
-              <div class="attr-header">
-                <div class="attr-label">Recovery</div>
-                <label class="mini">Rank</label>
-                <input class="attr-rank" type="text" name="system.attributes.recovery.rank" value="{{system.attributes.recovery.rank}}" />
-              </div>
-              <label>Base</label><input type="number" name="system.attributes.recovery.base" value="{{system.attributes.recovery.base}}" />
-              <label>Rank Score</label><input type="number" name="system.attributes.recovery.rankScore" value="{{system.attributes.recovery.rankScore}}" />
-              <label>Mod</label><input type="number" name="system.attributes.recovery.mod" value="{{system.attributes.recovery.mod}}" />
-            </div>
-          </div>
-        </section>
-      </section>
+      {{> "systems/hwfwm-d20/templates/parts/subtabs/stats/attributes.hbs"
+          actor=actor
+          system=system }}
     </div>
 
     {{!-- ===================== STATUS SUBTAB ==================== --}}
     <div class="tab" data-group="stats" data-tab="status">
-      <section class="stats flexrow">
-        <!-- Right: Status (formerly Resources) + Defenses -->
-        <section class="resources-and-defenses card">
-          <h2>Status</h2>
-          <div class="resources-grid">
-            <div class="res"><label>Life Force</label><input type="number" name="system.resources.lifeforce.value" value="{{system.resources.lifeforce.value}}" /><span>/</span><input type="number" name="system.resources.lifeforce.max" value="{{system.resources.lifeforce.max}}" /></div>
-            <div class="res"><label>Armor</label><input type="number" name="system.resources.armor.value" value="{{system.resources.armor.value}}" /><span>/</span><input type="number" name="system.resources.armor.max" value="{{system.resources.armor.max}}" /></div>
-            <div class="res"><label>Shielding</label><input type="number" name="system.resources.shielding.value" value="{{system.resources.shielding.value}}" /></div>
-            <div class="res"><label>Mana</label><input type="number" name="system.resources.mana.value" value="{{system.resources.mana.value}}" /><span>/</span><input type="number" name="system.resources.mana.max" value="{{system.resources.mana.max}}" /></div>
-            <div class="res"><label>Stamina</label><input type="number" name="system.resources.stamina.value" value="{{system.resources.stamina.value}}" /><span>/</span><input type="number" name="system.resources.stamina.max" value="{{system.resources.stamina.max}}" /></div>
-            <div class="res"><label>Trauma</label><input type="number" name="system.resources.trauma.value" value="{{system.resources.trauma.value}}" /><span>/</span><input type="number" name="system.resources.trauma.max" value="{{system.resources.trauma.max}}" /></div>
-            <div class="res"><label>Resolve</label><input type="number" name="system.resources.resolve.value" value="{{system.resources.resolve.value}}" /><span>/</span><input type="number" name="system.resources.resolve.max" value="{{system.resources.resolve.max}}" /></div>
-            {{#if @root.showWillpower}}
-              <div class="res"><label>Willpower</label><input type="number" name="system.resources.willpower.value" value="{{system.resources.willpower.value}}" /><span>/</span><input type="number" name="system.resources.willpower.max" value="{{system.resources.willpower.max}}" /></div>
-            {{/if}}
-          </div>
-
-          <h2>Defenses</h2>
-          <div class="defenses-grid">
-            <div class="def"><label>Defense</label><input type="number" name="system.defenses.defense.value" value="{{system.defenses.defense.value}}" /></div>
-            <div class="def"><label>Reaction</label><input type="number" name="system.defenses.reaction.value" value="{{system.defenses.reaction.value}}" /></div>
-          </div>
-        </section>
-      </section>
+      {{> "systems/hwfwm-d20/templates/parts/subtabs/stats/status.hbs"
+          actor=actor
+          system=system
+          showWillpower=showWillpower }}
     </div>
+
+  </section>
+</section>
+
   </section>
 </section>
