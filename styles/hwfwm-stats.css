@@ -1,67 +1,110 @@
 /* =====================================================
-   HWFWM v13 | STATS TAB STYLING
-   - Attributes: 2x2 box layout
-   - Status: Resources & Defenses columns
+   HWFWM v13 | Stats Tab Styling (Attributes + Status)
    ===================================================== */
 
-/* -----------------------------
-   Stats subtabs (Attributes/Status)
-   ----------------------------- */
-
+/* -----------------------------------------------------
+   SUBTABS (Attributes / Status)
+   ----------------------------------------------------- */
 .hwfwm.sheet .subtabs {
   display: flex;
   justify-content: center;
-  gap: var(--gap);
-  margin-bottom: var(--gap);
+  gap: 12px;
+  margin-bottom: 12px;
 }
 
-.hwfwm.sheet .subtabs .subtab-btn {
+.hwfwm.sheet .subtab-btn {
   padding: 6px 16px;
-  border: var(--border);
-  border-radius: var(--radius);
-  cursor: pointer;
+  border: 3px solid #000;
+  border-radius: 10px;
   background: #fff;
+  cursor: pointer;
   font-weight: 600;
 }
 
 .hwfwm.sheet .subtab {
   display: none;
 }
-
 .hwfwm.sheet .subtab.active {
   display: block;
 }
 
-/* ============================
-   STATUS TAB – 2×2 grid layout
-   ============================ */
+/* =====================================================
+   ATTRIBUTES – 2×2 layout (Power / Speed / Spirit / Recovery)
+   ===================================================== */
+
+.hwfwm.sheet .attributes-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* two equal columns */
+  gap: 12px;
+}
+
+.hwfwm.sheet .attribute-box {
+  border: 3px solid #000;
+  border-radius: 10px;
+  padding: 10px;
+  background: #fff;
+  box-sizing: border-box;
+}
+
+.hwfwm.sheet .attribute-box h3 {
+  margin: 0 0 6px 0;
+  font-size: 18px;
+  border-bottom: 2px solid #9b3b33;
+  padding-bottom: 3px;
+}
+
+.hwfwm.sheet .attribute-row {
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  gap: 6px 10px;
+  margin-bottom: 8px;
+}
+
+.hwfwm.sheet .attribute-row input {
+  border: 3px solid #000;
+  border-radius: 10px;
+  padding: 5px 6px;
+  height: 26px;
+  background: #fff;
+  color: #000;
+}
+
+/* =====================================================
+   STATUS – 2×2 layout (Resources / Defenses / Affinities / Resistances)
+   ===================================================== */
 
 .hwfwm.sheet .status-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr; /* two equal columns */
-  gap: var(--gap);
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
 }
 
 .hwfwm.sheet .status-box {
-  border: var(--border);
-  border-radius: var(--radius);
-  padding: var(--pad);
+  border: 3px solid #000;
+  border-radius: 10px;
+  padding: 10px;
   background: #fff;
+  box-sizing: border-box;
 }
 
-/* Rows with value / max (label, value, slash, max) */
+.hwfwm.sheet .status-box h3 {
+  margin: 0 0 6px 0;
+  font-size: 18px;
+  border-bottom: 2px solid #9b3b33;
+  padding-bottom: 3px;
+}
+
 .hwfwm.sheet .status-row {
   display: grid;
-  grid-template-columns: 90px 1fr 20px 1fr;
+  grid-template-columns: 90px 1fr 20px 1fr; /* label | value | / | max */
   gap: 6px;
   align-items: center;
   margin-bottom: 6px;
 }
 
-/* Rows with a single value (label + value only) */
 .hwfwm.sheet .status-row-2 {
   display: grid;
-  grid-template-columns: 120px 1fr;
+  grid-template-columns: 130px 1fr; /* label | value */
   gap: 6px;
   align-items: center;
   margin-bottom: 6px;
@@ -69,87 +112,18 @@
 
 .hwfwm.sheet .status-row input,
 .hwfwm.sheet .status-row-2 input {
-  border: var(--border);
-  border-radius: var(--radius);
+  border: 3px solid #000;
+  border-radius: 10px;
   padding: 5px 7px;
   background: #fff;
   color: #000;
 }
 
-/* Block areas for Affinities / Resistances */
+/* Text block sections */
 .hwfwm.sheet .status-block {
-  border: var(--border);
-  border-radius: var(--radius);
-  padding: var(--pad);
+  border: 3px solid #000;
+  border-radius: 10px;
+  padding: 10px;
   background: #fff;
   min-height: 80px;
-  box-sizing: border-box;
-}
-
-
-/* =====================================================
-   STATUS SUBTAB – Resources & Defenses
-   ===================================================== */
-
-/* Two equal columns: left = Resources + Affinities,
-   right = Defenses + Resistances */
-.hwfwm.sheet .status-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;   /* equal width columns */
-  gap: var(--gap);
-}
-
-/* Column card */
-.hwfwm.sheet .status-column {
-  border: var(--border);
-  border-radius: var(--radius);
-  padding: var(--pad);
-  background: #fff;
-}
-
-/* Section inside a column (Resources, Defenses, etc.) */
-.hwfwm.sheet .status-section {
-  margin-bottom: 16px;
-}
-
-.hwfwm.sheet .status-section h3 {
-  margin: 0 0 6px 0;
-  font-size: 18px;
-}
-
-/* Resource/Defense rows with current / max layout */
-.hwfwm.sheet .status-row {
-  display: grid;
-  grid-template-columns: 90px 1fr 18px 1fr;  /* Label | value | "/" | max */
-  gap: 4px 8px;
-  margin-bottom: 6px;
-  align-items: center;
-}
-
-.hwfwm.sheet .status-row label {
-  font-size: 11px;
-}
-
-.hwfwm.sheet .status-row span.slash {
-  text-align: center;
-  font-size: 12px;
-}
-
-.hwfwm.sheet .status-row input {
-  border: var(--border);
-  border-radius: var(--radius);
-  padding: 4px 7px;
-  height: 26px;
-  background: #fff;
-  color: #000;
-}
-
-/* Full-width blocks for Affinities / Resistances */
-.hwfwm.sheet .status-block {
-  border: var(--border);
-  border-radius: var(--radius);
-  padding: var(--pad);
-  min-height: 80px;
-  background: #fff;
-  margin-top: 8px;
 }
