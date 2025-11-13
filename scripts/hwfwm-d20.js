@@ -1,29 +1,24 @@
 // ============================================================================
 // HWFWM-D20 | System JS
-// - Registers PC ActorSheet and generic ItemSheet
-// - Preloads all sheet templates (tabs + subtabs)
-// - Adds Handlebars helpers used by the sheets
 // ============================================================================
-
-/* --------------------------- Template Preloading --------------------------- */
 
 async function preloadHWFWMTemplates() {
   const paths = [
     // Main tab partials
-    "systems/hwfwm-d20/templates/parts/tabs/stats.hbs",
-    "systems/hwfwm-d20/templates/parts/tabs/skills.hbs",
-    "systems/hwfwm-d20/templates/parts/tabs/abilities.hbs",
-    "systems/hwfwm-d20/templates/parts/tabs/inventory.hbs",
-    "systems/hwfwm-d20/templates/parts/tabs/notes.hbs",
+    "systems/hwfwm-d20/templates/actors/parts/tabs/stats.hbs",
+    "systems/hwfwm-d20/templates/actors/parts/tabs/skills.hbs",
+    "systems/hwfwm-d20/templates/actors/parts/tabs/abilities.hbs",
+    "systems/hwfwm-d20/templates/actors/parts/tabs/inventory.hbs",
+    "systems/hwfwm-d20/templates/actors/parts/tabs/notes.hbs",
 
     // Stats subtabs
-    "systems/hwfwm-d20/templates/parts/subtabs/stats/attributes.hbs",
-    "systems/hwfwm-d20/templates/parts/subtabs/stats/status.hbs",
+    "systems/hwfwm-d20/templates/actors/parts/subtabs/stats/attributes.hbs",
+    "systems/hwfwm-d20/templates/actors/parts/subtabs/stats/status.hbs",
 
-    // Inventory subtabs (adjust names here if your files differ)
-    "systems/hwfwm-d20/templates/parts/subtabs/inventory/items.hbs",
-    "systems/hwfwm-d20/templates/parts/subtabs/inventory/weapons.hbs",
-    "systems/hwfwm-d20/templates/parts/subtabs/inventory/gear.hbs"
+    // Inventory subtabs (tweak names if yours differ)
+    "systems/hwfwm-d20/templates/actors/parts/subtabs/inventory/items.hbs",
+    "systems/hwfwm-d20/templates/actors/parts/subtabs/inventory/weapons.hbs",
+    "systems/hwfwm-d20/templates/actors/parts/subtabs/inventory/gear.hbs"
   ];
 
   return loadTemplates(paths);
@@ -32,26 +27,22 @@ async function preloadHWFWMTemplates() {
 /* --------------------------- Handlebars Helpers --------------------------- */
 
 function registerHWFWMHandlebarsHelpers() {
-  // {{array "Combat" "Power" ...}}
   Handlebars.registerHelper("array", function () {
     const args = Array.from(arguments);
-    args.pop(); // handlebars options
+    args.pop();
     return args;
   });
 
-  // {{#if (eq a b)}} ... {{/if}}
   Handlebars.registerHelper("eq", function (a, b) {
     return a === b;
   });
 
-  // {{#each (sortBy itemTypes.skill "name") as |skill|}}
   Handlebars.registerHelper("sortBy", function (collection, field) {
     if (!Array.isArray(collection)) return [];
     const path = (field || "").split(".");
 
-    const getValue = (obj) => {
-      return path.reduce((v, key) => (v && v[key] !== undefined ? v[key] : undefined), obj);
-    };
+    const getValue = (obj) =>
+      path.reduce((v, key) => (v && v[key] !== undefined ? v[key] : undefined), obj);
 
     const cloned = collection.slice();
     cloned.sort((a, b) => {
@@ -81,7 +72,6 @@ class HWFWMPCSheet extends ActorSheet {
           initial: "stats"
         },
         {
-          // inner group for the Stats subtabs (Attributes / Status)
           navSelector: ".sheet-tabs[data-group='stats']",
           contentSelector: ".tab-body",
           initial: "attributes"
@@ -93,12 +83,9 @@ class HWFWMPCSheet extends ActorSheet {
   getData(options) {
     const data = super.getData(options);
     const sys = this.actor.system ?? {};
-
-    // Rank-based Willpower visibility (for Status subtab)
     const rank = (sys.details?.rank ?? "").toString().toLowerCase();
-    data.showWillpower = rank.includes("gold") || rank.includes("diamond");
 
-    // Expose itemTypes for Skills / Inventory tabs
+    data.showWillpower = rank.includes("gold") || rank.includes("diamond");
     data.itemTypes = this.actor.itemTypes ?? {};
 
     return data;
@@ -108,7 +95,6 @@ class HWFWMPCSheet extends ActorSheet {
     super.activateListeners(html);
     if (!this.isEditable) return;
 
-    // ---- Create embedded Item (with default category/attribute) ----
     html.find(".item-create").on("click", async (ev) => {
       const btn = ev.currentTarget;
       const type = btn.dataset.type;
@@ -129,7 +115,6 @@ class HWFWMPCSheet extends ActorSheet {
       ]);
     });
 
-    // ---- Edit embedded Item ----
     html.find(".item-edit").on("click", (ev) => {
       const li = ev.currentTarget.closest("[data-item-id]");
       if (!li) return;
@@ -137,14 +122,12 @@ class HWFWMPCSheet extends ActorSheet {
       if (item) item.sheet.render(true);
     });
 
-    // ---- Delete embedded Item ----
     html.find(".item-delete").on("click", async (ev) => {
       const li = ev.currentTarget.closest("[data-item-id]");
       if (!li) return;
       await this.actor.deleteEmbeddedDocuments("Item", [li.dataset.itemId]);
     });
 
-    // ---- Toggle trained on Skill row ----
     html.find(".skill-trained").on("change", async (ev) => {
       const cb = ev.currentTarget;
       const id = cb.dataset.itemId;
@@ -180,14 +163,12 @@ Hooks.once("init", () => {
   registerHWFWMHandlebarsHelpers();
   preloadHWFWMTemplates();
 
-  // Actor sheet (PC)
   Actors.unregisterSheet("core", ActorSheet);
   Actors.registerSheet("hwfwm-d20", HWFWMPCSheet, {
     makeDefault: true,
     types: ["pc"]
   });
 
-  // Item sheet (generic)
   Items.unregisterSheet("core", ItemSheet);
   Items.registerSheet("hwfwm-d20", HWFWMItemSheet, {
     makeDefault: true
