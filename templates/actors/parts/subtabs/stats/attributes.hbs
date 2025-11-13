@@ -1,1 +1,120 @@
+{{!-- =========================================================
+     STATS → ATTRIBUTES SUBTAB
+     Four core attributes: Power, Speed, Spirit, Recovery
+     ========================================================= --}}
 
+<section class="card attributes">
+  <h2>Attributes</h2>
+
+  <div class="attributes-grid">
+
+    {{!-- POWER --}}
+    <div class="attribute">
+      <div class="attr-header">
+        <h3 class="attr-label">Power</h3>
+        <span class="mini">Rank</span>
+        <input class="attr-rank"
+               type="text"
+               name="system.attributes.power.rank"
+               value="{{system.attributes.power.rank}}" />
+      </div>
+
+      <label>Base</label>
+      <input type="number"
+             name="system.attributes.power.base"
+             value="{{system.attributes.power.base}}" />
+
+      <label>Rank Score</label>
+      <input type="number"
+             name="system.attributes.power.rankScore"
+             value="{{system.attributes.power.rankScore}}" />
+
+      <label>Mod</label>
+      <input type="number"
+             name="system.attributes.power.mod"
+             value="{{system.attributes.power.mod}}" />
+    </div>
+
+    {{!-- SPEED --}}
+    <div class="attribute">
+      <div class="attr-header">
+        <h3 class="attr-label">Speed</h3>
+        <span class="mini">Rank</span>
+        <input class="attr-rank"
+               type="text"
+               name="system.attributes.speed.rank"
+               value="{{system.attributes.speed.rank}}" />
+      </div>
+
+      <label>Base</label>
+      <input type="number"
+             name="system.attributes.speed.base"
+             value="{{system.attributes.speed.base}}" />
+
+      <label>Rank Score</label>
+      <input type="number"
+             name="system.attributes.speed.rankScore"
+             value="{{system.attributes.speed.rankScore}}" />
+
+      <label>Mod</label>
+      <input type="number"
+             name="system.attributes.speed.mod"
+             value="{{system.attributes.speed.mod}}" />
+    </div>
+
+    {{!-- SPIRIT --}}
+    <div class="attribute">
+      <div class="attr-header">
+        <h3 class="attr-label">Spirit</h3>
+        <span class="mini">Rank</span>
+        <input class="attr-rank"
+               type="text"
+               name="system.attributes.spirit.rank"
+               value="{{system.attributes.spirit.rank}}" />
+      </div>
+
+      <label>Base</label>
+      <input type="number"
+             name="system.attributes.spirit.base"
+             value="{{system.attributes.spirit.base}}" />
+
+      <label>Rank Score</label>
+      <input type="number"
+             name="system.attributes.spirit.rankScore"
+             value="{{system.attributes.spirit.rankScore}}" />
+
+      <label>Mod</label>
+      <input type="number"
+             name="system.attributes.spirit.mod"
+             value="{{system.attributes.spirit.mod}}" />
+    </div>
+
+    {{!-- RECOVERY --}}
+    <div class="attribute">
+      <div class="attr-header">
+        <h3 class="attr-label">Recovery</h3>
+        <span class="mini">Rank</span>
+        <input class="attr-rank"
+               type="text"
+               name="system.attributes.recovery.rank"
+               value="{{system.attributes.recovery.rank}}" />
+      </div>
+
+      <label>Base</label>
+      <input type="number"
+             name="system.attributes.recovery.base"
+             value="{{system.attributes.recovery.base}}" />
+
+      <label>Rank Score</label>
+      <input type="number"
+             name="system.attributes.recovery.rankScore"
+             value="{{system.attributes.recovery.rankScore}}" />
+
+      <label>Mod</label>
+      <input type="number"
+             name="system.attributes.recovery.mod"
+             value="{{system.attributes.recovery.mod}}" />
+    </div>
+
+  </div>
+</section>
