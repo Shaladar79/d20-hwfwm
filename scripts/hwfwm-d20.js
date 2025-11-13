@@ -27,9 +27,9 @@ class HWFWMPCSheet extends ActorSheet {
           contentSelector: ".sheet-content",
           initial: "stats"
         }
-      ],
-      // IMPORTANT: make the actual dashed slots the drop targets
-      dragDrop: [{ dragSelector: ".item", dropSelector: ".drop-slot" }]
+      ]
+      // NOTE: we let ActorSheet's default dragDrop handle everything.
+      // We only specialize behavior inside _onDropItem.
     });
   }
 
@@ -109,8 +109,8 @@ class HWFWMPCSheet extends ActorSheet {
 
   /* ----------------------------- Drop Handling ----------------------------- */
   async _onDropItem(event, data) {
-    // Because dropSelector = ".drop-slot", this will be the exact dashed box.
-    const dropTarget = event.target;
+    // Look for one of our custom slots anywhere under the cursor.
+    const dropTarget = event.target.closest(".essence-drop, .ability-drop");
 
     // Helper for various Foundry versions
     const fromDrop =
@@ -118,14 +118,29 @@ class HWFWMPCSheet extends ActorSheet {
       Item.fromDropData ||
       foundry.documents.Item.fromDropData;
 
-    // If we didn't actually hit one of our custom slots, fall back
-    if (!dropTarget.classList.contains("essence-drop") &&
-        !dropTarget.classList.contains("ability-drop")) {
+    // ---------- If no special slot -> normal skill/item behavior ----------
+    if (!dropTarget) {
       const item = await fromDrop.call(Item, data);
       if (!item) return false;
+
+      // If it's a skill, normalize its fields
+      if (item.type === "skill") {
+        const s = foundry.utils.duplicate(item.system ?? {});
+        if (s.skillType && !s.category) s.category = s.skillType;
+        if (s.attribute && !s.associatedAttribute) s.associatedAttribute = s.attribute;
+        if (s.category && !s.skillType) s.skillType = s.category;
+        if (s.associatedAttribute && !s.attribute) s.attribute = s.associatedAttribute;
+        try {
+          await item.update({ system: s }, { diff: false, recursive: false });
+        } catch (e) {
+          console.warn("HWFWM-D20 | Could not normalize dropped skill fields:", e);
+        }
+      }
+
       return super._onDropItem(event, data);
     }
 
+    // ---------- We *do* have an Essence or Ability slot ----------
     const dropped = await fromDrop.call(Item, data);
     if (!dropped) return false;
 
@@ -138,7 +153,7 @@ class HWFWMPCSheet extends ActorSheet {
       return created;
     };
 
-    // ---------- Essence item dropped into an Essence slot ----------
+    // Essence item dropped into an Essence slot
     if (dropTarget.classList.contains("essence-drop")) {
       const essenceKey = dropTarget.dataset.essenceKey;
       if (!essenceKey) return false;
@@ -168,13 +183,13 @@ class HWFWMPCSheet extends ActorSheet {
       return true;
     }
 
-    // ---------- Essence Ability dropped into an Ability slot ----------
+    // Essence Ability dropped into an Ability slot
     if (dropTarget.classList.contains("ability-drop")) {
       const essenceKey = dropTarget.dataset.essenceKey;
       const slotIndex = Number(dropTarget.dataset.slotIndex ?? 0);
       if (!essenceKey || Number.isNaN(slotIndex)) return false;
 
-      // NOTE: no type check here, so any test "essenceAbility" you made will work.
+      // NOTE: no strict type check here so test abilities always work.
       const embedded = await ensureEmbedded(dropped);
 
       await this.actor.update({
@@ -378,8 +393,10 @@ class HWFWMSkillSheet extends ItemSheet {
   getData(options) {
     const data = super.getData(options);
 
+    // Editable for owned/world items; read-only in compendiums
     data.editable = this.isEditable && !this.item.pack;
 
+    // Build a normalized, non-destructive view for the template
     const s = foundry.utils.duplicate(data.item.system ?? {});
     if (s.skillType && !s.category) s.category = s.skillType;
     if (s.attribute && !s.associatedAttribute) s.associatedAttribute = s.attribute;
@@ -415,7 +432,9 @@ Hooks.once("init", () => {
     return [...array].sort((a, b) => {
       const aVal = getProperty(a, key) ?? "";
       const bVal = getProperty(b, key) ?? "";
-      return aVal.toString().localeCompare(bVal.toString(), undefined, { sensitivity: "base" });
+      return aVal.toString().localeCompare(bVal.toString(), undefined, {
+        sensitivity: "base"
+      });
     });
   });
 
