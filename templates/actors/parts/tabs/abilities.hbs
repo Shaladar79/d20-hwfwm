@@ -1,1 +1,81 @@
+<section class="card">
+  <h2>Abilities</h2>
 
+  <div class="ability-group" style="margin-top:12px;">
+    <div class="flexrow" style="justify-content:space-between; align-items:center;">
+      <h3 style="margin:0;">Essence Abilities</h3>
+      <button type="button" class="item-create" data-type="essenceAbility">+ Add Essence Ability</button>
+    </div>
+    <table class="abilities-table" style="margin-top:6px;">
+      <thead>
+        <tr>
+          <th style="width:22%">Name</th>
+          <th style="width:12%">Category</th>
+          <th style="width:10%">Resource</th>
+          <th style="width:8%">Cost</th>
+          <th style="width:10%">Action</th>
+          <th style="width:10%">Cooldown</th>
+          <th style="width:8%">Dmg</th>
+          <th style="width:8%">Heal</th>
+          <th style="width:8%">Shield</th>
+          <th style="width:4%">Edit</th>
+          <th style="width:4%">🗑️</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each (sortBy itemTypes.essenceAbility "name") as |ab|}}
+          <tr class="item" data-item-id="{{ab._id}}">
+            <td><a class="item-edit">{{ab.name}}</a></td>
+            <td>{{ab.system.category}}</td>
+            <td>{{ab.system.resource}}</td>
+            <td>{{ab.system.cost}}</td>
+            <td>{{ab.system.actionCost}}</td>
+            <td>{{ab.system.cooldown}}</td>
+            <td>{{ab.system.damage}}</td>
+            <td>{{ab.system.healing}}</td>
+            <td>{{ab.system.shielding}}</td>
+            <td><button type="button" class="item-edit">Open</button></td>
+            <td><button type="button" class="item-delete" aria-label="Delete">&times;</button></td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="ability-group" style="margin-top:18px;">
+    <div class="flexrow" style="justify-content:space-between; align-items:center;">
+      <h3 style="margin:0;">Racial Abilities</h3>
+      <button type="button" class="item-create" data-type="racialAbility">+ Add Racial Ability</button>
+    </div>
+    <table class="abilities-table" style="margin-top:6px;">
+      <thead>
+        <tr>
+          <th style="width:28%">Name</th>
+          <th style="width:14%">Category</th>
+          <th style="width:10%">Resource</th>
+          <th style="width:8%">Cost</th>
+          <th style="width:10%">Action</th>
+          <th style="width:10%">Cooldown</th>
+          <th style="width:12%">Notes</th>
+          <th style="width:4%">Edit</th>
+          <th style="width:4%">🗑️</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each (sortBy itemTypes.racialAbility "name") as |ra|}}
+          <tr class="item" data-item-id="{{ra._id}}">
+            <td><a class="item-edit">{{ra.name}}</a></td>
+            <td>{{ra.system.category}}</td>
+            <td>{{ra.system.resource}}</td>
+            <td>{{ra.system.cost}}</td>
+            <td>{{ra.system.actionCost}}</td>
+            <td>{{ra.system.cooldown}}</td>
+            <td>{{ra.system.notes}}</td>
+            <td><button type="button" class="item-edit">Open</button></td>
+            <td><button type="button" class="item-delete" aria-label="Delete">&times;</button></td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+</section>
