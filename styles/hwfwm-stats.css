@@ -1,0 +1,101 @@
+/* =====================================================
+   HWFWM v13 | STATS TAB (Attributes & Status)
+   ===================================================== */
+
+/* ---------------- Subtab buttons (Attributes / Status) ---------------- */
+.hwfwm.sheet .tab.stats .subtabs {
+  display: flex;
+  justify-content: center;
+  gap: var(--gap);
+  margin-bottom: var(--gap);
+}
+
+.hwfwm.sheet .tab.stats .subtabs .subtab-btn {
+  padding: 6px 16px;
+  border: var(--border);
+  border-radius: var(--radius);
+  cursor: pointer;
+  background: #fff;
+  font-weight: 600;
+}
+
+.hwfwm.sheet .tab.stats .subtab {
+  display: none;
+}
+.hwfwm.sheet .tab.stats .subtab.active {
+  display: block;
+}
+
+/* ---------------- ATTRIBUTES GRID (2x2 boxes) ---------------- */
+.hwfwm.sheet .tab.stats .attributes-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--gap);
+}
+
+.hwfwm.sheet .tab.stats .attribute-box {
+  border: var(--border);
+  border-radius: var(--radius);
+  padding: var(--pad);
+  background: #fff;
+}
+
+.hwfwm.sheet .tab.stats .attribute-row {
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  gap: 5px 10px;
+  margin-top: 6px;
+}
+
+.hwfwm.sheet .tab.stats .attribute-row input {
+  border: var(--border);
+  border-radius: var(--radius);
+  padding: 5px 7px;
+  height: 26px;
+}
+
+/* ---------------- STATUS – Resources & Defenses columns ---------------- */
+.hwfwm.sheet .tab.stats .status-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* equal width */
+  gap: var(--gap);
+}
+
+.hwfwm.sheet .tab.stats .status-column {
+  border: var(--border);
+  border-radius: var(--radius);
+  padding: var(--pad);
+  background: #fff;
+}
+
+.hwfwm.sheet .tab.stats .status-section {
+  margin-bottom: 16px;
+}
+
+.hwfwm.sheet .tab.stats .status-section h3 {
+  margin: 0 0 6px 0;
+  font-size: 18px;
+}
+
+.hwfwm.sheet .tab.stats .status-row {
+  display: grid;
+  grid-template-columns: 90px 1fr 20px 1fr;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+
+.hwfwm.sheet .tab.stats .status-row input {
+  border: var(--border);
+  border-radius: var(--radius);
+  padding: 5px 7px;
+}
+
+/* Full-width block sections (Affinities, Resistances) */
+.hwfwm.sheet .tab.stats .status-block {
+  border: var(--border);
+  border-radius: var(--radius);
+  padding: var(--pad);
+  min-height: 80px;
+  background: #fff;
+  margin-top: 12px;
+}
