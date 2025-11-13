@@ -1,0 +1,15 @@
+/* =====================================================
+   HWFWM v13 | NOTES TAB
+   (Currently a scoped placeholder – safe to edit)
+   ===================================================== */
+
+/* All Notes-tab-specific styles go under .tab.notes */
+
+.hwfwm.sheet .tab.notes {
+  /* example: you can add layout tweaks later */
+  /* padding: var(--pad); */
+}
+
+/* If you add a rich-text area, you could style it with:
+.hwfwm.sheet .tab.notes .editor { ... }
+*/
