@@ -22,7 +22,7 @@
              value="{{system.resources.lifeforce.max}}" />
     </div>
 
-    {{!-- Armor (Total AP) --}}
+    {{!-- Armor --}}
     <div class="res">
       <label>Armor</label>
       <input type="number"
@@ -34,7 +34,7 @@
              value="{{system.resources.armor.max}}" />
     </div>
 
-    {{!-- Shielding (no max, granted by abilities) --}}
+    {{!-- Shielding --}}
     <div class="res">
       <label>Shielding</label>
       <input type="number"
@@ -92,7 +92,7 @@
              value="{{system.resources.resolve.max}}" />
     </div>
 
-    {{!-- Willpower (Gold & Diamond only) --}}
+    {{!-- Willpower (Gold/Diamond only) --}}
     {{#if showWillpower}}
       <div class="res">
         <label>Willpower</label>
@@ -124,6 +124,14 @@
       <input type="number"
              name="system.defenses.reaction.value"
              value="{{system.defenses.reaction.value}}" />
+    </div>
+
+    {{!-- 🆕 PACE (Movement Speed) --}}
+    <div class="def">
+      <label>Pace</label>
+      <input type="number"
+             name="system.defenses.pace.value"
+             value="{{system.defenses.pace.value}}" />
     </div>
 
   </div>
