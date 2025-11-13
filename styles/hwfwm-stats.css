@@ -32,82 +32,60 @@
   display: block;
 }
 
-/* =====================================================
-   ATTRIBUTES SUBTAB – 2x2 BOX LAYOUT
-   ===================================================== */
+/* ============================
+   STATUS TAB – 2×2 grid layout
+   ============================ */
 
-/* The 2×2 grid container */
-.hwfwm.sheet .attributes-grid {
+.hwfwm.sheet .status-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;   /* 2 columns => 4 boxes total */
+  grid-template-columns: 1fr 1fr; /* two equal columns */
   gap: var(--gap);
 }
 
-/* Each attribute “box” (Power / Speed / Spirit / Recovery) */
-.hwfwm.sheet .attribute-box {
+.hwfwm.sheet .status-box {
   border: var(--border);
   border-radius: var(--radius);
   padding: var(--pad);
   background: #fff;
-
-  /* Make them feel like big panels */
-  min-height: 210px;
-  display: flex;
-  flex-direction: column;
 }
 
-/* Attribute box title (Power, Speed, etc.) */
-.hwfwm.sheet .attribute-box h3 {
-  margin: 0 0 6px 0;
-  font-size: 18px;
-}
-
-/* Each labeled row inside a box */
-.hwfwm.sheet .attribute-row {
+/* Rows with value / max (label, value, slash, max) */
+.hwfwm.sheet .status-row {
   display: grid;
-  grid-template-columns: 90px 1fr;
-  gap: 4px 10px;
-  margin-top: 4px;
+  grid-template-columns: 90px 1fr 20px 1fr;
+  gap: 6px;
+  align-items: center;
+  margin-bottom: 6px;
 }
 
-.hwfwm.sheet .attribute-row label {
-  font-size: 11px;
-  align-self: center;
+/* Rows with a single value (label + value only) */
+.hwfwm.sheet .status-row-2 {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 6px;
+  align-items: center;
+  margin-bottom: 6px;
 }
 
-.hwfwm.sheet .attribute-row input {
+.hwfwm.sheet .status-row input,
+.hwfwm.sheet .status-row-2 input {
   border: var(--border);
   border-radius: var(--radius);
-  padding: 4px 7px;
-  height: 26px;
+  padding: 5px 7px;
   background: #fff;
   color: #000;
 }
 
-/* If you have a special header row for Rank inline with the title */
-.hwfwm.sheet .attribute-header-row {
-  display: grid;
-  grid-template-columns: 1fr auto 110px; /* Name | "Rank" | input */
-  gap: 4px 8px;
-  margin-bottom: 4px;
-  align-items: center;
-}
-
-.hwfwm.sheet .attribute-header-row .attr-name {
-  font-size: 18px;
-  font-weight: 700;
-}
-
-.hwfwm.sheet .attribute-header-row .attr-rank-label {
-  font-size: 11px;
-}
-
-.hwfwm.sheet .attribute-header-row .attr-rank-input {
+/* Block areas for Affinities / Resistances */
+.hwfwm.sheet .status-block {
   border: var(--border);
   border-radius: var(--radius);
-  padding: 4px 7px;
-  height: 26px;
+  padding: var(--pad);
+  background: #fff;
+  min-height: 80px;
+  box-sizing: border-box;
 }
+
 
 /* =====================================================
    STATUS SUBTAB – Resources & Defenses
