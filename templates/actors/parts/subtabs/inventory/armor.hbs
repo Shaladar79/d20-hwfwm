@@ -1,1 +1,33 @@
+<div class="flexrow" style="justify-content:space-between; align-items:center;">
+  <h3 style="margin:0;">Armor</h3>
+  <button type="button" class="item-create" data-type="armor">+ Add Armor</button>
+</div>
 
+<table class="armor-table" style="margin-top:6px;">
+  <thead>
+    <tr>
+      <th style="width:28%">Name</th>
+      <th style="width:12%">Defense</th>
+      <th style="width:12%">AP</th>
+      <th style="width:12%">Depleted</th>
+      <th style="width:12%">Penalty</th>
+      <th style="width:12%">Props</th>
+      <th style="width:6%">Edit</th>
+      <th style="width:6%">🗑️</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each (sortBy itemTypes.armor "name") as |a|}}
+      <tr class="item" data-item-id="{{a._id}}">
+        <td><a class="item-edit">{{a.name}}</a></td>
+        <td>{{a.system.defense}}</td>
+        <td>{{a.system.armorPoints}}</td>
+        <td>{{a.system.armorDepleted}}</td>
+        <td>{{a.system.penalty}}</td>
+        <td>{{a.system.properties}}</td>
+        <td><button type="button" class="item-edit">Open</button></td>
+        <td><button type="button" class="item-delete" aria-label="Delete">&times;</button></td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>
