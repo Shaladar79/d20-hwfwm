@@ -1,1 +1,31 @@
+<div class="flexrow" style="justify-content:space-between; align-items:center;">
+  <h3 style="margin:0;">Weapons</h3>
+  <button type="button" class="item-create" data-type="weapon">+ Add Weapon</button>
+</div>
 
+<table class="weapons-table" style="margin-top:6px;">
+  <thead>
+    <tr>
+      <th style="width:28%">Name</th>
+      <th style="width:14%">Damage</th>
+      <th style="width:14%">Ability</th>
+      <th style="width:14%">Range</th>
+      <th style="width:14%">Props</th>
+      <th style="width:8%">Edit</th>
+      <th style="width:8%">🗑️</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each (sortBy itemTypes.weapon "name") as |w|}}
+      <tr class="item" data-item-id="{{w._id}}">
+        <td><a class="item-edit">{{w.name}}</a></td>
+        <td>{{w.system.damage}}</td>
+        <td>{{w.system.ability}}</td>
+        <td>{{w.system.range}}</td>
+        <td>{{w.system.properties}}</td>
+        <td><button type="button" class="item-edit">Open</button></td>
+        <td><button type="button" class="item-delete" aria-label="Delete">&times;</button></td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>
