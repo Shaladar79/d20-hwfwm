@@ -1,21 +1,43 @@
-<section class="card">
-  <h2>Inventory</h2>
+{{!-- INVENTORY TAB WRAPPER: Weapons | Armor | Gear | Consumables --}}
 
-  <nav class="sheet-tabs tabs" data-group="inv">
+<section class="card hwfwm-inventory-wrapper">
+
+  <nav class="sheet-tabs tabs" data-group="inventory">
     <a class="item" data-tab="weapons">Weapons</a>
     <a class="item" data-tab="armor">Armor</a>
     <a class="item" data-tab="gear">Gear</a>
+    <a class="item" data-tab="consumables">Consumables</a>
   </nav>
 
   <section class="tab-body" style="margin-top:8px;">
-    <div class="tab active" data-group="inv" data-tab="weapons">
-      {{> "systems/hwfwm-d20/templates/partials/subtabs/inventory/weapons.hbs" actor=actor itemTypes=itemTypes }}
+
+    {{!-- WEAPONS SUBTAB --}}
+    <div class="tab active" data-group="inventory" data-tab="weapons">
+      {{> "systems/hwfwm-d20/templates/actors/parts/subtabs/inventory/weapons.hbs"
+          actor=actor
+          system=system }}
     </div>
-    <div class="tab" data-group="inv" data-tab="armor">
-      {{> "systems/hwfwm-d20/templates/partials/subtabs/inventory/armor.hbs" actor=actor itemTypes=itemTypes }}
+
+    {{!-- ARMOR SUBTAB --}}
+    <div class="tab" data-group="inventory" data-tab="armor">
+      {{> "systems/hwfwm-d20/templates/actors/parts/subtabs/inventory/armor.hbs"
+          actor=actor
+          system=system }}
     </div>
-    <div class="tab" data-group="inv" data-tab="gear">
-      {{> "systems/hwfwm-d20/templates/partials/subtabs/inventory/gear.hbs" actor=actor itemTypes=itemTypes }}
+
+    {{!-- GEAR SUBTAB --}}
+    <div class="tab" data-group="inventory" data-tab="gear">
+      {{> "systems/hwfwm-d20/templates/actors/parts/subtabs/inventory/gear.hbs"
+          actor=actor
+          system=system }}
     </div>
+
+    {{!-- CONSUMABLES SUBTAB --}}
+    <div class="tab" data-group="inventory" data-tab="consumables">
+      {{> "systems/hwfwm-d20/templates/actors/parts/subtabs/inventory/consumables.hbs"
+          actor=actor
+          system=system }}
+    </div>
+
   </section>
 </section>
