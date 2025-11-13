@@ -275,6 +275,9 @@ class HWFWMPCSheet extends ActorSheet {
 
     // Change bound attribute select
     html.find(".essence-attr-select").on("change", async (ev) => {
+      ev.preventDefault();
+      ev.stopPropagation();
+
       const select = ev.currentTarget;
       const essenceKey = select.dataset.essenceKey;
       if (!essenceKey) return;
@@ -286,6 +289,9 @@ class HWFWMPCSheet extends ActorSheet {
 
     // Change ability score
     html.find(".ability-score").on("change", async (ev) => {
+      ev.preventDefault();
+      ev.stopPropagation();
+
       const input = ev.currentTarget;
       const essenceKey = input.dataset.essenceKey;
       const slotIndex = input.dataset.slotIndex;
@@ -298,6 +304,9 @@ class HWFWMPCSheet extends ActorSheet {
 
     // Toggle Active
     html.find(".ability-active").on("change", async (ev) => {
+      ev.preventDefault();
+      ev.stopPropagation();
+
       const cb = ev.currentTarget;
       const essenceKey = cb.dataset.essenceKey;
       const slotIndex = cb.dataset.slotIndex;
@@ -310,6 +319,9 @@ class HWFWMPCSheet extends ActorSheet {
 
     // Toggle Attack Ability
     html.find(".ability-attack").on("change", async (ev) => {
+      ev.preventDefault();
+      ev.stopPropagation();
+
       const cb = ev.currentTarget;
       const essenceKey = cb.dataset.essenceKey;
       const slotIndex = cb.dataset.slotIndex;
