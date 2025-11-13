@@ -1,0 +1,15 @@
+/* =====================================================
+   HWFWM v13 | SKILLS TAB
+   (Currently just a scoped placeholder – safe to edit)
+   ===================================================== */
+
+/* All Skills-tab-specific styles go under .tab.skills */
+
+.hwfwm.sheet .tab.skills {
+  /* example: you can add layout tweaks later */
+  /* padding: var(--pad); */
+}
+
+/* If you want to style the skills table later, you can use:
+.hwfwm.sheet .tab.skills .skills-table { ... }
+*/
