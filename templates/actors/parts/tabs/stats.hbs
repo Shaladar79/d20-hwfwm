@@ -1,26 +1,31 @@
-{{!-- STATS TAB WRAPPER: Attributes | Status subtabs --}}
+<!-- ===========================================================
+     PC SHEET — STATS TAB
+     Contains 2 subtabs:
+       • Attributes
+       • Status
+     =========================================================== -->
 
-<section class="card hwfwm-stats-wrapper">
+<div class="tab stats" data-group="primary" data-tab="stats">
 
-  <nav class="sheet-tabs tabs" data-group="stats">
+  <!-- ===== Subtab Navigation ===== -->
+  <nav class="sheet-tabs" data-group="stats">
     <a class="item" data-tab="attributes">Attributes</a>
     <a class="item" data-tab="status">Status</a>
   </nav>
 
-  <section class="tab-body" style="margin-top:8px;">
+  <!-- ===== Subtab Content Wrapper ===== -->
+  <section class="stats-subtabs">
 
-    <div class="tab active" data-group="stats" data-tab="attributes">
-      {{> "systems/hwfwm-d20/templates/actors/parts/subtabs/stats/attributes.hbs"
-          actor=actor
-          system=system }}
+    <!-- ATTRIBUTES SUBTAB -->
+    <div class="tab" data-group="stats" data-tab="attributes">
+      {{> "systems/hwfwm-d20/templates/actors/parts/subtabs/stats/attributes.hbs"}}
     </div>
 
+    <!-- STATUS SUBTAB -->
     <div class="tab" data-group="stats" data-tab="status">
-      {{> "systems/hwfwm-d20/templates/actors/parts/subtabs/stats/status.hbs"
-          actor=actor
-          system=system
-          showWillpower=showWillpower }}
+      {{> "systems/hwfwm-d20/templates/actors/parts/subtabs/stats/status.hbs"}}
     </div>
 
   </section>
-</section>
+
+</div>
