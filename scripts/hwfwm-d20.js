@@ -28,7 +28,8 @@ class HWFWMPCSheet extends ActorSheet {
           initial: "stats"
         }
       ],
-      dragDrop: [{ dragSelector: ".item", dropSelector: ".sheet-content" }]
+      // IMPORTANT: make the actual dashed slots the drop targets
+      dragDrop: [{ dragSelector: ".item", dropSelector: ".drop-slot" }]
     });
   }
 
@@ -108,7 +109,8 @@ class HWFWMPCSheet extends ActorSheet {
 
   /* ----------------------------- Drop Handling ----------------------------- */
   async _onDropItem(event, data) {
-    const dropTarget = event.target.closest?.(".essence-drop, .ability-drop");
+    // Because dropSelector = ".drop-slot", this will be the exact dashed box.
+    const dropTarget = event.target;
 
     // Helper for various Foundry versions
     const fromDrop =
@@ -116,89 +118,72 @@ class HWFWMPCSheet extends ActorSheet {
       Item.fromDropData ||
       foundry.documents.Item.fromDropData;
 
-    // ---------- Essence / Ability drops ----------
-    if (dropTarget) {
-      const dropped = await fromDrop.call(Item, data);
-      if (!dropped) return false;
+    // If we didn't actually hit one of our custom slots, fall back
+    if (!dropTarget.classList.contains("essence-drop") &&
+        !dropTarget.classList.contains("ability-drop")) {
+      const item = await fromDrop.call(Item, data);
+      if (!item) return false;
+      return super._onDropItem(event, data);
+    }
 
-      // Ensure the dropped doc is embedded on this actor
-      const ensureEmbedded = async (doc) => {
-        if (doc.parent === this.actor) return doc;
-        const docData = doc.toObject();
-        delete docData._id;
-        const [created] = await this.actor.createEmbeddedDocuments("Item", [docData]);
-        return created;
-      };
+    const dropped = await fromDrop.call(Item, data);
+    if (!dropped) return false;
 
-      // Essence item dropped into an Essence slot
-      if (dropTarget.classList.contains("essence-drop")) {
-        const essenceKey = dropTarget.dataset.essenceKey;
-        if (!essenceKey) return false;
+    // Ensure the dropped doc is embedded on this actor
+    const ensureEmbedded = async (doc) => {
+      if (doc.parent === this.actor) return doc;
+      const docData = doc.toObject();
+      delete docData._id;
+      const [created] = await this.actor.createEmbeddedDocuments("Item", [docData]);
+      return created;
+    };
 
-        if (dropped.type !== "essence") {
-          ui.notifications?.warn?.("Only Essence items can be dropped in Essence slots.");
-          return false;
-        }
+    // ---------- Essence item dropped into an Essence slot ----------
+    if (dropTarget.classList.contains("essence-drop")) {
+      const essenceKey = dropTarget.dataset.essenceKey;
+      if (!essenceKey) return false;
 
-        const embedded = await ensureEmbedded(dropped);
+      if (dropped.type !== "essence") {
+        ui.notifications?.warn?.("Only Essence items can be dropped in Essence slots.");
+        return false;
+      }
 
-        // Enforce distinct Essences in e1/e2/e3
-        if (["e1", "e2", "e3"].includes(essenceKey)) {
-          const ess = this.actor.system.essences ?? {};
-          for (const key of ["e1", "e2", "e3"]) {
-            if (key === essenceKey) continue;
-            if (ess[key]?.itemId === embedded.id) {
-              ui.notifications?.warn?.("Each Essence slot (1–3) must be a different Essence.");
-              return false;
-            }
+      const embedded = await ensureEmbedded(dropped);
+
+      // Enforce distinct Essences in e1/e2/e3
+      if (["e1", "e2", "e3"].includes(essenceKey)) {
+        const ess = this.actor.system.essences ?? {};
+        for (const key of ["e1", "e2", "e3"]) {
+          if (key === essenceKey) continue;
+          if (ess[key]?.itemId === embedded.id) {
+            ui.notifications?.warn?.("Each Essence slot (1–3) must be a different Essence.");
+            return false;
           }
         }
-
-        await this.actor.update({
-          [`system.essences.${essenceKey}.itemId`]: embedded.id
-        });
-        return true;
       }
 
-      // Essence Ability dropped into an Ability slot
-      if (dropTarget.classList.contains("ability-drop")) {
-        const essenceKey = dropTarget.dataset.essenceKey;
-        const slotIndex = Number(dropTarget.dataset.slotIndex ?? 0);
-        if (!essenceKey || Number.isNaN(slotIndex)) return false;
-
-        // NOTE: we intentionally do NOT check dropped.type here anymore,
-        // so your test abilities always work.
-        const embedded = await ensureEmbedded(dropped);
-
-        await this.actor.update({
-          [`system.essences.${essenceKey}.abilities.${slotIndex}.itemId`]: embedded.id
-        });
-        return true;
-      }
-
-      return false;
+      await this.actor.update({
+        [`system.essences.${essenceKey}.itemId`]: embedded.id
+      });
+      return true;
     }
 
-    // ---------- Default behavior for other drops (skills, etc.) ----------
-    const item = await fromDrop.call(Item, data);
-    if (!item) return false;
+    // ---------- Essence Ability dropped into an Ability slot ----------
+    if (dropTarget.classList.contains("ability-drop")) {
+      const essenceKey = dropTarget.dataset.essenceKey;
+      const slotIndex = Number(dropTarget.dataset.slotIndex ?? 0);
+      if (!essenceKey || Number.isNaN(slotIndex)) return false;
 
-    if (item.type === "skill") {
-      const s = foundry.utils.duplicate(item.system ?? {});
-      // Normalize both pairs so template.json & sheet are happy
-      if (s.skillType && !s.category) s.category = s.skillType;
-      if (s.attribute && !s.associatedAttribute) s.associatedAttribute = s.attribute;
-      if (s.category && !s.skillType) s.skillType = s.category;
-      if (s.associatedAttribute && !s.attribute) s.attribute = s.associatedAttribute;
-      try {
-        await item.update({ system: s }, { diff: false, recursive: false });
-      } catch (e) {
-        // Compendium items are read-only; ignore update errors from drops
-        console.warn("HWFWM-D20 | Could not normalize dropped skill fields:", e);
-      }
+      // NOTE: no type check here, so any test "essenceAbility" you made will work.
+      const embedded = await ensureEmbedded(dropped);
+
+      await this.actor.update({
+        [`system.essences.${essenceKey}.abilities.${slotIndex}.itemId`]: embedded.id
+      });
+      return true;
     }
 
-    return super._onDropItem(event, data);
+    return false;
   }
 
   /* --------------------------- Activate Listeners --------------------------- */
@@ -365,7 +350,6 @@ class HWFWMPCSheet extends ActorSheet {
 }
 
 /* ------------------------------ Item Sheets ------------------------------- */
-// Generic Item sheet (fallback)
 class HWFWMItemSheet extends ItemSheet {
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
@@ -394,21 +378,18 @@ class HWFWMSkillSheet extends ItemSheet {
   getData(options) {
     const data = super.getData(options);
 
-    // Editable for owned/world items; read-only in compendiums
     data.editable = this.isEditable && !this.item.pack;
 
-    // Build a normalized, non-destructive view for the template (compendium-safe)
     const s = foundry.utils.duplicate(data.item.system ?? {});
     if (s.skillType && !s.category) s.category = s.skillType;
     if (s.attribute && !s.associatedAttribute) s.associatedAttribute = s.attribute;
     if (s.category && !s.skillType) s.skillType = s.category;
     if (s.associatedAttribute && !s.attribute) s.attribute = s.associatedAttribute;
 
-    data.systemView = s; // used by the HBS for display
+    data.systemView = s;
     return data;
   }
 
-  /** On submit, mirror fields so both are always in-sync (for editable docs) */
   async _updateObject(event, formData) {
     const s = foundry.utils.expandObject(formData).system ?? {};
     if (s.skillType && !s.category) s.category = s.skillType;
@@ -427,7 +408,6 @@ Hooks.once("init", () => {
 
   preloadHWFWMTemplates();
 
-  // Handlebars helpers (needed by skills tab)
   Handlebars.registerHelper("array", (...args) => args.slice(0, -1));
   Handlebars.registerHelper("eq", (a, b) => a === b);
   Handlebars.registerHelper("sortBy", (array, key) => {
@@ -439,11 +419,9 @@ Hooks.once("init", () => {
     });
   });
 
-  // Actor sheet (PC)
   Actors.unregisterSheet("core", ActorSheet);
   Actors.registerSheet("hwfwm-d20", HWFWMPCSheet, { makeDefault: true, types: ["pc"] });
 
-  // Item sheets
   Items.unregisterSheet("core", ItemSheet);
   Items.registerSheet("hwfwm-d20", HWFWMSkillSheet, { types: ["skill"], makeDefault: true });
   Items.registerSheet("hwfwm-d20", HWFWMItemSheet, { types: [], makeDefault: false });
