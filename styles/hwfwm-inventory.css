@@ -1,0 +1,15 @@
+/* =====================================================
+   HWFWM v13 | INVENTORY TAB
+   (Currently a scoped placeholder – safe to edit)
+   ===================================================== */
+
+/* All Inventory-tab-specific styles go under .tab.inventory */
+
+.hwfwm.sheet .tab.inventory {
+  /* example: you can add layout tweaks later */
+  /* padding: var(--pad); */
+}
+
+/* You can later add things like:
+.hwfwm.sheet .tab.inventory .inventory-grid { ... }
+*/
