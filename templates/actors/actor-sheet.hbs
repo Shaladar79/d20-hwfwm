@@ -1,5 +1,41 @@
 <form class="hwfwm sheet actor pc" autocomplete="off">
-  <!-- Header lives inside the Stats partial so it appears on the Stats tab -->
+
+  <!-- ==================== HEADER ==================== -->
+  <header class="sheet-header flexrow">
+    <div class="profile">
+      <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" />
+    </div>
+
+    <div class="header-fields">
+      <div class="name-row">
+        <input name="name" type="text" value="{{actor.name}}" placeholder="Name" />
+      </div>
+
+      <div class="meta-row">
+        <div class="field">
+          <label>Rank</label>
+          <input type="text" name="system.details.rank" value="{{system.details.rank}}" />
+        </div>
+
+        <div class="field">
+          <label>Nature</label>
+          <input type="text" name="system.details.nature" value="{{system.details.nature}}" />
+        </div>
+
+        <div class="field">
+          <label>Role</label>
+          <input type="text" name="system.details.role" value="{{system.details.role}}" />
+        </div>
+
+        <div class="field">
+          <label>Background</label>
+          <input type="text" name="system.details.background" value="{{system.details.background}}" />
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== MAIN TABS ==================== -->
   <nav class="sheet-tabs tabs" data-group="primary">
     <a class="item" data-tab="stats">Stats</a>
     <a class="item" data-tab="skills">Skills</a>
@@ -8,32 +44,45 @@
     <a class="item" data-tab="notes">Notes</a>
   </nav>
 
+  <!-- ==================== TAB CONTENT ==================== -->
   <section class="sheet-content">
-  <div class="tab stats active" data-group="primary" data-tab="stats">
-  {{> "systems/hwfwm-d20/templates/actors/parts/tabs/stats.hbs"
-      actor=actor
-      system=system
-      showWillpower=showWillpower }}
-</div>
 
-<div class="tab" data-group="primary" data-tab="skills">
-  {{> "systems/hwfwm-d20/templates/parts/tabs/skills.hbs" actor=actor itemTypes=itemTypes }}
-</div>
+    <!-- ========== STATS TAB (has subtabs) ========== -->
+    <div class="tab stats" data-group="primary" data-tab="stats">
+      {{> "systems/hwfwm-d20/templates/actors/parts/tabs/stats.hbs"
+           actor=actor
+           system=system
+           showWillpower=showWillpower }}
+    </div>
 
-<div class="tab" data-group="primary" data-tab="abilities">
-  {{> "systems/hwfwm-d20/templates/parts/tabs/abilities.hbs" actor=actor itemTypes=itemTypes }}
-</div>
+    <!-- ========== SKILLS TAB ========== -->
+    <div class="tab skills" data-group="primary" data-tab="skills">
+      {{> "systems/hwfwm-d20/templates/actors/parts/tabs/skills.hbs"
+           actor=actor
+           system=system }}
+    </div>
 
-<div class="tab" data-group="primary" data-tab="inventory">
-  {{> "systems/hwfwm-d20/templates/parts/tabs/inventory.hbs" actor=actor itemTypes=itemTypes }}
-</div>
+    <!-- ========== ABILITIES TAB ========== -->
+    <div class="tab abilities" data-group="primary" data-tab="abilities">
+      {{> "systems/hwfwm-d20/templates/actors/parts/tabs/abilities.hbs"
+           actor=actor
+           system=system }}
+    </div>
 
-<div class="tab" data-group="primary" data-tab="notes">
-  {{> "systems/hwfwm-d20/templates/parts/tabs/notes.hbs" actor=actor system=system owner=owner editable=editable }}
-</div>
+    <!-- ========== INVENTORY TAB ========== -->
+    <div class="tab inventory" data-group="primary" data-tab="inventory">
+      {{> "systems/hwfwm-d20/templates/actors/parts/tabs/inventory.hbs"
+           actor=actor
+           system=system }}
+    </div>
+
+    <!-- ========== NOTES TAB ========== -->
+    <div class="tab notes" data-group="primary" data-tab="notes">
+      {{> "systems/hwfwm-d20/templates/actors/parts/tabs/notes.hbs"
+           actor=actor
+           system=system }}
+    </div>
 
   </section>
+
 </form>
-
-
-
