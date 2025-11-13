@@ -1,39 +1,26 @@
-{{!-- ===================================================================== --}}
-{{!-- STATS TAB WRAPPER: sub-tabs -> Attributes | Status                   --}}
-{{!-- This file is included by actor-sheet.hbs inside the main Stats tab.  --}}
-{{!-- It only manages the internal navigation; actual content lives in     --}}
-{{!--   parts/subtabs/stats/attributes.hbs                                 --}}
-{{!--   parts/subtabs/stats/status.hbs                                     --}}
-{{!-- ===================================================================== --}}
+{{!-- STATS TAB WRAPPER: Attributes | Status subtabs --}}
 
 <section class="card hwfwm-stats-wrapper">
 
-  {{!-- Sub-tab bar for the Stats page --}}
   <nav class="sheet-tabs tabs" data-group="stats">
     <a class="item" data-tab="attributes">Attributes</a>
     <a class="item" data-tab="status">Status</a>
   </nav>
 
-  {{!-- Container used by the stats tab controller in hwfwm-d20.js --}}
   <section class="tab-body" style="margin-top:8px;">
 
-    {{!-- ================== ATTRIBUTES SUBTAB ================== --}}
     <div class="tab active" data-group="stats" data-tab="attributes">
-      {{> "systems/hwfwm-d20/templates/parts/subtabs/stats/attributes.hbs"
+      {{> "systems/hwfwm-d20/templates/actors/parts/subtabs/stats/attributes.hbs"
           actor=actor
           system=system }}
     </div>
 
-    {{!-- ===================== STATUS SUBTAB ==================== --}}
     <div class="tab" data-group="stats" data-tab="status">
-      {{> "systems/hwfwm-d20/templates/parts/subtabs/stats/status.hbs"
+      {{> "systems/hwfwm-d20/templates/actors/parts/subtabs/stats/status.hbs"
           actor=actor
           system=system
           showWillpower=showWillpower }}
     </div>
-
-  </section>
-</section>
 
   </section>
 </section>
