@@ -3,13 +3,14 @@
 
   <div class="essence-grid" style="display:grid; grid-template-columns: repeat(4, 1fr); gap:12px;">
 
-    {{!-- Essence 1 --}}
+    {{!-- ================= Essence 1 ================= --}}
     <div class="essence-col" data-essence-key="e1" style="border:2px solid #000; border-radius:8px; padding:10px;">
       <div class="flexrow" style="align-items:center; justify-content:space-between;">
         <h3 style="margin:0;">Essence 1</h3>
         <small>(must be distinct)</small>
       </div>
 
+      <!-- Essence drop slot -->
       <div class="drop-slot essence-drop"
            data-drop-type="essence"
            data-essence-key="e1"
@@ -26,6 +27,7 @@
         {{/if}}
       </div>
 
+      <!-- Binding attribute -->
       <div class="flexrow" style="margin-top:8px; align-items:center; gap:6px;">
         <label style="white-space:nowrap;">Binds to Attribute:</label>
         <select class="essence-attr-select"
@@ -40,19 +42,20 @@
         </select>
       </div>
 
+      <!-- Five ability slots -->
       <div class="essence-abilities" style="margin-top:10px;">
         {{#each (array 0 1 2 3 4) as |i|}}
-          {{#with (lookup system.essencesView.e1.abilities i) as |slot|}}
-            <div class="ability-slot item-list"
+          <div class="ability-slot item-list"
+               data-essence-key="e1"
+               data-slot-index="{{i}}"
+               style="border:1px solid #000; border-radius:8px; padding:8px; margin-bottom:8px;">
+
+            <div class="drop-slot ability-drop"
+                 data-drop-type="essenceAbility"
                  data-essence-key="e1"
                  data-slot-index="{{i}}"
-                 style="border:1px solid #000; border-radius:8px; padding:8px; margin-bottom:8px;">
-
-              <div class="drop-slot ability-drop"
-                   data-drop-type="essenceAbility"
-                   data-essence-key="e1"
-                   data-slot-index="{{i}}"
-                   style="padding:6px; border:2px dashed #bbb; border-radius:6px; min-height:40px; display:flex; align-items:center; gap:8px;">
+                 style="padding:6px; border:2px dashed #bbb; border-radius:6px; min-height:40px; display:flex; align-items:center; gap:8px;">
+              {{#with (lookup system.essencesView.e1.abilities i) as |slot|}}
                 {{#if slot.itemId}}
                   <img class="ability-img" src="{{slot.img}}" width="28" height="28" alt=""/>
                   <a class="ability-edit"
@@ -68,9 +71,12 @@
                 {{else}}
                   <span>Drop an Essence Ability here</span>
                 {{/if}}
-              </div>
+              {{/with}}
+            </div>
 
-              <div class="flexrow" style="align-items:center; gap:8px; margin-top:6px;">
+            {{!-- Controls --}}
+            <div class="flexrow" style="align-items:center; gap:8px; margin-top:6px;">
+              {{#with (lookup system.essencesView.e1.abilities i) as |slot|}}
                 <label style="width:50px;">Score</label>
                 <input type="number"
                        class="ability-score"
@@ -86,38 +92,37 @@
                          data-essence-key="e1"
                          data-slot-index="{{i}}"
                          name="system.essences.e1.abilities.{{i}}.isActive"
-                         {{#if slot.isActive}}checked{{/if}}/>
+                         {{#if slot.isActive}}checked{{/if}} />
                   Active
                 </label>
 
-                {{#if slot.isActive}}
-                  <label class="checkbox">
-                    <input type="checkbox"
-                           class="ability-attack"
-                           data-essence-key="e1"
-                           data-slot-index="{{i}}"
-                           name="system.essences.e1.abilities.{{i}}.isAttack"
-                           {{#if slot.isAttack}}checked{{/if}}/>
-                    Attack Ability
-                  </label>
-                  {{#if slot.isAttack}}
-                    <button type="button"
-                            class="ability-roll"
-                            data-essence-key="e1"
-                            data-slot-index="{{i}}"
-                            title="Roll">
-                      <i class="fas fa-dice-d20"></i>
-                    </button>
-                  {{/if}}
+                <label class="checkbox">
+                  <input type="checkbox"
+                         class="ability-attack"
+                         data-essence-key="e1"
+                         data-slot-index="{{i}}"
+                         name="system.essences.e1.abilities.{{i}}.isAttack"
+                         {{#if slot.isAttack}}checked{{/if}} />
+                  Attack Ability
+                </label>
+
+                {{#if slot.isAttack}}
+                  <button type="button"
+                          class="ability-roll"
+                          data-essence-key="e1"
+                          data-slot-index="{{i}}"
+                          title="Roll">
+                    <i class="fas fa-dice-d20"></i>
+                  </button>
                 {{/if}}
-              </div>
+              {{/with}}
             </div>
-          {{/with}}
+          </div>
         {{/each}}
       </div>
     </div>
 
-    {{!-- Essence 2 --}}
+    {{!-- ================= Essence 2 ================= --}}
     <div class="essence-col" data-essence-key="e2" style="border:2px solid #000; border-radius:8px; padding:10px;">
       <div class="flexrow" style="align-items:center; justify-content:space-between;">
         <h3 style="margin:0;">Essence 2</h3>
@@ -153,16 +158,17 @@
 
       <div class="essence-abilities" style="margin-top:10px;">
         {{#each (array 0 1 2 3 4) as |i|}}
-          {{#with (lookup system.essencesView.e2.abilities i) as |slot|}}
-            <div class="ability-slot item-list"
+          <div class="ability-slot item-list"
+               data-essence-key="e2"
+               data-slot-index="{{i}}"
+               style="border:1px solid #000; border-radius:8px; padding:8px; margin-bottom:8px;">
+
+            <div class="drop-slot ability-drop"
+                 data-drop-type="essenceAbility"
                  data-essence-key="e2"
                  data-slot-index="{{i}}"
-                 style="border:1px solid #000; border-radius:8px; padding:8px; margin-bottom:8px;">
-              <div class="drop-slot ability-drop"
-                   data-drop-type="essenceAbility"
-                   data-essence-key="e2"
-                   data-slot-index="{{i}}"
-                   style="padding:6px; border:2px dashed #bbb; border-radius:6px; min-height:40px; display:flex; align-items:center; gap:8px;">
+                 style="padding:6px; border:2px dashed #bbb; border-radius:6px; min-height:40px; display:flex; align-items:center; gap:8px;">
+              {{#with (lookup system.essencesView.e2.abilities i) as |slot|}}
                 {{#if slot.itemId}}
                   <img class="ability-img" src="{{slot.img}}" width="28" height="28" alt=""/>
                   <a class="ability-edit" data-essence-key="e2" data-slot-index="{{i}}" style="font-weight:600; flex:1;">
@@ -172,8 +178,11 @@
                 {{else}}
                   <span>Drop an Essence Ability here</span>
                 {{/if}}
-              </div>
-              <div class="flexrow" style="align-items:center; gap:8px; margin-top:6px;">
+              {{/with}}
+            </div>
+
+            <div class="flexrow" style="align-items:center; gap:8px; margin-top:6px;">
+              {{#with (lookup system.essencesView.e2.abilities i) as |slot|}}
                 <label style="width:50px;">Score</label>
                 <input type="number"
                        class="ability-score"
@@ -188,33 +197,31 @@
                          data-essence-key="e2"
                          data-slot-index="{{i}}"
                          name="system.essences.e2.abilities.{{i}}.isActive"
-                         {{#if slot.isActive}}checked{{/if}}/>
+                         {{#if slot.isActive}}checked{{/if}} />
                   Active
                 </label>
-                {{#if slot.isActive}}
-                  <label class="checkbox">
-                    <input type="checkbox"
-                           class="ability-attack"
-                           data-essence-key="e2"
-                           data-slot-index="{{i}}"
-                           name="system.essences.e2.abilities.{{i}}.isAttack"
-                           {{#if slot.isAttack}}checked{{/if}}/>
-                    Attack Ability
-                  </label>
-                  {{#if slot.isAttack}}
-                    <button type="button" class="ability-roll" data-essence-key="e2" data-slot-index="{{i}}">
-                      <i class="fas fa-dice-d20"></i>
-                    </button>
-                  {{/if}}
+                <label class="checkbox">
+                  <input type="checkbox"
+                         class="ability-attack"
+                         data-essence-key="e2"
+                         data-slot-index="{{i}}"
+                         name="system.essences.e2.abilities.{{i}}.isAttack"
+                         {{#if slot.isAttack}}checked{{/if}} />
+                  Attack Ability
+                </label>
+                {{#if slot.isAttack}}
+                  <button type="button" class="ability-roll" data-essence-key="e2" data-slot-index="{{i}}">
+                    <i class="fas fa-dice-d20"></i>
+                  </button>
                 {{/if}}
-              </div>
+              {{/with}}
             </div>
-          {{/with}}
+          </div>
         {{/each}}
       </div>
     </div>
 
-    {{!-- Essence 3 --}}
+    {{!-- ================= Essence 3 ================= --}}
     <div class="essence-col" data-essence-key="e3" style="border:2px solid #000; border-radius:8px; padding:10px;">
       <div class="flexrow" style="align-items:center; justify-content:space-between;">
         <h3 style="margin:0;">Essence 3</h3>
@@ -249,16 +256,16 @@
 
       <div class="essence-abilities" style="margin-top:10px;">
         {{#each (array 0 1 2 3 4) as |i|}}
-          {{#with (lookup system.essencesView.e3.abilities i) as |slot|}}
-            <div class="ability-slot item-list"
+          <div class="ability-slot item-list"
+               data-essence-key="e3"
+               data-slot-index="{{i}}"
+               style="border:1px solid #000; border-radius:8px; padding:8px; margin-bottom:8px;">
+            <div class="drop-slot ability-drop"
+                 data-drop-type="essenceAbility"
                  data-essence-key="e3"
                  data-slot-index="{{i}}"
-                 style="border:1px solid #000; border-radius:8px; padding:8px; margin-bottom:8px;">
-              <div class="drop-slot ability-drop"
-                   data-drop-type="essenceAbility"
-                   data-essence-key="e3"
-                   data-slot-index="{{i}}"
-                   style="padding:6px; border:2px dashed #bbb; border-radius:6px; min-height:40px; display:flex; align-items:center; gap:8px;">
+                 style="padding:6px; border:2px dashed #bbb; border-radius:6px; min-height:40px; display:flex; align-items:center; gap:8px;">
+              {{#with (lookup system.essencesView.e3.abilities i) as |slot|}}
                 {{#if slot.itemId}}
                   <img class="ability-img" src="{{slot.img}}" width="28" height="28" alt=""/>
                   <a class="ability-edit" data-essence-key="e3" data-slot-index="{{i}}" style="font-weight:600; flex:1;">
@@ -268,8 +275,10 @@
                 {{else}}
                   <span>Drop an Essence Ability here</span>
                 {{/if}}
-              </div>
-              <div class="flexrow" style="align-items:center; gap:8px; margin-top:6px;">
+              {{/with}}
+            </div>
+            <div class="flexrow" style="align-items:center; gap:8px; margin-top:6px;">
+              {{#with (lookup system.essencesView.e3.abilities i) as |slot|}}
                 <label style="width:50px;">Score</label>
                 <input type="number"
                        class="ability-score"
@@ -284,33 +293,31 @@
                          data-essence-key="e3"
                          data-slot-index="{{i}}"
                          name="system.essences.e3.abilities.{{i}}.isActive"
-                         {{#if slot.isActive}}checked{{/if}}/>
+                         {{#if slot.isActive}}checked{{/if}} />
                   Active
                 </label>
-                {{#if slot.isActive}}
-                  <label class="checkbox">
-                    <input type="checkbox"
-                           class="ability-attack"
-                           data-essence-key="e3"
-                           data-slot-index="{{i}}"
-                           name="system.essences.e3.abilities.{{i}}.isAttack"
-                           {{#if slot.isAttack}}checked{{/if}}/>
-                    Attack Ability
-                  </label>
-                  {{#if slot.isAttack}}
-                    <button type="button" class="ability-roll" data-essence-key="e3" data-slot-index="{{i}}">
-                      <i class="fas fa-dice-d20"></i>
-                    </button>
-                  {{/if}}
+                <label class="checkbox">
+                  <input type="checkbox"
+                         class="ability-attack"
+                         data-essence-key="e3"
+                         data-slot-index="{{i}}"
+                         name="system.essences.e3.abilities.{{i}}.isAttack"
+                         {{#if slot.isAttack}}checked{{/if}} />
+                  Attack Ability
+                </label>
+                {{#if slot.isAttack}}
+                  <button type="button" class="ability-roll" data-essence-key="e3" data-slot-index="{{i}}">
+                    <i class="fas fa-dice-d20"></i>
+                  </button>
                 {{/if}}
-              </div>
+              {{/with}}
             </div>
-          {{/with}}
+          </div>
         {{/each}}
       </div>
     </div>
 
-    {{!-- Confluence --}}
+    {{!-- ================= Confluence ================= --}}
     <div class="essence-col" data-essence-key="confluence" style="border:2px solid #000; border-radius:8px; padding:10px;">
       <div class="flexrow" style="align-items:center; justify-content:space-between;">
         <h3 style="margin:0;">Confluence</h3>
@@ -347,16 +354,16 @@
 
       <div class="essence-abilities" style="margin-top:10px;">
         {{#each (array 0 1 2 3 4) as |i|}}
-          {{#with (lookup system.essencesView.confluence.abilities i) as |slot|}}
-            <div class="ability-slot item-list"
+          <div class="ability-slot item-list"
+               data-essence-key="confluence"
+               data-slot-index="{{i}}"
+               style="border:1px solid #000; border-radius:8px; padding:8px; margin-bottom:8px;">
+            <div class="drop-slot ability-drop"
+                 data-drop-type="essenceAbility"
                  data-essence-key="confluence"
                  data-slot-index="{{i}}"
-                 style="border:1px solid #000; border-radius:8px; padding:8px; margin-bottom:8px;">
-              <div class="drop-slot ability-drop"
-                   data-drop-type="essenceAbility"
-                   data-essence-key="confluence"
-                   data-slot-index="{{i}}"
-                   style="padding:6px; border:2px dashed #bbb; border-radius:6px; min-height:40px; display:flex; align-items:center; gap:8px;">
+                 style="padding:6px; border:2px dashed #bbb; border-radius:6px; min-height:40px; display:flex; align-items:center; gap:8px;">
+              {{#with (lookup system.essencesView.confluence.abilities i) as |slot|}}
                 {{#if slot.itemId}}
                   <img class="ability-img" src="{{slot.img}}" width="28" height="28" alt=""/>
                   <a class="ability-edit" data-essence-key="confluence" data-slot-index="{{i}}" style="font-weight:600; flex:1;">
@@ -366,8 +373,10 @@
                 {{else}}
                   <span>Drop an Essence Ability here</span>
                 {{/if}}
-              </div>
-              <div class="flexrow" style="align-items:center; gap:8px; margin-top:6px;">
+              {{/with}}
+            </div>
+            <div class="flexrow" style="align-items:center; gap:8px; margin-top:6px;">
+              {{#with (lookup system.essencesView.confluence.abilities i) as |slot|}}
                 <label style="width:50px;">Score</label>
                 <input type="number"
                        class="ability-score"
@@ -382,35 +391,33 @@
                          data-essence-key="confluence"
                          data-slot-index="{{i}}"
                          name="system.essences.confluence.abilities.{{i}}.isActive"
-                         {{#if slot.isActive}}checked{{/if}}/>
+                         {{#if slot.isActive}}checked{{/if}} />
                   Active
                 </label>
-                {{#if slot.isActive}}
-                  <label class="checkbox">
-                    <input type="checkbox"
-                           class="ability-attack"
-                           data-essence-key="confluence"
-                           data-slot-index="{{i}}"
-                           name="system.essences.confluence.abilities.{{i}}.isAttack"
-                           {{#if slot.isAttack}}checked{{/if}}/>
-                    Attack Ability
-                  </label>
-                  {{#if slot.isAttack}}
-                    <button type="button" class="ability-roll" data-essence-key="confluence" data-slot-index="{{i}}">
-                      <i class="fas fa-dice-d20"></i>
-                    </button>
-                  {{/if}}
+                <label class="checkbox">
+                  <input type="checkbox"
+                         class="ability-attack"
+                         data-essence-key="confluence"
+                         data-slot-index="{{i}}"
+                         name="system.essences.confluence.abilities.{{i}}.isAttack"
+                         {{#if slot.isAttack}}checked{{/if}} />
+                  Attack Ability
+                </label>
+                {{#if slot.isAttack}}
+                  <button type="button" class="ability-roll" data-essence-key="confluence" data-slot-index="{{i}}">
+                    <i class="fas fa-dice-d20"></i>
+                  </button>
                 {{/if}}
-              </div>
+              {{/with}}
             </div>
-          {{/with}}
+          </div>
         {{/each}}
       </div>
     </div>
 
   </div>
 
-  {{!-- Racial Abilities --}}
+  <!-- ===== Racial Abilities Section ===== -->
   <div class="racial-block" style="margin-top:16px;">
     <h3>Racial Abilities</h3>
     <p style="margin:0 0 8px;">Up to 6 abilities (auto-populated from Race items on the sheet).</p>
