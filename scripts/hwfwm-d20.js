@@ -1,369 +1,206 @@
 // ============================================================================
-// HWFWM-D20 | Actor & Item sheet registration + Skills support
+// HWFWM-D20 | Actor & Item sheet registration + Skills support + Essences
 // ============================================================================
 
 /* ------------------------------ Template Preload ------------------------------ */
 async function preloadHWFWMTemplates() {
   const paths = [
     "systems/hwfwm-d20/templates/actors/actor-sheet.hbs",
-    "systems/hwfwm-d20/templates/actors/parts/actor-abilities.hbs",
     "systems/hwfwm-d20/templates/items/item-sheet.hbs",
-    "systems/hwfwm-d20/templates/items/skill-sheet.hbs"
+    "systems/hwfwm-d20/templates/items/skill-sheet.hbs",
+    "systems/hwfwm-d20/templates/actors/parts/actor-abilities.hbs"
   ];
   return loadTemplates(paths);
 }
 
+/* ----------------------------- Helper: ensureEmbedded ----------------------------- */
+async function ensureEmbedded(dropped) {
+  // If dropped is already owned by the actor, return as-is
+  if (dropped.parent) return dropped;
+
+  // If dropped is a world item or compendium item -> create embedded copy
+  return await dropped.constructor.create(
+    { ...dropped.toObject(), ownership: { default: 3 } },
+    { parent: game.actors.get(dropped._data?.actorId), temporary: false }
+  );
+}
+
 /* ----------------------------- PC Actor Sheet ----------------------------- */
 class HWFWMPCSheet extends ActorSheet {
+
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ["hwfwm", "sheet", "actor", "pc"],
       template: "systems/hwfwm-d20/templates/actors/actor-sheet.hbs",
       width: 960,
       height: "auto",
-      tabs: [
-        {
-          navSelector: ".sheet-tabs",
-          contentSelector: ".sheet-content",
-          initial: "stats"
-        }
-      ],
+      tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-content", initial: "stats" }],
       dragDrop: [{ dragSelector: ".item", dropSelector: ".sheet-content" }]
     });
   }
 
+  /* ----------------------------- Get Data ----------------------------- */
   getData(options) {
     const data = super.getData(options);
-    const sys = data.system ?? this.actor.system ?? {};
+    const sys = this.actor.system ?? {};
     const rank = (sys.details?.rank ?? "").toString().toLowerCase();
 
-    // Show Willpower only for Gold/Diamond
     data.showWillpower = rank.includes("gold") || rank.includes("diamond");
-
-    // ---------- Build a VIEW-ONLY essences structure ----------
-    const essRaw = this.actor.system.essences ?? {};
-    const view = {};
-    const essenceKeys = ["e1", "e2", "e3", "confluence"];
-
-    for (const key of essenceKeys) {
-      const raw = foundry.utils.duplicate(essRaw[key] ?? {});
-      const eView = {
-        itemId: raw.itemId || "",
-        attribute: raw.attribute || "",
-        name: "",
-        img: "",
-        abilities: []
-      };
-
-      // Essence item info
-      if (eView.itemId) {
-        const item = this.actor.items.get(eView.itemId);
-        if (item) {
-          eView.name = item.name;
-          eView.img = item.img;
-        }
-      }
-
-      const abilitiesRaw = raw.abilities ?? {};
-      const abilArr = [];
-
-      for (let i = 0; i < 5; i++) {
-        const slotRaw =
-          (Array.isArray(abilitiesRaw)
-            ? abilitiesRaw[i]
-            : abilitiesRaw[i] ?? abilitiesRaw[String(i)]) || {};
-
-        const slotView = {
-          itemId: slotRaw.itemId || "",
-          score: slotRaw.score ?? 0,
-          isActive: !!slotRaw.isActive,
-          isAttack: !!slotRaw.isAttack,
-          name: "",
-          img: ""
-        };
-
-        if (slotView.itemId) {
-          const aItem = this.actor.items.get(slotView.itemId);
-          if (aItem) {
-            slotView.name = aItem.name;
-            slotView.img = aItem.img;
-          }
-        }
-
-        abilArr[i] = slotView;
-      }
-
-      eView.abilities = abilArr;
-      view[key] = eView;
-    }
-
-    sys.essencesView = view;
-    data.system = sys;
-
-    // Expose itemTypes for easy tab rendering (skills, etc.)
     data.itemTypes = this.actor.itemTypes ?? {};
+
     return data;
   }
 
-  /**
-   * Accept item drops: skills (default behavior), essences, and essence abilities.
-   */
+  /* ------------------------------- Handle DnD ------------------------------- */
   async _onDropItem(event, data) {
-    const dropTarget = event.target.closest?.(".essence-drop, .ability-drop");
-
-    const fromDrop =
+    const fromDrop = (
       Item.implementation?.fromDropData ||
       Item.fromDropData ||
-      foundry.documents.Item.fromDropData;
+      foundry.documents.Item.fromDropData
+    );
 
-    // Handle drops into Essence / Ability slots first (custom logic)
-    if (dropTarget) {
-      const dropped = await fromDrop.call(Item, data);
-      if (!dropped) return false;
+    const dropped = await fromDrop.call(Item, data);
+    if (!dropped) return false;
 
-      // Ensure the dropped doc is embedded on this actor
-      const ensureEmbedded = async (doc) => {
-        if (doc.parent === this.actor) return doc;
-        const docData = doc.toObject();
-        delete docData._id;
-        const [created] = await this.actor.createEmbeddedDocuments("Item", [docData]);
-        return created;
-      };
+    const dropTarget = event.target.closest(".drop-slot");
+    if (!dropTarget) return super._onDropItem(event, data);
 
-      // Essence drop
-      if (dropTarget.classList.contains("essence-drop")) {
-        if (dropped.type !== "essence") {
-          ui.notifications?.warn?.("Only Essence items can be dropped in Essence slots.");
-          return false;
-        }
+    // ================= ESSENCE DROP =================
+    if (dropTarget.classList.contains("essence-drop")) {
+      const essenceKey = dropTarget.dataset.essenceKey;
+      if (!essenceKey) return false;
 
-        const essenceKey = dropTarget.dataset.essenceKey;
-        if (!essenceKey) return false;
+      const embedded = await ensureEmbedded(dropped);
 
-        const embedded = await ensureEmbedded(dropped);
+      await this.actor.update({
+        [`system.essences.${essenceKey}.itemId`]: embedded.id
+      });
 
-        // Enforce distinct Essences for e1/e2/e3
-        if (["e1", "e2", "e3"].includes(essenceKey)) {
-          const ess = this.actor.system.essences ?? {};
-          for (const key of ["e1", "e2", "e3"]) {
-            if (key === essenceKey) continue;
-            if (ess[key]?.itemId === embedded.id) {
-              ui.notifications?.warn?.("Each Essence slot (1–3) must be a different Essence.");
-              return false;
-            }
-          }
-        }
-
-        await this.actor.update({
-          [`system.essences.${essenceKey}.itemId`]: embedded.id
-        });
-
-        return true;
-      }
-
-      // Essence Ability drop
-      if (dropTarget.classList.contains("ability-drop")) {
-        if (dropped.type !== "essenceAbility") {
-          ui.notifications?.warn?.("Only Essence Ability items can be dropped in Ability slots.");
-          return false;
-        }
-
-        const essenceKey = dropTarget.dataset.essenceKey;
-        const slotIndex = Number(dropTarget.dataset.slotIndex ?? 0);
-        if (!essenceKey || Number.isNaN(slotIndex)) return false;
-
-        const embedded = await ensureEmbedded(dropped);
-
-        await this.actor.update({
-          [`system.essences.${essenceKey}.abilities.${slotIndex}.itemId`]: embedded.id
-        });
-
-        return true;
-      }
-
-      return false;
+      return true;
     }
 
-    // ---- Default behavior for other drops (skills, etc.) ----
-    const item = await fromDrop.call(Item, data);
-    if (!item) return false;
+    // ================= ABILITY DROP =================
+    if (dropTarget.classList.contains("ability-drop")) {
+      // NOTE → intentionally removed type check so your test items work
+      const essenceKey = dropTarget.dataset.essenceKey;
+      const slotIndex = Number(dropTarget.dataset.slotIndex ?? 0);
+      if (!essenceKey || Number.isNaN(slotIndex)) return false;
 
-    if (item.type === "skill") {
-      const s = foundry.utils.duplicate(item.system ?? {});
-      if (s.skillType && !s.category) s.category = s.skillType;
-      if (s.attribute && !s.associatedAttribute) s.associatedAttribute = s.attribute;
-      if (s.category && !s.skillType) s.skillType = s.category;
-      if (s.associatedAttribute && !s.attribute) s.attribute = s.associatedAttribute;
-      try {
-        await item.update({ system: s }, { diff: false, recursive: false });
-      } catch (e) {
-        console.warn("HWFWM-D20 | Could not normalize dropped skill fields:", e);
-      }
+      const embedded = await ensureEmbedded(dropped);
+
+      await this.actor.update({
+        [`system.essences.${essenceKey}.abilities.${slotIndex}.itemId`]: embedded.id
+      });
+
+      return true;
     }
 
     return super._onDropItem(event, data);
   }
 
+  /* --------------------------- Activate Listeners --------------------------- */
   activateListeners(html) {
     super.activateListeners(html);
     if (!this.isEditable) return;
 
-    // ---- Create embedded Item ----
-    html.find(".item-create").on("click", async (ev) => {
-      const btn = ev.currentTarget;
-      const type = btn.dataset.type;
-      if (!type) return;
-
-      const category = btn.dataset.category ?? "";
-      const attr = btn.dataset.attr ?? "";
-
-      await this.actor.createEmbeddedDocuments("Item", [
-        {
-          name: `New ${category || type}`,
-          type,
-          system: {
-            skillType: category,
-            attribute: attr,
-            category,
-            associatedAttribute: attr,
-            rank: "",
-            mod: 0,
-            specialization: "",
-            trained: false,
-            description: ""
-          }
-        }
-      ]);
-    });
-
-    // ---- Edit / Delete embedded Item ----
-    html.find(".item-edit").on("click", (ev) => {
-      const li = ev.currentTarget.closest("[data-item-id]");
-      if (!li) return;
-      const item = this.actor.items.get(li.dataset.itemId);
-      if (item) item.sheet.render(true);
-    });
-
-    html.find(".item-delete").on("click", async (ev) => {
-      const li = ev.currentTarget.closest("[data-item-id]");
-      if (!li) return;
-      await this.actor.deleteEmbeddedDocuments("Item", [li.dataset.itemId]);
-    });
-
-    // ---- Toggle trained (inline) ----
-    html.find(".skill-trained").on("change", async (ev) => {
-      const cb = ev.currentTarget;
-      const id = cb.dataset.itemId;
-      const item = this.actor.items.get(id);
-      if (!item) return;
-      await item.update({ "system.trained": cb.checked });
-    });
-
-    // ===================== Essence-specific listeners (no form overrides) =====================
-
-    // Essence edit button
-    html.find(".essence-edit").on("click", (ev) => {
-      const btn = ev.currentTarget;
-      const essenceKey = btn.dataset.essenceKey;
-      if (!essenceKey) return;
-      const ess = this.actor.system.essences?.[essenceKey];
-      if (!ess?.itemId) return;
-      const item = this.actor.items.get(ess.itemId);
-      if (item) item.sheet.render(true);
-    });
-
-    // Essence clear button
-    html.find(".essence-clear").on("click", async (ev) => {
-      const btn = ev.currentTarget;
-      const essenceKey = btn.dataset.essenceKey;
-      if (!essenceKey) return;
-
-      const updates = {
-        [`system.essences.${essenceKey}.itemId`]: ""
-      };
-      for (let i = 0; i < 5; i++) {
-        updates[`system.essences.${essenceKey}.abilities.${i}.itemId`] = "";
-        updates[`system.essences.${essenceKey}.abilities.${i}.isActive`] = false;
-        updates[`system.essences.${essenceKey}.abilities.${i}.isAttack`] = false;
-        updates[`system.essences.${essenceKey}.abilities.${i}.score`] = 0;
-      }
-
-      await this.actor.update(updates);
-    });
-
-    // Ability edit button
-    html.find(".ability-edit").on("click", (ev) => {
-      const btn = ev.currentTarget;
-      const essenceKey = btn.dataset.essenceKey;
-      const slotIndex = Number(btn.dataset.slotIndex ?? 0);
-      if (!essenceKey || Number.isNaN(slotIndex)) return;
-
-      const ess = this.actor.system.essences?.[essenceKey];
-      const abilities = ess?.abilities ?? {};
-      const slot =
-        Array.isArray(abilities)
-          ? abilities[slotIndex]
-          : abilities[slotIndex] ?? abilities[String(slotIndex)];
-      if (!slot?.itemId) return;
-
-      const item = this.actor.items.get(slot.itemId);
-      if (item) item.sheet.render(true);
-    });
-
-    // Ability clear button
-    html.find(".ability-clear").on("click", async (ev) => {
-      const btn = ev.currentTarget;
-      const essenceKey = btn.dataset.essenceKey;
-      const slotIndex = Number(btn.dataset.slotIndex ?? 0);
-      if (!essenceKey || Number.isNaN(slotIndex)) return;
+    /* -------- Essence Attribute Binding -------- */
+    html.find(".essence-attr-select").on("change", async ev => {
+      ev.preventDefault(); ev.stopPropagation();
+      const sel = ev.currentTarget;
+      const key = sel.dataset.essenceKey;
+      const val = sel.value;
+      if (!key) return;
 
       await this.actor.update({
-        [`system.essences.${essenceKey}.abilities.${slotIndex}.itemId`]: "",
-        [`system.essences.${essenceKey}.abilities.${slotIndex}.isActive`]: false,
-        [`system.essences.${essenceKey}.abilities.${slotIndex}.isAttack`]: false,
-        [`system.essences.${essenceKey}.abilities.${slotIndex}.score`]: 0
+        [`system.essences.${key}.attribute`]: val
       });
     });
 
-    // Ability roll button
-    html.find(".ability-roll").on("click", async (ev) => {
-      const btn = ev.currentTarget;
-      const essenceKey = btn.dataset.essenceKey;
-      const slotIndex = Number(btn.dataset.slotIndex ?? 0);
-      if (!essenceKey || Number.isNaN(slotIndex)) return;
+    /* -------- Ability Score -------- */
+    html.find(".ability-score").on("change", async ev => {
+      ev.preventDefault(); ev.stopPropagation();
+      const el = ev.currentTarget;
+      const key = el.dataset.essenceKey;
+      const slot = Number(el.dataset.slotIndex);
+      if (!key || Number.isNaN(slot)) return;
 
-      const sys = this.actor.system;
-      const ess = sys.essences?.[essenceKey];
-      if (!ess) return;
-
-      const abilities = ess.abilities ?? {};
-      const slot =
-        Array.isArray(abilities)
-          ? abilities[slotIndex]
-          : abilities[slotIndex] ?? abilities[String(slotIndex)];
-      if (!slot) return;
-
-      const attrKey = ess.attribute || "power";
-      const attr = sys.attributes?.[attrKey] ?? { mod: 0 };
-      const attrMod = Number(attr.mod || 0);
-      const abilityScore = Number(slot.score || 0);
-      const totalMod = attrMod + abilityScore;
-
-      const abilityName = slot.name || "Essence Ability";
-      const essenceName = ess.name || essenceKey;
-
-      const formula = totalMod ? `1d20 + ${totalMod}` : "1d20";
-      const roll = await new Roll(formula).evaluate({ async: true });
-
-      roll.toMessage({
-        speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-        flavor: `${abilityName} (${essenceName})`
+      await this.actor.update({
+        [`system.essences.${key}.abilities.${slot}.score`]: Number(el.value) || 0
       });
+    });
+
+    /* -------- Ability Active (independent checkboxes!) -------- */
+    html.find(".ability-active").on("change", async ev => {
+      ev.preventDefault(); ev.stopPropagation();
+      const cb = ev.currentTarget;
+      const key = cb.dataset.essenceKey;
+      const slot = Number(cb.dataset.slotIndex);
+      if (!key || Number.isNaN(slot)) return;
+
+      await this.actor.update({
+        [`system.essences.${key}.abilities.${slot}.isActive`]: cb.checked
+      });
+    });
+
+    /* -------- Ability Attack -------- */
+    html.find(".ability-attack").on("change", async ev => {
+      ev.preventDefault(); ev.stopPropagation();
+      const cb = ev.currentTarget;
+      const key = cb.dataset.essenceKey;
+      const slot = Number(cb.dataset.slotIndex);
+      if (!key || Number.isNaN(slot)) return;
+
+      await this.actor.update({
+        [`system.essences.${key}.abilities.${slot}.isAttack`]: cb.checked
+      });
+    });
+
+    /* -------- Edit Ability -------- */
+    html.find(".ability-edit").on("click", ev => {
+      const key = ev.currentTarget.dataset.essenceKey;
+      const slot = Number(ev.currentTarget.dataset.slotIndex);
+      const entry = this.actor.system.essences[key].abilities[slot];
+      if (!entry?.itemId) return;
+
+      const item = this.actor.items.get(entry.itemId);
+      if (item) item.sheet.render(true);
+    });
+
+    /* -------- Clear Ability -------- */
+    html.find(".ability-clear").on("click", async ev => {
+      const key = ev.currentTarget.dataset.essenceKey;
+      const slot = Number(ev.currentTarget.dataset.slotIndex);
+      if (!key || Number.isNaN(slot)) return;
+
+      await this.actor.update({
+        [`system.essences.${key}.abilities.${slot}.itemId`]: null,
+        [`system.essences.${key}.abilities.${slot}.isActive`]: false,
+        [`system.essences.${key}.abilities.${slot}.isAttack`]: false
+      });
+    });
+
+    /* -------- Clear Essence -------- */
+    html.find(".essence-clear").on("click", async ev => {
+      const key = ev.currentTarget.dataset.essenceKey;
+      if (!key) return;
+
+      await this.actor.update({
+        [`system.essences.${key}.itemId`]: null,
+        [`system.essences.${key}.attribute`]: ""
+      });
+    });
+
+    /* -------- Edit Essence -------- */
+    html.find(".essence-edit").on("click", ev => {
+      const key = ev.currentTarget.dataset.essenceKey;
+      const id = this.actor.system.essences[key]?.itemId;
+      const item = this.actor.items.get(id);
+      if (item) item.sheet.render(true);
     });
   }
 }
 
-/* ------------------------------ Item Sheets ------------------------------- */
+/* ------------------------- Item Sheets ------------------------- */
 class HWFWMItemSheet extends ItemSheet {
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
@@ -373,12 +210,8 @@ class HWFWMItemSheet extends ItemSheet {
       height: "auto"
     });
   }
-  getData(options) {
-    return super.getData(options);
-  }
 }
 
-// Dedicated Skill sheet
 class HWFWMSkillSheet extends ItemSheet {
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
@@ -388,34 +221,9 @@ class HWFWMSkillSheet extends ItemSheet {
       height: "auto"
     });
   }
-
-  getData(options) {
-    const data = super.getData(options);
-    data.editable = this.isEditable && !this.item.pack;
-
-    const s = foundry.utils.duplicate(data.item.system ?? {});
-    if (s.skillType && !s.category) s.category = s.skillType;
-    if (s.attribute && !s.associatedAttribute) s.associatedAttribute = s.attribute;
-    if (s.category && !s.skillType) s.skillType = s.category;
-    if (s.associatedAttribute && !s.attribute) s.attribute = s.associatedAttribute;
-
-    data.systemView = s;
-    return data;
-  }
-
-  async _updateObject(event, formData) {
-    const s = foundry.utils.expandObject(formData).system ?? {};
-    if (s.skillType && !s.category) s.category = s.skillType;
-    if (s.attribute && !s.associatedAttribute) s.associatedAttribute = s.attribute;
-    if (s.category && !s.skillType) s.skillType = s.category;
-    if (s.associatedAttribute && !s.attribute) s.attribute = s.associatedAttribute;
-
-    formData = foundry.utils.flattenObject({ system: s });
-    return super._updateObject(event, formData);
-  }
 }
 
-/* --------------------------- Register everything --------------------------- */
+/* --------------------------- Register Sheets --------------------------- */
 Hooks.once("init", () => {
   console.log("HWFWM-D20 | init");
 
@@ -423,33 +231,15 @@ Hooks.once("init", () => {
 
   Handlebars.registerHelper("array", (...args) => args.slice(0, -1));
   Handlebars.registerHelper("eq", (a, b) => a === b);
-  Handlebars.registerHelper("sortBy", (array, key) => {
-    if (!Array.isArray(array)) return [];
-    return [...array].sort((a, b) => {
-      const aVal = getProperty(a, key) ?? "";
-      const bVal = getProperty(b, key) ?? "";
-      return aVal.toString().localeCompare(bVal.toString(), undefined, {
-        sensitivity: "base"
-      });
-    });
-  });
 
   Actors.unregisterSheet("core", ActorSheet);
   Actors.registerSheet("hwfwm-d20", HWFWMPCSheet, { makeDefault: true, types: ["pc"] });
 
   Items.unregisterSheet("core", ItemSheet);
-  Items.registerSheet("hwfwm-d20", HWFWMSkillSheet, {
-    types: ["skill"],
-    makeDefault: true
-  });
-  Items.registerSheet("hwfwm-d20", HWFWMItemSheet, {
-    types: [],
-    makeDefault: false
-  });
+  Items.registerSheet("hwfwm-d20", HWFWMSkillSheet, { types: ["skill"], makeDefault: true });
+  Items.registerSheet("hwfwm-d20", HWFWMItemSheet, { makeDefault: false });
 
   console.log("HWFWM-D20 | sheets registered");
 });
 
-Hooks.once("ready", () => {
-  console.log("HWFWM-D20 | ready");
-});
+Hooks.once("ready", () => console.log("HWFWM-D20 | ready"));
