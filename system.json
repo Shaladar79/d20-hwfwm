@@ -16,9 +16,12 @@
   "esmodules": [
     "scripts/hwfwm-d20.js"
   ],
-  "styles": [
-    "styles/hwfwm-d20.css"
-  ],
+ "styles": [
+  "styles/hwfwm-base.css",
+  "styles/hwfwm-stats.css",
+  "styles/hwfwm-abilities.css"
+],
+
  "packs": [
   {
     "name": "hwfwm-skills-power",
@@ -89,6 +92,7 @@
   "license": "LICENSE",
   "readme": "https://github.com/Shaladar79/d20-hwfwm#readme"
 }
+
 
 
 
