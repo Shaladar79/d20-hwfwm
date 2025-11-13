@@ -1,6 +1,5 @@
 {
   "id": "hwfwm-d20",
-  "type": "system",
   "title": "HWFWM System (d20)",
   "description": "Custom d20-based system using Power, Speed, Spirit, and Recovery as core attributes.",
   "version": "0.1.0.8",
@@ -95,6 +94,7 @@
   "license": "LICENSE",
   "readme": "https://github.com/Shaladar79/d20-hwfwm#readme"
 }
+
 
 
 
