@@ -1,37 +1,5 @@
 <form class="hwfwm sheet actor pc" autocomplete="off">
-  <!-- HEADER -->
-  <header class="sheet-header flexrow">
-    <div class="profile">
-      <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" />
-    </div>
-
-    <div class="header-fields">
-      <div class="name-row">
-        <input name="name" type="text" value="{{actor.name}}" placeholder="Name" />
-      </div>
-
-      <div class="meta-row flexrow">
-        <div class="field">
-          <label>Rank</label>
-          <input type="text" name="system.details.rank" value="{{system.details.rank}}" placeholder="Iron / Bronze / Silver / Gold / Diamond"/>
-        </div>
-        <div class="field">
-          <label>Nature</label>
-          <input type="text" name="system.details.nature" value="{{system.details.nature}}" placeholder="Race / Origin"/>
-        </div>
-        <div class="field">
-          <label>Role</label>
-          <input type="text" name="system.details.role" value="{{system.details.role}}" placeholder="Combat / Support / etc."/>
-        </div>
-        <div class="field">
-          <label>Background</label>
-          <input type="text" name="system.details.background" value="{{system.details.background}}" placeholder="Upbringing / History"/>
-        </div>
-      </div>
-    </div>
-  </header>
-
-  <!-- TABS -->
+  <!-- Header lives inside the Stats partial so it appears on the Stats tab -->
   <nav class="sheet-tabs tabs" data-group="primary">
     <a class="item" data-tab="stats">Stats</a>
     <a class="item" data-tab="skills">Skills</a>
@@ -40,253 +8,25 @@
     <a class="item" data-tab="notes">Notes</a>
   </nav>
 
-  <!-- BODY (SCROLLS: .sheet-content matches your CSS) -->
   <section class="sheet-content">
-    <!-- ===================== STATS ===================== -->
-    <div class="tab stats active" data-group="primary" data-tab="stats">
-      <section class="flexrow">
-        <!-- LEFT: ATTRIBUTES -->
-        <section class="attributes card">
-          <h2>Attributes</h2>
-
-          <div class="attributes-grid">
-            <!-- POWER -->
-            <div class="attribute">
-              <div class="attr-header">
-                <div class="attr-label">Power</div>
-                <label class="mini">Rank</label>
-                <input class="attr-rank" type="text" name="system.attributes.power.rank" value="{{system.attributes.power.rank}}" />
-              </div>
-
-              <label>Base</label>
-              <input type="number" name="system.attributes.power.base" value="{{system.attributes.power.base}}" />
-
-              <label>Rank Score</label>
-              <input type="number" name="system.attributes.power.rankScore" value="{{system.attributes.power.rankScore}}" />
-
-              <label>Mod</label>
-              <input type="number" name="system.attributes.power.mod" value="{{system.attributes.power.mod}}" />
-            </div>
-
-            <!-- SPEED -->
-            <div class="attribute">
-              <div class="attr-header">
-                <div class="attr-label">Speed</div>
-                <label class="mini">Rank</label>
-                <input class="attr-rank" type="text" name="system.attributes.speed.rank" value="{{system.attributes.speed.rank}}" />
-              </div>
-
-              <label>Base</label>
-              <input type="number" name="system.attributes.speed.base" value="{{system.attributes.speed.base}}" />
-
-              <label>Rank Score</label>
-              <input type="number" name="system.attributes.speed.rankScore" value="{{system.attributes.speed.rankScore}}" />
-
-              <label>Mod</label>
-              <input type="number" name="system.attributes.speed.mod" value="{{system.attributes.speed.mod}}" />
-            </div>
-
-            <!-- SPIRIT -->
-            <div class="attribute">
-              <div class="attr-header">
-                <div class="attr-label">Spirit</div>
-                <label class="mini">Rank</label>
-                <input class="attr-rank" type="text" name="system.attributes.spirit.rank" value="{{system.attributes.spirit.rank}}" />
-              </div>
-
-              <label>Base</label>
-              <input type="number" name="system.attributes.spirit.base" value="{{system.attributes.spirit.base}}" />
-
-              <label>Rank Score</label>
-              <input type="number" name="system.attributes.spirit.rankScore" value="{{system.attributes.spirit.rankScore}}" />
-
-              <label>Mod</label>
-              <input type="number" name="system.attributes.spirit.mod" value="{{system.attributes.spirit.mod}}" />
-            </div>
-
-            <!-- RECOVERY -->
-            <div class="attribute">
-              <div class="attr-header">
-                <div class="attr-label">Recovery</div>
-                <label class="mini">Rank</label>
-                <input class="attr-rank" type="text" name="system.attributes.recovery.rank" value="{{system.attributes.recovery.rank}}" />
-              </div>
-
-              <label>Base</label>
-              <input type="number" name="system.attributes.recovery.base" value="{{system.attributes.recovery.base}}" />
-
-              <label>Rank Score</label>
-              <input type="number" name="system.attributes.recovery.rankScore" value="{{system.attributes.recovery.rankScore}}" />
-
-              <label>Mod</label>
-              <input type="number" name="system.attributes.recovery.mod" value="{{system.attributes.recovery.mod}}" />
-            </div>
-          </div>
-        </section>
-
-        <!-- RIGHT: RESOURCES + DEFENSES -->
-        <section class="resources-and-defenses card">
-          <h2>Resources</h2>
-
-          <div class="resources-grid">
-            <!-- Life Force -->
-            <div class="res">
-              <label>Life Force</label>
-              <input type="number" name="system.resources.lifeforce.value" value="{{system.resources.lifeforce.value}}" />
-              <span>/</span>
-              <input type="number" name="system.resources.lifeforce.max" value="{{system.resources.lifeforce.max}}" />
-            </div>
-
-            <!-- Armor -->
-            <div class="res">
-              <label>Armor</label>
-              <input type="number" name="system.resources.armor.value" value="{{system.resources.armor.value}}" />
-              <span>/</span>
-              <input type="number" name="system.resources.armor.max" value="{{system.resources.armor.max}}" />
-            </div>
-
-            <!-- Shielding (uncapped) -->
-            <div class="res">
-              <label>Shielding</label>
-              <input type="number" name="system.resources.shielding.value" value="{{system.resources.shielding.value}}" />
-            </div>
-
-            <!-- Mana -->
-            <div class="res">
-              <label>Mana</label>
-              <input type="number" name="system.resources.mana.value" value="{{system.resources.mana.value}}" />
-              <span>/</span>
-              <input type="number" name="system.resources.mana.max" value="{{system.resources.mana.max}}" />
-            </div>
-
-            <!-- Stamina -->
-            <div class="res">
-              <label>Stamina</label>
-              <input type="number" name="system.resources.stamina.value" value="{{system.resources.stamina.value}}" />
-              <span>/</span>
-              <input type="number" name="system.resources.stamina.max" value="{{system.resources.stamina.max}}" />
-            </div>
-
-            <!-- Trauma -->
-            <div class="res">
-              <label>Trauma</label>
-              <input type="number" name="system.resources.trauma.value" value="{{system.resources.trauma.value}}" />
-              <span>/</span>
-              <input type="number" name="system.resources.trauma.max" value="{{system.resources.trauma.max}}" />
-            </div>
-
-            <!-- Resolve -->
-            <div class="res">
-              <label>Resolve</label>
-              <input type="number" name="system.resources.resolve.value" value="{{system.resources.resolve.value}}" />
-              <span>/</span>
-              <input type="number" name="system.resources.resolve.max" value="{{system.resources.resolve.max}}" />
-            </div>
-
-            <!-- Willpower (Gold/Diamond only) -->
-            {{#if showWillpower}}
-            <div class="res">
-              <label>Willpower</label>
-              <input type="number" name="system.resources.willpower.value" value="{{system.resources.willpower.value}}" />
-              <span>/</span>
-              <input type="number" name="system.resources.willpower.max" value="{{system.resources.willpower.max}}" />
-            </div>
-            {{/if}}
-          </div>
-
-          <h2>Defenses</h2>
-          <div class="defenses-grid">
-            <div class="def">
-              <label>Defense</label>
-              <input type="number" name="system.defenses.defense.value" value="{{system.defenses.defense.value}}" />
-            </div>
-            <div class="def">
-              <label>Reaction</label>
-              <input type="number" name="system.defenses.reaction.value" value="{{system.defenses.reaction.value}}" />
-            </div>
-          </div>
-        </section>
-      </section>
+    <div class="tab active" data-group="primary" data-tab="stats">
+      {{> "systems/hwfwm-d20/templates/partials/tabs/stats.hbs" actor=actor system=system showWillpower=showWillpower }}
     </div>
 
-    <!-- ===================== TAB: SKILLS ===================== -->
-    <div class="tab skills" data-group="primary" data-tab="skills">
-      <section class="card">
-        <h2>Skills</h2>
-
-        {{!-- Render groups in this fixed order (Combat first) --}}
-        {{#each (array "Combat" "Power" "Speed" "Spirit" "Recovery" "Crafting" "Knowledge") as |cat|}}
-          <div class="skill-group" style="margin-top:12px;">
-            <div class="flexrow" style="justify-content:space-between; align-items:center;">
-              <h3 style="margin:0;">{{cat}}</h3>
-              <button
-                type="button"
-                class="item-create"
-                data-type="skill"
-                data-category="{{cat}}"
-                data-attr="{{#if (eq cat "Power")}}power{{else if (eq cat "Speed")}}speed{{else if (eq cat "Spirit")}}spirit{{else if (eq cat "Recovery")}}recovery{{else if (eq cat "Knowledge")}}spirit{{else}}power{{/if}}"
-              >
-                + Add {{cat}} Skill
-              </button>
-            </div>
-
-            <table class="skills-table" style="margin-top:6px;">
-              <thead>
-                <tr>
-                  <th style="width:22%">Name</th>
-                  <th style="width:12%">Attribute</th>
-                  <th style="width:10%">Rank</th>
-                  <th style="width:8%">Mod</th>
-                  <th style="width:28%">Specialization</th>
-                  <th style="width:10%">Trained</th>
-                  <th style="width:6%">Edit</th>
-                  <th style="width:4%">🗑️</th>
-                </tr>
-              </thead>
-              <tbody>
-                {{#each (sortBy ../itemTypes.skill "name") as |skill|}}
-                  {{#if (eq skill.system.category cat)}}
-                    <tr class="item" data-item-id="{{skill._id}}">
-                      <td><a class="item-edit">{{skill.name}}</a></td>
-                      <td>{{skill.system.associatedAttribute}}</td>
-                      <td>{{skill.system.rank}}</td>
-                      <td>{{skill.system.mod}}</td>
-                      <td>{{skill.system.specialization}}</td>
-                      <td>
-                        <input class="skill-trained" type="checkbox" data-item-id="{{skill._id}}" {{#if skill.system.trained}}checked{{/if}} />
-                      </td>
-                      <td><button type="button" class="item-edit">Open</button></td>
-                      <td><button type="button" class="item-delete" aria-label="Delete">&times;</button></td>
-                    </tr>
-                  {{/if}}
-                {{/each}}
-              </tbody>
-            </table>
-          </div>
-        {{/each}}
-      </section>
+    <div class="tab" data-group="primary" data-tab="skills">
+      {{> "systems/hwfwm-d20/templates/partials/tabs/skills.hbs" actor=actor itemTypes=itemTypes }}
     </div>
 
-    <!-- ===================== TAB: ABILITIES ===================== -->
-    <div class="tab abilities" data-group="primary" data-tab="abilities">
-      {{> "systems/hwfwm-d20/templates/actors/parts/actor-abilities.hbs"}}
+    <div class="tab" data-group="primary" data-tab="abilities">
+      {{> "systems/hwfwm-d20/templates/partials/tabs/abilities.hbs" actor=actor itemTypes=itemTypes }}
     </div>
 
-    <!-- ===================== TAB: INVENTORY ===================== -->
-    <div class="tab inventory" data-group="primary" data-tab="inventory">
-      <section class="card"><h2>Inventory</h2><p>Coming soon.</p></section>
+    <div class="tab" data-group="primary" data-tab="inventory">
+      {{> "systems/hwfwm-d20/templates/partials/tabs/inventory.hbs" actor=actor itemTypes=itemTypes }}
     </div>
 
-    <!-- ===================== TAB: NOTES ===================== -->
-    <div class="tab notes" data-group="primary" data-tab="notes">
-      <section class="card">
-        <h2>Biography</h2>
-        {{editor system.notes.biography target="system.notes.biography" button=true owner=owner editable=editable}}
-      </section>
-      <section class="card">
-        <h2>GM Notes</h2>
-        {{editor system.notes.gmNotes target="system.notes.gmNotes" button=true owner=owner editable=editable}}
-      </section>
+    <div class="tab" data-group="primary" data-tab="notes">
+      {{> "systems/hwfwm-d20/templates/partials/tabs/notes.hbs" actor=actor system=system owner=owner editable=editable }}
     </div>
   </section>
 </form>
