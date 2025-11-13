@@ -2,15 +2,43 @@
 // HWFWM-D20 | Actor & Item sheet registration + Skills + Essences
 // ============================================================================
 
-/* ------------------------------ Template Preload ------------------------------ */
 async function preloadHWFWMTemplates() {
   const paths = [
-    "systems/hwfwm-d20/templates/actors/actor-sheet.hbs",
-    "systems/hwfwm-d20/templates/actors/parts/actor-abilities.hbs",
-    "systems/hwfwm-d20/templates/items/item-sheet.hbs",
-    "systems/hwfwm-d20/templates/items/skill-sheet.hbs"
+    "systems/hwfwm-d20/templates/partials/tabs/stats.hbs",
+    "systems/hwfwm-d20/templates/partials/tabs/skills.hbs",
+    "systems/hwfwm-d20/templates/partials/tabs/abilities.hbs",
+    "systems/hwfwm-d20/templates/partials/tabs/inventory.hbs",
+    "systems/hwfwm-d20/templates/partials/tabs/notes.hbs",
+    "systems/hwfwm-d20/templates/partials/subtabs/inventory/weapons.hbs",
+    "systems/hwfwm-d20/templates/partials/subtabs/inventory/armor.hbs",
+    "systems/hwfwm-d20/templates/partials/subtabs/inventory/gear.hbs"
   ];
   return loadTemplates(paths);
+}
+
+Hooks.once("init", async () => {
+  console.log("HWFWM-D20 | init");
+
+  // Helpers for templates (you already added these; keep them)
+  Handlebars.registerHelper("array", (...args) => args.slice(0, -1));
+  Handlebars.registerHelper("eq", (a, b) => a === b);
+  Handlebars.registerHelper("sortBy", (arr, key) => {
+    if (!Array.isArray(arr)) return [];
+    const get = (o, k) => k.split(".").reduce((p, c) => p?.[c], o) ?? "";
+    return [...arr].sort((a, b) => get(a, key).toString().localeCompare(get(b, key).toString(), undefined, { sensitivity: "base" }));
+  });
+
+  await preloadHWFWMTemplates();
+
+  // Register sheets (your existing code)
+  Actors.unregisterSheet("core", ActorSheet);
+  Actors.registerSheet("hwfwm-d20", HWFWMPCSheet, { makeDefault: true, types: ["pc"] });
+  Items.unregisterSheet("core", ItemSheet);
+  Items.registerSheet("hwfwm-d20", HWFWMItemSheet, { makeDefault: true });
+
+  console.log("HWFWM-D20 | sheets registered");
+});
+
 }
 
 /* ============================================================================ */
@@ -403,3 +431,4 @@ Hooks.once("init", () => {
 Hooks.once("ready", () => {
   console.log("HWFWM-D20 | ready");
 });
+
