@@ -9,9 +9,13 @@
   </nav>
 
   <section class="sheet-content">
-   <div class="tab active" data-group="primary" data-tab="stats">
-  {{> "systems/hwfwm-d20/templates/parts/tabs/stats.hbs" actor=actor system=system showWillpower=showWillpower }}
+  <div class="tab stats active" data-group="primary" data-tab="stats">
+  {{> "systems/hwfwm-d20/templates/actors/parts/tabs/stats.hbs"
+      actor=actor
+      system=system
+      showWillpower=showWillpower }}
 </div>
+
 
 <div class="tab" data-group="primary" data-tab="skills">
   {{> "systems/hwfwm-d20/templates/parts/tabs/skills.hbs" actor=actor itemTypes=itemTypes }}
@@ -31,4 +35,5 @@
 
   </section>
 </form>
+
 
