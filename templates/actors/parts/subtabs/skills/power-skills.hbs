@@ -1,2 +1,110 @@
-<h3>Combat Skills</h3>
-<p>(Combat skills layout will go here.)</p>
+<div class="skills-subtab-inner">
+  <h3>Power Skills</h3>
+  <div class="skill-table">
+
+    {{!-- Athletics --}}
+    <div class="skill-row">
+      <div class="skill-name"
+           data-tooltip="Physical performance such as running, jumping, climbing, or swimming. Used for most raw strength-based movement challenges.">
+        Athletics
+      </div>
+      <label class="skill-trained">
+        <input type="checkbox" name="system.skills.power.athletics.trained" />
+        Trained
+      </label>
+      <div class="skill-rolls">
+        <button type="button"
+                class="skill-roll untrained"
+                data-skill="power.athletics"
+                data-trained="false">
+          Untrained
+        </button>
+        <button type="button"
+                class="skill-roll trained"
+                data-skill="power.athletics"
+                data-trained="true">
+          Trained
+        </button>
+      </div>
+    </div>
+
+    {{!-- Endurance --}}
+    <div class="skill-row">
+      <div class="skill-name"
+           data-tooltip="Resisting fatigue, pushing through exhaustion, surviving harsh conditions through stamina.">
+        Endurance
+      </div>
+      <label class="skill-trained">
+        <input type="checkbox" name="system.skills.power.endurance.trained" />
+        Trained
+      </label>
+      <div class="skill-rolls">
+        <button type="button"
+                class="skill-roll untrained"
+                data-skill="power.endurance"
+                data-trained="false">
+          Untrained
+        </button>
+        <button type="button"
+                class="skill-roll trained"
+                data-skill="power.endurance"
+                data-trained="true">
+          Trained
+        </button>
+      </div>
+    </div>
+
+    {{!-- Intimidation --}}
+    <div class="skill-row">
+      <div class="skill-name"
+           data-tooltip="Coercing or influencing others through physical presence, threat, or sheer dominance.">
+        Intimidation
+      </div>
+      <label class="skill-trained">
+        <input type="checkbox" name="system.skills.power.intimidation.trained" />
+        Trained
+      </label>
+      <div class="skill-rolls">
+        <button type="button"
+                class="skill-roll untrained"
+                data-skill="power.intimidation"
+                data-trained="false">
+          Untrained
+        </button>
+        <button type="button"
+                class="skill-roll trained"
+                data-skill="power.intimidation"
+                data-trained="true">
+          Trained
+        </button>
+      </div>
+    </div>
+
+    {{!-- Might --}}
+    <div class="skill-row">
+      <div class="skill-name"
+           data-tooltip="Displays of brute force — breaking objects, lifting massive weight, overpowering obstacles.">
+        Might
+      </div>
+      <label class="skill-trained">
+        <input type="checkbox" name="system.skills.power.might.trained" />
+        Trained
+      </label>
+      <div class="skill-rolls">
+        <button type="button"
+                class="skill-roll untrained"
+                data-skill="power.might"
+                data-trained="false">
+          Untrained
+        </button>
+        <button type="button"
+                class="skill-roll trained"
+                data-skill="power.might"
+                data-trained="true">
+          Trained
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>
