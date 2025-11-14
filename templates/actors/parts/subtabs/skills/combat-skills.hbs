@@ -1,2 +1,219 @@
-<h3>Combat Skills</h3>
-<p>(Combat skills layout will go here.)</p>
+<div class="skills-subtab-inner">
+  <h3>Combat Skills</h3>
+
+  {{!-- POWER-BASED COMBAT --}}
+  <h4>Power-Based Combat</h4>
+  <div class="skill-table">
+
+    {{!-- Brawl --}}
+    <div class="skill-row">
+      <div class="skill-name"
+           data-tooltip="Unarmed strikes, martial arts, and improvised weapons — raw close-quarters combat.">
+        Brawl
+      </div>
+      <label class="skill-trained">
+        <input type="checkbox" name="system.skills.combat.brawl.trained" />
+        Trained
+      </label>
+      <div class="skill-rolls">
+        <button type="button" class="skill-roll untrained"
+                data-skill="combat.brawl" data-trained="false">
+          Untrained
+        </button>
+        <button type="button" class="skill-roll trained"
+                data-skill="combat.brawl" data-trained="true">
+          Trained
+        </button>
+      </div>
+    </div>
+
+    {{!-- Grappling --}}
+    <div class="skill-row">
+      <div class="skill-name"
+           data-tooltip="Wrestling, throws, locks, and physical restraint of opponents.">
+        Grappling
+      </div>
+      <label class="skill-trained">
+        <input type="checkbox" name="system.skills.combat.grappling.trained" />
+        Trained
+      </label>
+      <div class="skill-rolls">
+        <button type="button" class="skill-roll untrained"
+                data-skill="combat.grappling" data-trained="false">
+          Untrained
+        </button>
+        <button type="button" class="skill-roll trained"
+                data-skill="combat.grappling" data-trained="true">
+          Trained
+        </button>
+      </div>
+    </div>
+
+    {{!-- Heavy Melee --}}
+    <div class="skill-row">
+      <div class="skill-name"
+           data-tooltip="Two-handed weapons that rely on power and momentum (greatswords, greataxes, halberds, etc.).">
+        Heavy Melee
+      </div>
+      <label class="skill-trained">
+        <input type="checkbox" name="system.skills.combat.heavyMelee.trained" />
+        Trained
+      </label>
+      <div class="skill-rolls">
+        <button type="button" class="skill-roll untrained"
+                data-skill="combat.heavyMelee" data-trained="false">
+          Untrained
+        </button>
+        <button type="button" class="skill-roll trained"
+                data-skill="combat.heavyMelee" data-trained="true">
+          Trained
+        </button>
+      </div>
+    </div>
+
+    {{!-- Medium Melee --}}
+    <div class="skill-row">
+      <div class="skill-name"
+           data-tooltip="One-handed strength-based melee weapons (swords, axes, maces, etc.).">
+        Medium Melee
+      </div>
+      <label class="skill-trained">
+        <input type="checkbox" name="system.skills.combat.mediumMelee.trained" />
+        Trained
+      </label>
+      <div class="skill-rolls">
+        <button type="button" class="skill-roll untrained"
+                data-skill="combat.mediumMelee" data-trained="false">
+          Untrained
+        </button>
+        <button type="button" class="skill-roll trained"
+                data-skill="combat.mediumMelee" data-trained="true">
+          Trained
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  {{!-- SPEED-BASED COMBAT --}}
+  <h4 style="margin-top:12px;">Speed-Based Combat</h4>
+  <div class="skill-table">
+
+    {{!-- Light Melee --}}
+    <div class="skill-row">
+      <div class="skill-name"
+           data-tooltip="Small, agile blades or finesse weapons (daggers, shortswords, rapiers, etc.).">
+        Light Melee
+      </div>
+      <label class="skill-trained">
+        <input type="checkbox" name="system.skills.combat.lightMelee.trained" />
+        Trained
+      </label>
+      <div class="skill-rolls">
+        <button type="button" class="skill-roll untrained"
+                data-skill="combat.lightMelee" data-trained="false">
+          Untrained
+        </button>
+        <button type="button" class="skill-roll trained"
+                data-skill="combat.lightMelee" data-trained="true">
+          Trained
+        </button>
+      </div>
+    </div>
+
+    {{!-- Ranged Weapons --}}
+    <div class="skill-row">
+      <div class="skill-name"
+           data-tooltip="Bows, crossbows, firearms, blowguns, or other projectile weapons.">
+        Ranged Weapons
+      </div>
+      <label class="skill-trained">
+        <input type="checkbox" name="system.skills.combat.rangedWeapons.trained" />
+        Trained
+      </label>
+      <div class="skill-rolls">
+        <button type="button" class="skill-roll untrained"
+                data-skill="combat.rangedWeapons" data-trained="false">
+          Untrained
+        </button>
+        <button type="button" class="skill-roll trained"
+                data-skill="combat.rangedWeapons" data-trained="true">
+          Trained
+        </button>
+      </div>
+    </div>
+
+    {{!-- Thrown Weapons --}}
+    <div class="skill-row">
+      <div class="skill-name"
+           data-tooltip="Knives, darts, axes, or any weapon designed to be thrown with precision.">
+        Thrown Weapons
+      </div>
+      <label class="skill-trained">
+        <input type="checkbox" name="system.skills.combat.thrownWeapons.trained" />
+        Trained
+      </label>
+      <div class="skill-rolls">
+        <button type="button" class="skill-roll untrained"
+                data-skill="combat.thrownWeapons" data-trained="false">
+          Untrained
+        </button>
+        <button type="button" class="skill-roll trained"
+                data-skill="combat.thrownWeapons" data-trained="true">
+          Trained
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  {{!-- SPIRIT-BASED COMBAT --}}
+  <h4 style="margin-top:12px;">Spirit-Based Combat</h4>
+  <div class="skill-table">
+
+    {{!-- Arcane Weaponry --}}
+    <div class="skill-row">
+      <div class="skill-name"
+           data-tooltip="Using wands, staves, spellguns, or enchanted tools as direct combat weapons.">
+        Arcane Weaponry
+      </div>
+      <label class="skill-trained">
+        <input type="checkbox" name="system.skills.combat.arcaneWeaponry.trained" />
+        Trained
+      </label>
+      <div class="skill-rolls">
+        <button type="button" class="skill-roll untrained"
+                data-skill="combat.arcaneWeaponry" data-trained="false">
+          Untrained
+        </button>
+        <button type="button" class="skill-roll trained"
+                data-skill="combat.arcaneWeaponry" data-trained="true">
+          Trained
+        </button>
+      </div>
+    </div>
+
+    {{!-- Spellcraft --}}
+    <div class="skill-row">
+      <div class="skill-name"
+           data-tooltip="Accuracy, control, and potency when casting spells offensively or defensively.">
+        Spellcraft
+      </div>
+      <label class="skill-trained">
+        <input type="checkbox" name="system.skills.combat.spellcraft.trained" />
+        Trained
+      </label>
+      <div class="skill-rolls">
+        <button type="button" class="skill-roll untrained"
+                data-skill="combat.spellcraft" data-trained="false">
+          Untrained
+        </button>
+        <button type="button" class="skill-roll trained"
+                data-skill="combat.spellcraft" data-trained="true">
+          Trained
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>
