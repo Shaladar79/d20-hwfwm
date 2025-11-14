@@ -1,2 +1,182 @@
-<h3>Combat Skills</h3>
-<p>(Combat skills layout will go here.)</p>
+<div class="skills-subtab-inner">
+  <h3>Crafting Skills</h3>
+  <div class="skill-table">
+
+    {{!-- Alchemy --}}
+    <div class="skill-row">
+      <div class="skill-name"
+           data-tooltip="Creating potions, elixirs, and magical compounds using reagents and arcane processes.">
+        Alchemy
+      </div>
+      <label class="skill-trained">
+        <input type="checkbox" name="system.skills.crafting.alchemy.trained" />
+        Trained
+      </label>
+      <div class="skill-rolls">
+        <button type="button" class="skill-roll untrained"
+                data-skill="crafting.alchemy" data-trained="false">
+          Untrained
+        </button>
+        <button type="button" class="skill-roll trained"
+                data-skill="crafting.alchemy" data-trained="true">
+          Trained
+        </button>
+      </div>
+    </div>
+
+    {{!-- Cooking --}}
+    <div class="skill-row">
+      <div class="skill-name"
+           data-tooltip="Preparing meals and consumables that restore vitality or grant temporary effects.">
+        Cooking
+      </div>
+      <label class="skill-trained">
+        <input type="checkbox" name="system.skills.crafting.cooking.trained" />
+        Trained
+      </label>
+      <div class="skill-rolls">
+        <button type="button" class="skill-roll untrained"
+                data-skill="crafting.cooking" data-trained="false">
+          Untrained
+        </button>
+        <button type="button" class="skill-roll trained"
+                data-skill="crafting.cooking" data-trained="true">
+          Trained
+        </button>
+      </div>
+    </div>
+
+    {{!-- Enchanting --}}
+    <div class="skill-row">
+      <div class="skill-name"
+           data-tooltip="Imbuing objects with magical energy to create charms, artifacts, or permanent enchantments.">
+        Enchanting
+      </div>
+      <label class="skill-trained">
+        <input type="checkbox" name="system.skills.crafting.enchanting.trained" />
+        Trained
+      </label>
+      <div class="skill-rolls">
+        <button type="button" class="skill-roll untrained"
+                data-skill="crafting.enchanting" data-trained="false">
+          Untrained
+        </button>
+        <button type="button" class="skill-roll trained"
+                data-skill="crafting.enchanting" data-trained="true">
+          Trained
+        </button>
+      </div>
+    </div>
+
+    {{!-- Engineering --}}
+    <div class="skill-row">
+      <div class="skill-name"
+           data-tooltip="Designing, constructing, and maintaining machines, mechanisms, or magitech constructs requiring technical precision.">
+        Engineering
+      </div>
+      <label class="skill-trained">
+        <input type="checkbox" name="system.skills.crafting.engineering.trained" />
+        Trained
+      </label>
+      <div class="skill-rolls">
+        <button type="button" class="skill-roll untrained"
+                data-skill="crafting.engineering" data-trained="false">
+          Untrained
+        </button>
+        <button type="button" class="skill-roll trained"
+                data-skill="crafting.engineering" data-trained="true">
+          Trained
+        </button>
+      </div>
+    </div>
+
+    {{!-- Jewelcrafting --}}
+    <div class="skill-row">
+      <div class="skill-name"
+           data-tooltip="Shaping and setting gems or crystals to create decorative or enchanted jewelry.">
+        Jewelcrafting
+      </div>
+      <label class="skill-trained">
+        <input type="checkbox" name="system.skills.crafting.jewelcrafting.trained" />
+        Trained
+      </label>
+      <div class="skill-rolls">
+        <button type="button" class="skill-roll untrained"
+                data-skill="crafting.jewelcrafting" data-trained="false">
+          Untrained
+        </button>
+        <button type="button" class="skill-roll trained"
+                data-skill="crafting.jewelcrafting" data-trained="true">
+          Trained
+        </button>
+      </div>
+    </div>
+
+    {{!-- Smithing --}}
+    <div class="skill-row">
+      <div class="skill-name"
+           data-tooltip="Forging, shaping, and repairing metal weapons, armor, and tools through heat, strength, and precision.">
+        Smithing
+      </div>
+      <label class="skill-trained">
+        <input type="checkbox" name="system.skills.crafting.smithing.trained" />
+        Trained
+      </label>
+      <div class="skill-rolls">
+        <button type="button" class="skill-roll untrained"
+                data-skill="crafting.smithing" data-trained="false">
+          Untrained
+        </button>
+        <button type="button" class="skill-roll trained"
+                data-skill="crafting.smithing" data-trained="true">
+          Trained
+        </button>
+      </div>
+    </div>
+
+    {{!-- Textiles --}}
+    <div class="skill-row">
+      <div class="skill-name"
+           data-tooltip="Crafting and repairing garments, cloth armor, and woven materials using fabrics, threads, and leathers.">
+        Textiles
+      </div>
+      <label class="skill-trained">
+        <input type="checkbox" name="system.skills.crafting.textiles.trained" />
+        Trained
+      </label>
+      <div class="skill-rolls">
+        <button type="button" class="skill-roll untrained"
+                data-skill="crafting.textiles" data-trained="false">
+          Untrained
+        </button>
+        <button type="button" class="skill-roll trained"
+                data-skill="crafting.textiles" data-trained="true">
+          Trained
+        </button>
+      </div>
+    </div>
+
+    {{!-- Woodworking --}}
+    <div class="skill-row">
+      <div class="skill-name"
+           data-tooltip="Shaping wood into tools, weapons, furniture, or other crafted objects with craftsmanship and strength.">
+        Woodworking
+      </div>
+      <label class="skill-trained">
+        <input type="checkbox" name="system.skills.crafting.woodworking.trained" />
+        Trained
+      </label>
+      <div class="skill-rolls">
+        <button type="button" class="skill-roll untrained"
+                data-skill="crafting.woodworking" data-trained="false">
+          Untrained
+        </button>
+        <button type="button" class="skill-roll trained"
+                data-skill="crafting.woodworking" data-trained="true">
+          Trained
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>
