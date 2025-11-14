@@ -1,134 +1,108 @@
+// systems/hwfwm-d20/scripts/hwfwm-d20.js
 // ============================================================================
-// HWFWM-D20 | Actor & Item sheet registration + Template Preloading
+// HWFWM-D20 | Actor & Item sheet registration + Tabs/Subtabs support
 // ============================================================================
-
-/* ---------------------- Handlebars Helpers ---------------------- */
-function registerHWFWMHandlebarsHelpers() {
-  // (array "a" "b" "c") -> ["a","b","c"]
-  Handlebars.registerHelper("array", function () {
-    const args = Array.from(arguments);
-    args.pop(); // remove Handlebars options object
-    return args;
-  });
-
-  // (eq a b)
-  Handlebars.registerHelper("eq", function (a, b) {
-    return a === b;
-  });
-
-  // (sortBy collection "name" or "system.field")
-  Handlebars.registerHelper("sortBy", function (collection, field) {
-    if (!Array.isArray(collection)) return [];
-    const path = (field || "").split(".");
-
-    const getValue = (obj) =>
-      path.reduce(
-        (v, key) => (v && v[key] !== undefined ? v[key] : undefined),
-        obj
-      );
-
-    const cloned = collection.slice();
-    cloned.sort((a, b) => {
-      const av = getValue(a) ?? "";
-      const bv = getValue(b) ?? "";
-      if (av < bv) return -1;
-      if (av > bv) return 1;
-      return 0;
-    });
-    return cloned;
-  });
-}
 
 /* ----------------------------- PC Actor Sheet ----------------------------- */
 class HWFWMPCSheet extends ActorSheet {
   static get defaultOptions() {
-    return mergeObject(super.defaultOptions, {
+    return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ["hwfwm", "sheet", "actor", "pc"],
       template: "systems/hwfwm-d20/templates/actors/actor-sheet.hbs",
       width: 960,
       height: "auto",
-
       tabs: [
-        // Primary sheet tabs (Stats, Skills, Inventory, Abilities, Notes)
         {
-          navSelector: ".sheet-tabs[data-group='primary']",
+          navSelector: ".sheet-tabs",
           contentSelector: ".sheet-content",
           initial: "stats"
-        },
-
-        // Subtabs for Stats: Attributes / Status
-        {
-          navSelector: ".sheet-tabs[data-group='stats']",
-          contentSelector: ".stats-subtabs",
-          initial: "attributes"
-        },
-
-        // Subtabs for Inventory: Weapons / Armor / Gear / Consumables
-        {
-          navSelector: ".sheet-tabs[data-group='inventory']",
-          contentSelector: ".inventory-subtabs",
-          initial: "weapons"
         }
       ]
     });
   }
 
+  /** Inject extra data into the sheet */
   getData(options) {
     const data = super.getData(options);
-    const sys = this.actor.system ?? {};
-    const rank = (sys.details?.rank ?? "").toString().toLowerCase();
+    const sys  = this.actor.system ?? {};
 
-    // Show Willpower only for Gold or Diamond
+    const rank = (sys.details?.rank ?? "").toString().toLowerCase();
     data.showWillpower = rank.includes("gold") || rank.includes("diamond");
 
-    // Expose item types (skills, etc.)
+    // Expose itemTypes for easy use on tabs
     data.itemTypes = this.actor.itemTypes ?? {};
 
     return data;
   }
 
+  /** Activate listeners for sheet controls */
   activateListeners(html) {
     super.activateListeners(html);
     if (!this.isEditable) return;
 
-    // CREATE item
-    html.find(".item-create").on("click", async (ev) => {
-      const { type, category, attr } = ev.currentTarget.dataset;
+    // ---------------- Subtabs (Stats, Skills, Inventory, etc.) -------------
+    html.find(".subtabs").each((_, elem) => {
+      const $block   = $(elem);
+      const $buttons = $block.find(".subtab-btn");
+
+      $buttons.on("click", ev => {
+        const $btn   = $(ev.currentTarget);
+        const target = $btn.data("subtab");
+        if (!target) return;
+
+        // Update buttons
+        $buttons.removeClass("active");
+        $btn.addClass("active");
+
+        // Subtab containers are within the same .card
+        const $card = $block.closest(".card");
+        const $tabs = $card.find(".subtab");
+
+        $tabs.removeClass("active");
+        $card.find(`.subtab[data-subtab='${target}']`).addClass("active");
+      });
+    });
+
+    // ---------------- Embedded Item Controls (skills, etc.) -----------------
+    html.find(".item-create").on("click", async ev => {
+      const btn = ev.currentTarget;
+      const type = btn.dataset.type;
       if (!type) return;
+
+      const category = btn.dataset.category ?? "";
+      const attr     = btn.dataset.attr ?? "";
 
       await this.actor.createEmbeddedDocuments("Item", [
         {
           name: `New ${category || type}`,
           type,
           system: {
-            category: category ?? "",
-            associatedAttribute: attr ?? ""
+            category,
+            associatedAttribute: attr
           }
         }
       ]);
     });
 
-    // EDIT item
-    html.find(".item-edit").on("click", (ev) => {
+    html.find(".item-edit").on("click", ev => {
       const li = ev.currentTarget.closest("[data-item-id]");
       if (!li) return;
       const item = this.actor.items.get(li.dataset.itemId);
       if (item) item.sheet.render(true);
     });
 
-    // DELETE item
-    html.find(".item-delete").on("click", async (ev) => {
+    html.find(".item-delete").on("click", async ev => {
       const li = ev.currentTarget.closest("[data-item-id]");
       if (!li) return;
       await this.actor.deleteEmbeddedDocuments("Item", [li.dataset.itemId]);
     });
 
-    // Toggle Skill Trained
-    html.find(".skill-trained").on("change", async (ev) => {
-      const id = ev.currentTarget.dataset.itemId;
+    html.find(".skill-trained").on("change", async ev => {
+      const cb   = ev.currentTarget;
+      const id   = cb.dataset.itemId;
       const item = this.actor.items.get(id);
       if (!item) return;
-      await item.update({ "system.trained": ev.currentTarget.checked });
+      await item.update({ "system.trained": cb.checked });
     });
   }
 }
@@ -136,7 +110,7 @@ class HWFWMPCSheet extends ActorSheet {
 /* ------------------------------ Item Sheet -------------------------------- */
 class HWFWMItemSheet extends ItemSheet {
   static get defaultOptions() {
-    return mergeObject(super.defaultOptions, {
+    return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ["hwfwm", "sheet", "item"],
       template: "systems/hwfwm-d20/templates/items/item-sheet.hbs",
       width: 640,
@@ -145,70 +119,83 @@ class HWFWMItemSheet extends ItemSheet {
   }
 
   getData(options) {
-    return super.getData(options);
+    const data = super.getData(options);
+    return data;
   }
 }
 
-/* ------------------------- TEMPLATE PRELOADING ---------------------------- */
-async function preloadHWFWMTemplates() {
-  const paths = [
-    // TABS
-    "systems/hwfwm-d20/templates/actors/parts/tabs/stats.hbs",
-    "systems/hwfwm-d20/templates/actors/parts/tabs/skills.hbs",
-    "systems/hwfwm-d20/templates/actors/parts/tabs/inventory.hbs",
-    "systems/hwfwm-d20/templates/actors/parts/tabs/abilities.hbs",
-    "systems/hwfwm-d20/templates/actors/parts/tabs/notes.hbs",
+/* --------------------------- System Initialisation ------------------------ */
+Hooks.once("init", async function () {
+  console.log("HWFWM-D20 | init");
 
-    // STATS SUBTABS
-    "systems/hwfwm-d20/templates/actors/parts/subtabs/stats/attributes.hbs",
-    "systems/hwfwm-d20/templates/actors/parts/subtabs/stats/status.hbs",
+  // ---------- Handlebars helpers ----------
+  Handlebars.registerHelper("eq", function (a, b) {
+    return a === b;
+  });
 
-    // INVENTORY SUBTABS
-    "systems/hwfwm-d20/templates/actors/parts/subtabs/inventory/weapons.hbs",
-    "systems/hwfwm-d20/templates/actors/parts/subtabs/inventory/armor.hbs",
-    "systems/hwfwm-d20/templates/actors/parts/subtabs/inventory/gear.hbs",
-    "systems/hwfwm-d20/templates/actors/parts/subtabs/inventory/consumables.hbs"
-    
-    // SKILL SUBTABS
-    "systems/hwfwm-d20/templates/actors/parts/tabs/skills.hbs",
-    "systems/hwfwm-d20/templates/actors/parts/subtabs/skills/combat-skills.hbs",
-    "systems/hwfwm-d20/templates/actors/parts/subtabs/skills/power-skills.hbs",
-    "systems/hwfwm-d20/templates/actors/parts/subtabs/skills/speed-skills.hbs",
-    "systems/hwfwm-d20/templates/actors/parts/subtabs/skills/spirit-skills.hbs",
-    "systems/hwfwm-d20/templates/actors/parts/subtabs/skills/recovery-skills.hbs",
-    "systems/hwfwm-d20/templates/actors/parts/subtabs/skills/crafting-skills.hbs",
-    "systems/hwfwm-d20/templates/actors/parts/subtabs/skills/knowledge-skills.hbs",
+  Handlebars.registerHelper("array", function (...args) {
+    // Last arg is Handlebars options object
+    return args.slice(0, -1);
+  });
 
-  ];
+  Handlebars.registerHelper("sortBy", function (collection, field) {
+    if (!Array.isArray(collection)) return [];
+    return collection.slice().sort((a, b) => {
+      const av = foundry.utils.getProperty(a, field) ?? "";
+      const bv = foundry.utils.getProperty(b, field) ?? "";
+      return String(av).localeCompare(String(bv), "en", { sensitivity: "base" });
+    });
+  });
 
-  return loadTemplates(paths);
-}
-
-/* ------------------------------ SYSTEM INIT ------------------------------- */
-Hooks.once("init", () => {
-  console.log("HWFWM-D20 | Initializing…");
-
-  registerHWFWMHandlebarsHelpers();
-  preloadHWFWMTemplates();
-
-  // Actor sheet (PC)
+  // ---------- Register sheets ----------
   Actors.unregisterSheet("core", ActorSheet);
   Actors.registerSheet("hwfwm-d20", HWFWMPCSheet, {
     makeDefault: true,
     types: ["pc"]
   });
 
-  // Item sheet
   Items.unregisterSheet("core", ItemSheet);
   Items.registerSheet("hwfwm-d20", HWFWMItemSheet, {
     makeDefault: true
   });
 
-  console.log("HWFWM-D20 | Sheets registered.");
+  // ---------- Preload templates ----------
+  const templatePaths = [
+    // Main actor sheet
+    "systems/hwfwm-d20/templates/actors/actor-sheet.hbs",
+
+    // Tabs
+    "systems/hwfwm-d20/templates/actors/parts/tabs/stats.hbs",
+    "systems/hwfwm-d20/templates/actors/parts/tabs/skills.hbs",
+    "systems/hwfwm-d20/templates/actors/parts/tabs/abilities.hbs",
+    "systems/hwfwm-d20/templates/actors/parts/tabs/inventory.hbs",
+    "systems/hwfwm-d20/templates/actors/parts/tabs/notes.hbs",
+
+    // Stats subtabs
+    "systems/hwfwm-d20/templates/actors/parts/subtabs/stats/attributes.hbs",
+    "systems/hwfwm-d20/templates/actors/parts/subtabs/stats/status.hbs",
+
+    // Inventory subtabs
+    "systems/hwfwm-d20/templates/actors/parts/subtabs/inventory/weapons.hbs",
+    "systems/hwfwm-d20/templates/actors/parts/subtabs/inventory/armor.hbs",
+    "systems/hwfwm-d20/templates/actors/parts/subtabs/inventory/gear.hbs",
+    "systems/hwfwm-d20/templates/actors/parts/subtabs/inventory/consumables.hbs",
+
+    // Skills subtabs
+    "systems/hwfwm-d20/templates/actors/parts/subtabs/skills/combat-skills.hbs",
+    "systems/hwfwm-d20/templates/actors/parts/subtabs/skills/power-skills.hbs",
+    "systems/hwfwm-d20/templates/actors/parts/subtabs/skills/speed-skills.hbs",
+    "systems/hwfwm-d20/templates/actors/parts/subtabs/skills/spirit-skills.hbs",
+    "systems/hwfwm-d20/templates/actors/parts/subtabs/skills/recovery-skills.hbs",
+    "systems/hwfwm-d20/templates/actors/parts/subtabs/skills/crafting-skills.hbs",
+    "systems/hwfwm-d20/templates/actors/parts/subtabs/skills/knowledge-skills.hbs"
+  ];
+
+  await loadTemplates(templatePaths);
+
+  console.log("HWFWM-D20 | templates preloaded");
 });
 
-/* ------------------------------ SYSTEM READY ------------------------------ */
 Hooks.once("ready", () => {
-  console.log("HWFWM-D20 | System Ready.");
+  console.log("HWFWM-D20 | ready");
 });
-
