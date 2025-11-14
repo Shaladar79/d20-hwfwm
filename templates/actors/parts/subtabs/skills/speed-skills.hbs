@@ -1,2 +1,138 @@
-<h3>Combat Skills</h3>
-<p>(Combat skills layout will go here.)</p>
+<div class="skills-subtab-inner">
+  <h3>Speed Skills</h3>
+  <div class="skill-table">
+
+    {{!-- Acrobatics --}}
+    <div class="skill-row">
+      <div class="skill-name"
+           data-tooltip="Balancing, tumbling, flips, vaulting, and parkour-style movement. Used for most agility-based movement or physical grace challenges.">
+        Acrobatics
+      </div>
+      <label class="skill-trained">
+        <input type="checkbox" name="system.skills.speed.acrobatics.trained" />
+        Trained
+      </label>
+      <div class="skill-rolls">
+        <button type="button" class="skill-roll untrained"
+                data-skill="speed.acrobatics" data-trained="false">
+          Untrained
+        </button>
+        <button type="button" class="skill-roll trained"
+                data-skill="speed.acrobatics" data-trained="true">
+          Trained
+        </button>
+      </div>
+    </div>
+
+    {{!-- Lockpicking --}}
+    <div class="skill-row">
+      <div class="skill-name"
+           data-tooltip="Bypassing locks, disabling traps, or cracking mechanical security devices.">
+        Lockpicking
+      </div>
+      <label class="skill-trained">
+        <input type="checkbox" name="system.skills.speed.lockpicking.trained" />
+        Trained
+      </label>
+      <div class="skill-rolls">
+        <button type="button" class="skill-roll untrained"
+                data-skill="speed.lockpicking" data-trained="false">
+          Untrained
+        </button>
+        <button type="button" class="skill-roll trained"
+                data-skill="speed.lockpicking" data-trained="true">
+          Trained
+        </button>
+      </div>
+    </div>
+
+    {{!-- Piloting --}}
+    <div class="skill-row">
+      <div class="skill-name"
+           data-tooltip="Operating vehicles, airships, or other machinery that relies on reflexes and spatial control.">
+        Piloting
+      </div>
+      <label class="skill-trained">
+        <input type="checkbox" name="system.skills.speed.piloting.trained" />
+        Trained
+      </label>
+      <div class="skill-rolls">
+        <button type="button" class="skill-roll untrained"
+                data-skill="speed.piloting" data-trained="false">
+          Untrained
+        </button>
+        <button type="button" class="skill-roll trained"
+                data-skill="speed.piloting" data-trained="true">
+          Trained
+        </button>
+      </div>
+    </div>
+
+    {{!-- Riding --}}
+    <div class="skill-row">
+      <div class="skill-name"
+           data-tooltip="Controlling and maneuvering mounts of any kind, including animals, magical beasts, or summoned creatures.">
+        Riding
+      </div>
+      <label class="skill-trained">
+        <input type="checkbox" name="system.skills.speed.riding.trained" />
+        Trained
+      </label>
+      <div class="skill-rolls">
+        <button type="button" class="skill-roll untrained"
+                data-skill="speed.riding" data-trained="false">
+          Untrained
+        </button>
+        <button type="button" class="skill-roll trained"
+                data-skill="speed.riding" data-trained="true">
+          Trained
+        </button>
+      </div>
+    </div>
+
+    {{!-- Sleight of Hand --}}
+    <div class="skill-row">
+      <div class="skill-name"
+           data-tooltip="Fine manual control such as pickpocketing, palming, lock manipulation, or delicate work requiring steady hands.">
+        Sleight of Hand
+      </div>
+      <label class="skill-trained">
+        <input type="checkbox" name="system.skills.speed.sleightOfHand.trained" />
+        Trained
+      </label>
+      <div class="skill-rolls">
+        <button type="button" class="skill-roll untrained"
+                data-skill="speed.sleightOfHand" data-trained="false">
+          Untrained
+        </button>
+        <button type="button" class="skill-roll trained"
+                data-skill="speed.sleightOfHand" data-trained="true">
+          Trained
+        </button>
+      </div>
+    </div>
+
+    {{!-- Stealth --}}
+    <div class="skill-row">
+      <div class="skill-name"
+           data-tooltip="Moving silently, hiding effectively, and avoiding detection by sight or sound. Includes dodging awareness and quick evasive movement.">
+        Stealth
+      </div>
+      <label class="skill-trained">
+        <input type="checkbox" name="system.skills.speed.stealth.trained" />
+        Trained
+      </label>
+      <div class="skill-rolls">
+        <button type="button" class="skill-roll untrained"
+                data-skill="speed.stealth" data-trained="false">
+          Untrained
+        </button>
+        <button type="button" class="skill-roll trained"
+                data-skill="speed.stealth" data-trained="true">
+          Trained
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>
