@@ -1,2 +1,248 @@
-<h3>Combat Skills</h3>
-<p>(Combat skills layout will go here.)</p>
+<div class="skills-subtab-inner">
+  <h3>Knowledge Skills</h3>
+  <div class="skill-table">
+
+    {{!-- Astral Lore --}}
+    <div class="skill-row">
+      <div class="skill-name"
+           data-tooltip="Study of planes, stars, dimensional travel, and cosmic structures beyond the material realm.">
+        Astral Lore
+      </div>
+      <label class="skill-trained">
+        <input type="checkbox" name="system.skills.knowledge.astralLore.trained" />
+        Trained
+      </label>
+      <div class="skill-rolls">
+        <button type="button" class="skill-roll untrained"
+                data-skill="knowledge.astralLore" data-trained="false">
+          Untrained
+        </button>
+        <button type="button" class="skill-roll trained"
+                data-skill="knowledge.astralLore" data-trained="true">
+          Trained
+        </button>
+      </div>
+    </div>
+
+    {{!-- Culture --}}
+    <div class="skill-row">
+      <div class="skill-name"
+           data-tooltip="Familiarity with languages, customs, traditions, and social behaviors of different peoples.">
+        Culture
+      </div>
+      <label class="skill-trained">
+        <input type="checkbox" name="system.skills.knowledge.culture.trained" />
+        Trained
+      </label>
+      <div class="skill-rolls">
+        <button type="button" class="skill-roll untrained"
+                data-skill="knowledge.culture" data-trained="false">
+          Untrained
+        </button>
+        <button type="button" class="skill-roll trained"
+                data-skill="knowledge.culture" data-trained="true">
+          Trained
+        </button>
+      </div>
+    </div>
+
+    {{!-- Geography --}}
+    <div class="skill-row">
+      <div class="skill-name"
+           data-tooltip="Knowledge of lands, terrains, travel routes, and environmental features.">
+        Geography
+      </div>
+      <label class="skill-trained">
+        <input type="checkbox" name="system.skills.knowledge.geography.trained" />
+        Trained
+      </label>
+      <div class="skill-rolls">
+        <button type="button" class="skill-roll untrained"
+                data-skill="knowledge.geography" data-trained="false">
+          Untrained
+        </button>
+        <button type="button" class="skill-roll trained"
+                data-skill="knowledge.geography" data-trained="true">
+          Trained
+        </button>
+      </div>
+    </div>
+
+    {{!-- History --}}
+    <div class="skill-row">
+      <div class="skill-name"
+           data-tooltip="Knowledge of civilizations, historic events, lost empires, and notable figures of the past.">
+        History
+      </div>
+      <label class="skill-trained">
+        <input type="checkbox" name="system.skills.knowledge.history.trained" />
+        Trained
+      </label>
+      <div class="skill-rolls">
+        <button type="button" class="skill-roll untrained"
+                data-skill="knowledge.history" data-trained="false">
+          Untrained
+        </button>
+        <button type="button" class="skill-roll trained"
+                data-skill="knowledge.history" data-trained="true">
+          Trained
+        </button>
+      </div>
+    </div>
+
+    {{!-- Magic Theory --}}
+    <div class="skill-row">
+      <div class="skill-name"
+           data-tooltip="Understanding the structure and principles of magic, including spell formation, energy flow, and enchantment logic.">
+        Magic Theory
+      </div>
+      <label class="skill-trained">
+        <input type="checkbox" name="system.skills.knowledge.magicTheory.trained" />
+        Trained
+      </label>
+      <div class="skill-rolls">
+        <button type="button" class="skill-roll untrained"
+                data-skill="knowledge.magicTheory" data-trained="false">
+          Untrained
+        </button>
+        <button type="button" class="skill-roll trained"
+                data-skill="knowledge.magicTheory" data-trained="true">
+          Trained
+        </button>
+      </div>
+    </div>
+
+    {{!-- Monsters --}}
+    <div class="skill-row">
+      <div class="skill-name"
+           data-tooltip="Understanding of creature origins, physiology, abilities, and weaknesses.">
+        Monsters
+      </div>
+      <label class="skill-trained">
+        <input type="checkbox" name="system.skills.knowledge.monsters.trained" />
+        Trained
+      </label>
+      <div class="skill-rolls">
+        <button type="button" class="skill-roll untrained"
+                data-skill="knowledge.monsters" data-trained="false">
+          Untrained
+        </button>
+        <button type="button" class="skill-roll trained"
+                data-skill="knowledge.monsters" data-trained="true">
+          Trained
+        </button>
+      </div>
+    </div>
+
+    {{!-- Nature --}}
+    <div class="skill-row">
+      <div class="skill-name"
+           data-tooltip="Study of flora, fauna, weather patterns, and ecosystems.">
+        Nature
+      </div>
+      <label class="skill-trained">
+        <input type="checkbox" name="system.skills.knowledge.nature.trained" />
+        Trained
+      </label>
+      <div class="skill-rolls">
+        <button type="button" class="skill-roll untrained"
+                data-skill="knowledge.nature" data-trained="false">
+          Untrained
+        </button>
+        <button type="button" class="skill-roll trained"
+                data-skill="knowledge.nature" data-trained="true">
+          Trained
+        </button>
+      </div>
+    </div>
+
+    {{!-- Politics --}}
+    <div class="skill-row">
+      <div class="skill-name"
+           data-tooltip="Knowledge of factions, noble houses, power structures, and governance systems.">
+        Politics
+      </div>
+      <label class="skill-trained">
+        <input type="checkbox" name="system.skills.knowledge.politics.trained" />
+        Trained
+      </label>
+      <div class="skill-rolls">
+        <button type="button" class="skill-roll untrained"
+                data-skill="knowledge.politics" data-trained="false">
+          Untrained
+        </button>
+        <button type="button" class="skill-roll trained"
+                data-skill="knowledge.politics" data-trained="true">
+          Trained
+        </button>
+      </div>
+    </div>
+
+    {{!-- Religion --}}
+    <div class="skill-row">
+      <div class="skill-name"
+           data-tooltip="Understanding deities, divine hierarchies, rituals, and theological concepts.">
+        Religion
+      </div>
+      <label class="skill-trained">
+        <input type="checkbox" name="system.skills.knowledge.religion.trained" />
+        Trained
+      </label>
+      <div class="skill-rolls">
+        <button type="button" class="skill-roll untrained"
+                data-skill="knowledge.religion" data-trained="false">
+          Untrained
+        </button>
+        <button type="button" class="skill-roll trained"
+                data-skill="knowledge.religion" data-trained="true">
+          Trained
+        </button>
+      </div>
+    </div>
+
+    {{!-- Ritual Magic --}}
+    <div class="skill-row">
+      <div class="skill-name"
+           data-tooltip="Performing complex magical ceremonies that require time, components, or group participation.">
+        Ritual Magic
+      </div>
+      <label class="skill-trained">
+        <input type="checkbox" name="system.skills.knowledge.ritualMagic.trained" />
+        Trained
+      </label>
+      <div class="skill-rolls">
+        <button type="button" class="skill-roll untrained"
+                data-skill="knowledge.ritualMagic" data-trained="false">
+          Untrained
+        </button>
+        <button type="button" class="skill-roll trained"
+                data-skill="knowledge.ritualMagic" data-trained="true">
+          Trained
+        </button>
+      </div>
+    </div>
+
+    {{!-- Tactics --}}
+    <div class="skill-row">
+      <div class="skill-name"
+           data-tooltip="Battlefield maneuvering, unit coordination, and command-level decision-making.">
+        Tactics
+      </div>
+      <label class="skill-trained">
+        <input type="checkbox" name="system.skills.knowledge.tactics.trained" />
+        Trained
+      </label>
+      <div class="skill-rolls">
+        <button type="button" class="skill-roll untrained"
+                data-skill="knowledge.tactics" data-trained="false">
+          Untrained
+        </button>
+        <button type="button" class="skill-roll trained"
+                data-skill="knowledge.tactics" data-trained="true">
+          Trained
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>
