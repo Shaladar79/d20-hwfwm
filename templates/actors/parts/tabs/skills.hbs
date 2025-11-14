@@ -1,48 +1,57 @@
 <section class="card">
   <h2>Skills</h2>
 
-  {{#each (array "Combat" "Power" "Speed" "Spirit" "Recovery" "Crafting" "Knowledge") as |cat|}}
-    <div class="skill-group" style="margin-top:12px;">
-      <div class="flexrow" style="justify-content:space-between; align-items:center;">
-        <h3 style="margin:0;">{{cat}}</h3>
-        <button type="button" class="item-create" data-type="skill" data-category="{{cat}}"
-          data-attr="{{#if (eq cat "Power")}}power{{else if (eq cat "Speed")}}speed{{else if (eq cat "Spirit")}}spirit{{else if (eq cat "Recovery")}}recovery{{else if (eq cat "Knowledge")}}spirit{{else}}power{{/if}}">
-          + Add {{cat}} Skill
-        </button>
-      </div>
+  {{!-- Subtab buttons for each skill category --}}
+  <div class="subtabs skills-subtabs">
+    <button type="button" class="subtab-btn active" data-subtab="combat">
+      Combat
+    </button>
+    <button type="button" class="subtab-btn" data-subtab="power">
+      Power
+    </button>
+    <button type="button" class="subtab-btn" data-subtab="speed">
+      Speed
+    </button>
+    <button type="button" class="subtab-btn" data-subtab="spirit">
+      Spirit
+    </button>
+    <button type="button" class="subtab-btn" data-subtab="recovery">
+      Recovery
+    </button>
+    <button type="button" class="subtab-btn" data-subtab="crafting">
+      Crafting
+    </button>
+    <button type="button" class="subtab-btn" data-subtab="knowledge">
+      Knowledge
+    </button>
+  </div>
 
-      <table class="skills-table" style="margin-top:6px;">
-        <thead>
-          <tr>
-            <th style="width:22%">Name</th>
-            <th style="width:12%">Attribute</th>
-            <th style="width:10%">Rank</th>
-            <th style="width:8%">Mod</th>
-            <th style="width:28%">Specialization</th>
-            <th style="width:10%">Trained</th>
-            <th style="width:6%">Edit</th>
-            <th style="width:4%">🗑️</th>
-          </tr>
-        </thead>
-        <tbody>
-          {{#each (sortBy ../itemTypes.skill "name") as |skill|}}
-            {{#if (eq skill.system.category cat)}}
-              <tr class="item" data-item-id="{{skill._id}}">
-                <td><a class="item-edit">{{skill.name}}</a></td>
-                <td>{{skill.system.associatedAttribute}}</td>
-                <td>{{skill.system.rank}}</td>
-                <td>{{skill.system.mod}}</td>
-                <td>{{skill.system.specialization}}</td>
-                <td>
-                  <input class="skill-trained" type="checkbox" data-item-id="{{skill._id}}" {{#if skill.system.trained}}checked{{/if}} />
-                </td>
-                <td><button type="button" class="item-edit">Open</button></td>
-                <td><button type="button" class="item-delete" aria-label="Delete">&times;</button></td>
-              </tr>
-            {{/if}}
-          {{/each}}
-        </tbody>
-      </table>
-    </div>
-  {{/each}}
+  {{!-- Subtab content containers. Only one is .active at a time --}}
+  <div class="subtab skills-subtab active" data-subtab="combat">
+    {{> "systems/hwfwm-d20/templates/actors/parts/subtabs/skills/combat-skills.hbs"}}
+  </div>
+
+  <div class="subtab skills-subtab" data-subtab="power">
+    {{> "systems/hwfwm-d20/templates/actors/parts/subtabs/skills/power-skills.hbs"}}
+  </div>
+
+  <div class="subtab skills-subtab" data-subtab="speed">
+    {{> "systems/hwfwm-d20/templates/actors/parts/subtabs/skills/speed-skills.hbs"}}
+  </div>
+
+  <div class="subtab skills-subtab" data-subtab="spirit">
+    {{> "systems/hwfwm-d20/templates/actors/parts/subtabs/skills/spirit-skills.hbs"}}
+  </div>
+
+  <div class="subtab skills-subtab" data-subtab="recovery">
+    {{> "systems/hwfwm-d20/templates/actors/parts/subtabs/skills/recovery-skills.hbs"}}
+  </div>
+
+  <div class="subtab skills-subtab" data-subtab="crafting">
+    {{> "systems/hwfwm-d20/templates/actors/parts/subtabs/skills/crafting-skills.hbs"}}
+  </div>
+
+  <div class="subtab skills-subtab" data-subtab="knowledge">
+    {{> "systems/hwfwm-d20/templates/actors/parts/subtabs/skills/knowledge-skills.hbs"}}
+  </div>
 </section>
