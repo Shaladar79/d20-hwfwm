@@ -1,2 +1,116 @@
-<h3>Combat Skills</h3>
-<p>(Combat skills layout will go here.)</p>
+<div class="skills-subtab-inner">
+  <h3>Recovery Skills</h3>
+  <div class="skill-table">
+
+    {{!-- Animal Handling --}}
+    <div class="skill-row">
+      <div class="skill-name"
+           data-tooltip="Calming, training, and directing animals or magical beasts through empathy or control.">
+        Animal Handling
+      </div>
+      <label class="skill-trained">
+        <input type="checkbox" name="system.skills.recovery.animalHandling.trained" />
+        Trained
+      </label>
+      <div class="skill-rolls">
+        <button type="button" class="skill-roll untrained"
+                data-skill="recovery.animalHandling" data-trained="false">
+          Untrained
+        </button>
+        <button type="button" class="skill-roll trained"
+                data-skill="recovery.animalHandling" data-trained="true">
+          Trained
+        </button>
+      </div>
+    </div>
+
+    {{!-- Healing --}}
+    <div class="skill-row">
+      <div class="skill-name"
+           data-tooltip="Treating wounds, curing disease, and stabilizing the injured using medical, herbal, or magical means.">
+        Healing
+      </div>
+      <label class="skill-trained">
+        <input type="checkbox" name="system.skills.recovery.healing.trained" />
+        Trained
+      </label>
+      <div class="skill-rolls">
+        <button type="button" class="skill-roll untrained"
+                data-skill="recovery.healing" data-trained="false">
+          Untrained
+        </button>
+        <button type="button" class="skill-roll trained"
+                data-skill="recovery.healing" data-trained="true">
+          Trained
+        </button>
+      </div>
+    </div>
+
+    {{!-- Meditation --}}
+    <div class="skill-row">
+      <div class="skill-name"
+           data-tooltip="Restoring mana or stamina through focus and breathing techniques, rebalancing mind and body for recovery.">
+        Meditation
+      </div>
+      <label class="skill-trained">
+        <input type="checkbox" name="system.skills.recovery.meditation.trained" />
+        Trained
+      </label>
+      <div class="skill-rolls">
+        <button type="button" class="skill-roll untrained"
+                data-skill="recovery.meditation" data-trained="false">
+          Untrained
+        </button>
+        <button type="button" class="skill-roll trained"
+                data-skill="recovery.meditation" data-trained="true">
+          Trained
+        </button>
+      </div>
+    </div>
+
+    {{!-- Survival --}}
+    <div class="skill-row">
+      <div class="skill-name"
+           data-tooltip="Finding food and shelter, navigating natural environments, enduring harsh conditions, and resisting exposure.">
+        Survival
+      </div>
+      <label class="skill-trained">
+        <input type="checkbox" name="system.skills.recovery.survival.trained" />
+        Trained
+      </label>
+      <div class="skill-rolls">
+        <button type="button" class="skill-roll untrained"
+                data-skill="recovery.survival" data-trained="false">
+          Untrained
+        </button>
+        <button type="button" class="skill-roll trained"
+                data-skill="recovery.survival" data-trained="true">
+          Trained
+        </button>
+      </div>
+    </div>
+
+    {{!-- Tracking --}}
+    <div class="skill-row">
+      <div class="skill-name"
+           data-tooltip="Following tracks, trails, or magical traces across various terrains or through residual energy.">
+        Tracking
+      </div>
+      <label class="skill-trained">
+        <input type="checkbox" name="system.skills.recovery.tracking.trained" />
+        Trained
+      </label>
+      <div class="skill-rolls">
+        <button type="button" class="skill-roll untrained"
+                data-skill="recovery.tracking" data-trained="false">
+          Untrained
+        </button>
+        <button type="button" class="skill-roll trained"
+                data-skill="recovery.tracking" data-trained="true">
+          Trained
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>
