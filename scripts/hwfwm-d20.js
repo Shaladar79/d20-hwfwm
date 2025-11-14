@@ -168,6 +168,17 @@ async function preloadHWFWMTemplates() {
     "systems/hwfwm-d20/templates/actors/parts/subtabs/inventory/armor.hbs",
     "systems/hwfwm-d20/templates/actors/parts/subtabs/inventory/gear.hbs",
     "systems/hwfwm-d20/templates/actors/parts/subtabs/inventory/consumables.hbs"
+    
+    // SKILL SUBTABS
+    "systems/hwfwm-d20/templates/actors/parts/tabs/skills.hbs",
+    "systems/hwfwm-d20/templates/actors/parts/subtabs/skills/combat-skills.hbs",
+    "systems/hwfwm-d20/templates/actors/parts/subtabs/skills/power-skills.hbs",
+    "systems/hwfwm-d20/templates/actors/parts/subtabs/skills/speed-skills.hbs",
+    "systems/hwfwm-d20/templates/actors/parts/subtabs/skills/spirit-skills.hbs",
+    "systems/hwfwm-d20/templates/actors/parts/subtabs/skills/recovery-skills.hbs",
+    "systems/hwfwm-d20/templates/actors/parts/subtabs/skills/crafting-skills.hbs",
+    "systems/hwfwm-d20/templates/actors/parts/subtabs/skills/knowledge-skills.hbs",
+
   ];
 
   return loadTemplates(paths);
@@ -200,3 +211,4 @@ Hooks.once("init", () => {
 Hooks.once("ready", () => {
   console.log("HWFWM-D20 | System Ready.");
 });
+
