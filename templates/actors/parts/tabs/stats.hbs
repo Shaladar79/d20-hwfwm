@@ -1,29 +1,30 @@
-<!-- ===========================================================
-     PC SHEET — STATS TAB
-     Contains 2 subtabs:
-       • Attributes
-       • Status
-     Actor-sheet.hbs already wraps this in the primary
-     .tab[data-group="primary"][data-tab="stats"], so we do NOT
-     create another .tab wrapper here.
-     =========================================================== -->
+{{!-- systems/hwfwm-d20/templates/actors/parts/tabs/stats.hbs --}}
+<section class="card stats">
 
-<!-- ===== Subtab Navigation ===== -->
-<nav class="sheet-tabs" data-group="stats">
-  <a class="item" data-tab="attributes">Attributes</a>
-  <a class="item" data-tab="status">Status</a>
-</nav>
+  <h2>Attributes & Status</h2>
 
-<!-- ===== Subtab Content Wrapper ===== -->
-<section class="stats-subtabs">
+  {{!-- Subtab buttons --}}
+  <div class="subtabs">
+    <button type="button"
+            class="subtab-btn active"
+            data-subtab="attributes">
+      Attributes
+    </button>
 
-  <!-- ATTRIBUTES SUBTAB -->
-  <div class="tab" data-group="stats" data-tab="attributes">
+    <button type="button"
+            class="subtab-btn"
+            data-subtab="status">
+      Status
+    </button>
+  </div>
+
+  {{!-- ATTRIBUTES subtab (default visible) --}}
+  <div class="subtab active" data-subtab="attributes">
     {{> "systems/hwfwm-d20/templates/actors/parts/subtabs/stats/attributes.hbs"}}
   </div>
 
-  <!-- STATUS SUBTAB -->
-  <div class="tab" data-group="stats" data-tab="status">
+  {{!-- STATUS subtab --}}
+  <div class="subtab" data-subtab="status">
     {{> "systems/hwfwm-d20/templates/actors/parts/subtabs/stats/status.hbs"}}
   </div>
 
