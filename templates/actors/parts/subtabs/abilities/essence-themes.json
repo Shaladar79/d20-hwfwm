@@ -11,5 +11,128 @@
   "rune": "Structured magic, sigils, and prepared effects. Rune Essence focuses on glyphs, wards, traps, and powers that become stronger when carefully set up in advance.",
   "void": "Erasure, nullification, and isolation. Void Essence specializes in silencing magic, disrupting buffs, banishing entities, and cutting targets off from support.",
   "star": "Distant power, fate, and long-arc influence. Star Essence leans into critical hits, omens, luck manipulation, and abilities that grow stronger over a scene or campaign."
+  "ice": "Control through slowing, freezing, and locking enemies in place. Ice Essence emphasizes battlefield denial, toughness, and punishing foes for acting while hindered.",
+
+"lightning": "Sudden explosive speed, chaining effects, burst damage, and high-risk unpredictability. Lightning favors multi-target strikes and rapid turn cycling.",
+
+"wind": "Velocity, misdirection, and positional advantage. Wind Essence specializes in pushes, pulls, airborne maneuvers, and abilities that ignore obstacles.",
+
+"earth": "Stability, defense, and powerful counter attacks. Earth powers control terrain, raise walls, and punish movement near you.",
+
+"shadow": "Stealth, concealment, and weakening enemies from the dark. Shadow Essence focuses on debuffs, blinds, and ambush openings.",
+
+"life": "Healing, protection, and vitality. Life Essence replenishes resources and improves long-term survivability.",
+
+"death": "Decay, curses, and finishing blows. Death Essence excels at executing weakened foes, damage over time, and shutting down healing.",
+
+"dark": "Corruption, confusion, and fear. Dark Essence disrupts perceptions and weakens the mental resolve of its targets.",
+
+"blood": "Sacrifice-based power, risky boosts, and self-harm for gain. Blood Essence powers scale with lost health or self-inflicted wounds.",
+
+"bone": "Hard defense, skeletal constructs, and bone manipulation. Bone Essence provides armor-like resilience and summoned guardians.",
+
+"growth": "Regeneration, expansion, and sprouting natural structures. Growth Essence builds momentum the longer a battle goes.",
+
+"plant": "Vines, roots, thorns, and plant-based healing. Plant Essence immobilizes enemies while nurturing allies.",
+
+"fungus": "Spreading infections, spores, and status stacking. Fungus Essence snowballs over time as conditions build up.",
+
+"beast": "Instinctive reactions, primal strikes, and heightened senses. Beast Essence enhances close combat agility and ferocity.",
+
+"cat": "Grace, agility, and opportunistic precision. Cat Essence rewards flanking, advantage, and sudden bursts of damage.",
+
+"bird": "Elevation, glide movement, and high vantage attacks. Bird Essence excels in scouting and vertical combat.",
+
+"snake": "Ambush, venom, and coiling control. Snake Essence excels at punishing exposed enemies and exploiting weaknesses.",
+
+"shark": "Blood-scent aggression, relentless pursuit, and underwater lethality. Shark Essence thrives on finishing weakened targets.",
+
+"bear": "Brute strength, unstoppable momentum, and heavy resilience. Bear Essence focuses on grapples, shockwaves, and tanking hits.",
+
+"wolf": "Pack tactics, feral instincts, and relentless pressure. Wolf Essence improves when fighting alongside allies.",
+
+"spider": "Web traps, silencing venom, and layered ambush setups. Spider Essence is built on battlefield control.",
+
+"horse": "Endurance, travel, and charge attacks. Horse Essence excels at movement-based damage and repositioning allies.",
+
+"iron": "Defense, discipline, and unstoppable force. Iron Essence increases armor and power through reliability and grit.",
+
+"steel": "Precision, cutting power, and metallic projectiles. Steel Essence creates slashes, cutting winds, and edge-based attacks.",
+
+"technology": "Mechanical enhancement, gadgets, and energy-based tools. Technology Essence specializes in modular effects and augmentations.",
+
+"gun": "Ranged mastery, precision shots, and ricochet effects. Gun Essence shines when targeting weak points.",
+
+"bow": "Long-range control, multi-shot patterns, and trick arrows. Bow Essence manipulates angles and piercing shots.",
+
+"sword": "Masterful technique, flowing combos, and parries. Sword Essence focuses on chaining actions and reducing enemy counters.",
+
+"shield": "Guarding, reflection, and stalwart defense. Shield Essence boosts protection, blocking, and retaliatory strikes.",
+
+"hammer": "Crushing impact, stuns, and armor-breaking blows. Hammer Essence excels in stagger and disruption.",
+
+"staff": "Focus, channeling, and magical amplification. Staff Essence strengthens spells and boosts accuracy for arcane abilities.",
+
+"thread": "Binding, weaving, and fate manipulation. Thread Essence connects allies and enemies through beneficial or harmful links.",
+
+"trap": "Setup, planning, and punishing missteps. Trap Essence places hazards that trigger based on enemy behavior.",
+
+"mirror": "Reflection, duplication, and inversion of force. Mirror Essence copies abilities or turns enemy actions back onto them.",
+
+"pure": "Untainted energy, cleansing, and high clarity. Pure Essence enhances support powers and weakens corruption-based effects.",
+
+"smoke": "Obscurement, confusion, and evasion. Smoke Essence specializes in disappearing, reappearing, and creating false targets.",
+
+"cloud": "Drifting movement, diffusion, and soft control. Cloud Essence weakens attacks, spreads beneficial effects, or blocks lines of sight.",
+
+"sand": "Erosion, blindness, and shifting terrain. Sand Essence overwhelms enemies through attrition and buried hazards.",
+
+"light": "Radiance, clarity, and truth-seeing. Light Essence reveals hidden enemies, burns the unclean, and supports allies.",
+
+"moon": "Cycles, illusions, and fluctuation. Moon Essence excels at unpredictability and phase-based abilities.",
+
+"sun": "Intensity, brilliance, and overwhelming force. Sun Essence creates bursts, beams, and powerful healing light.",
+
+"star": "Destiny, probability, and cosmic influence. Star Essence manipulates critical hits and future outcomes."
+"echo": "Reverberation, repeating actions, and cascading effects. Echo Essence excels when abilities trigger more abilities, forming rhythmic chains.",
+
+"dust": "Dry decay, erosion, and gradual breakdown. Dust Essence weakens armor, drains stamina, and leaves terrain brittle and unstable.",
+
+"glass": "Sharp fragility, reflection, and brittle power. Glass Essence produces high damage spikes but becomes unstable under pressure.",
+
+"claw": "Rending, tearing, and animalistic ferocity. Claw Essence excels in bleeding damage, shredding defenses, and brutal close combat.",
+
+"bone": "Rigid structure, skeletal manipulation, and macabre constructs. Bone Essence creates bone armor, bone weapons, and bone-based minions.",
+
+"venom": "Toxins, weakening, and internal damage. Venom Essence stacks conditions that intensify with each subsequent hit.",
+
+"flesh": "Regeneration, mutation, and biological adaptability. Flesh Essence shifts tissues to mimic defenses, speed healing, or mutate limbs.",
+
+"locust": "Swarming, consumption, and devouring prey. Locust Essence amplifies damage against weakened foes and can create spreading ‘hunger zones’.",
+
+"coral": "Hard reefs, ocean resilience, and absorption. Coral Essence hardens the body, reduces incoming damage, and reflects strikes like spines.",
+
+"whale": "Deep resonance, tidal force, and overwhelming mass. Whale Essence creates pressure waves and resource-draining auras.",
+
+"turtle": "Protection, patience, and long-form endurance. Turtle Essence excels in ultra-high defense and slow but unstoppable counterattacks.",
+
+"octopus": "Fluid intelligence, multi-grab attacks, and adaptive camouflage. Octopus Essence specializes in restraining foes from multiple angles.",
+
+"paper": "Imagination, seals, written magic, and fragile constructs. Paper Essence creates scroll effects, summoned effigies, and spell duplication.",
+
+"needle": "Precision, piercing strikes, and pinpoint weakness exploitation. Needle Essence ignores armor and inflicts internal injuries.",
+
+"rake": "Wide sweeping strikes, entanglement, and field clearing. Rake Essence manipulates clusters of enemies and controls large spaces.",
+
+"hoof": "Ground-breaking charges and sudden force bursts. Hoof Essence excels at line attacks and momentum-based damage scaling.",
+
+"gale": "Violent winds, pressure bursts, and slicing gusts. Gale Essence specializes in wide-air cuts and disrupting enemy plans.",
+
+"tooth": "Savage biting, relentless pressure, and painful persistent damage. Tooth Essence excels in close-range assault and targeted maiming.",
+
+"net": "Capture, restraint, and immobilization. Net Essence traps enemies in place, reduces accuracy, and punishes escaped targets.",
+
+"threadbare": "Fraying, unraveling, and the slow collapse of form. Threadbare Essence corrupts constructs, weakens magical protections, and unravels spells."
+
 }
 
