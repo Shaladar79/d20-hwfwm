@@ -1,1 +1,15 @@
+{
+  "fire": "Aggressive, destructive power, burning damage, searing beams, explosions, and effects that escalate the longer a fight goes. Often trades control or safety for raw output.",
+  "water": "Flow, adaptability, healing, cleansing, and control. Water Essences favor flexible defenses, status-cleansing, repositioning, and effects that change shape to fit the situation.",
+  "earth": "Defense, stability, fortification, and control of terrain. Earth Essences excel at armor, barriers, marking territory, and punishing enemies who try to move through your space.",
+  "air": "Speed, movement, positioning, and precision. Air Essences focus on mobility, turn manipulation, dodging, and strikes that bypass conventional defenses.",
+  "wolf": "Predatory instincts, pack tactics, and brutal single-target pressure. Wolf Essence powers emphasize advantage when flanking, bleeding foes, and becoming more dangerous as enemies falter.",
+  "magic": "Raw arcane versatility and spellcraft. Magic Essence broadens what you can do: mixed damage types, utility effects, spell-like abilities, and interaction with other Essences and marks.",
+  "venom": "Damage over time, weakening, and attrition. Venom Essence powers often inflict stacking conditions, poison, or debuffs that reward longer engagements.",
+  "blood": "Sacrifice, life-manipulation, and risky power spikes. Blood Essence trades your resources for huge effects, stealing life, sharing wounds, or empowering allies at a cost.",
+  "renewal": "Recovery, restoration, and long-term endurance. Renewal Essence supports sustained adventuring: healing over time, condition removal, and recycling limited resources.",
+  "rune": "Structured magic, sigils, and prepared effects. Rune Essence focuses on glyphs, wards, traps, and powers that become stronger when carefully set up in advance.",
+  "void": "Erasure, nullification, and isolation. Void Essence specializes in silencing magic, disrupting buffs, banishing entities, and cutting targets off from support.",
+  "star": "Distant power, fate, and long-arc influence. Star Essence leans into critical hits, omens, luck manipulation, and abilities that grow stronger over a scene or campaign."
+}
 
