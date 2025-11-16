@@ -1,0 +1,205 @@
+{{!--
+  HWFWM-D20 | Confluence Combination Data
+  This file is pure JSON inside an .hbs wrapper so we can render it with
+  renderTemplate(...) and JSON.parse(...) in hwfwm-d20.js.
+
+  Structure (Hybrid):
+    {
+      "byCombination": {
+        "ess1+ess2+ess3": "confluenceName",
+        ...
+      },
+      "byConfluence": {
+        "confluenceName": [
+          ["ess1","ess2","ess3"],
+          ...
+        ],
+        ...
+      }
+    }
+
+  NOTE:
+    • Always use LOWERCASE ids for essence & confluence keys.
+    • In byCombination keys, essences are joined with "+".
+    • You can add/remove combos freely.
+    • This is a SEED; add the rest of your combos as needed.
+--}}
+
+{
+  "byCombination": {
+    {{!-- ===== SEED EXAMPLES ===== --}}
+
+    {{!-- Action: Gun + Hand + Vehicle --}}
+    "gun+hand+vehicle": "action",
+
+    {{!-- Alchemy: Adept + Venom + Water --}}
+    "adept+venom+water": "alchemy",
+
+    {{!-- Ambush: Iron + Thread + Trap (you will add the other Ambush combos here too) --}}
+    "iron+thread+trap": "ambush",
+
+    {{!-- Animate: Dance + Knowledge + Mirror (you will add the other Animate combos here too) --}}
+    "dance+knowledge+mirror": "animate",
+
+    {{!-- Gravity: Gun + Dimension + Magic --}}
+    "dimension+gun+magic": "gravity",
+
+    {{!-- Abyss: Dark + Void + Hunger --}}
+    "dark+hunger+void": "abyss"
+
+    {{!--
+      Add more combinations below, for example:
+
+      "rune+spider+trap": "ambush",
+      "earth+spike+trap": "ambush",
+      "fire+spider+trap": "ambush",
+
+      "fungus+growth+zeal": "animate",
+      "dance+dust+echo": "animate",
+      "bone+death+magic": "animate",
+      "cloth+dance+magic": "animate",
+
+      ...etc, until all of your combinations are represented.
+    --}}
+  },
+
+  "byConfluence": {
+    {{!--
+      All confluence essences, alphabetized.
+      Start with those we actually have combos for; leave empty arrays for now on others.
+      Fill them as you add combos above.
+    --}}
+
+    "abyss": [
+      ["dark","void","hunger"]
+    ],
+
+    "action": [
+      ["gun","hand","vehicle"]
+    ],
+
+    "alchemy": [
+      ["adept","venom","water"]
+    ],
+
+    "ambush": [
+      ["iron","thread","trap"]
+      {{!-- Later you can add:
+        ,["rune","spider","trap"],
+         ["earth","spike","trap"],
+         ["fire","spider","trap"]
+      --}}
+    ],
+
+    "animate": [
+      ["dance","knowledge","mirror"]
+      {{!-- Later you can add:
+        ,["fungus","growth","zeal"],
+         ["dance","dust","echo"],
+         ["bone","death","magic"],
+         ["cloth","dance","magic"]
+      --}}
+    ],
+
+    "anzu": [],
+    "arsenal": [],
+    "avatar": [],
+    "battlefield": [],
+    "behemoth": [],
+    "boundary": [],
+    "bounty": [],
+    "cataclysm": [],
+    "chaotic": [],
+    "charlatan": [],
+    "chimera": [],
+    "cyborg": [],
+    "cycle": [],
+    "dawn": [],
+    "desolate": [],
+    "discordant": [],
+    "doom": [],
+    "doppelganger": [],
+    "dragon": [],
+    "eclipse": [],
+    "edifice": [],
+    "effigy": [],
+    "empower": [],
+    "fertile": [],
+    "fey": [],
+    "firebird": [],
+    "force": [],
+    "forge": [],
+    "fortress": [],
+    "garuda": [],
+    "gate": [],
+    "glimeron": [],
+    "gorgon": [],
+    "gravity": [
+      ["gun","dimension","magic"]
+    ],
+    "griffin": [],
+    "guardian": [],
+    "harpy": [],
+    "harvest": [],
+    "hydra": [],
+    "immortal": [],
+    "juggernaut": [],
+    "karmic": [],
+    "kraken": [],
+    "leviathan": [],
+    "lotus": [],
+    "magitech": [],
+    "manticore": [],
+    "master": [],
+    "ministration": [],
+    "minotaur": [],
+    "mirage": [],
+    "monolith": [],
+    "mystic": [],
+    "nebula": [],
+    "nemesis": [],
+    "oasis": [],
+    "ocean": [],
+    "onslaught": [],
+    "phantasmagoria": [],
+    "phoenix": [],
+    "predatory": [],
+    "prison": [],
+    "prosperity": [],
+    "refracting": [],
+    "resonating": [],
+    "roc": [],
+    "sacrifice": [],
+    "scribe": [],
+    "serpent": [],
+    "simulacrum": [],
+    "skirmish": [],
+    "sky": [],
+    "soaring": [],
+    "sovereign": [],
+    "stellar": [],
+    "storm": [],
+    "succubus": [],
+    "swarm": [],
+    "talisman": [],
+    "thunderbird": [],
+    "time": [],
+    "tranquil": [],
+    "transfiguration": [],
+    "transgression": [],
+    "troll": [],
+    "twilight": [],
+    "undeath": [],
+    "unity": [],
+    "verdant": [],
+    "vessel": [],
+    "vision": [],
+    "volcano": [],
+    "vortex": [],
+    "weave": [],
+    "wendigo": [],
+    "wrath": [],
+    "ziz": []
+  }
+}
+
