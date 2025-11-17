@@ -4,11 +4,10 @@
   <div class="essence-row">
     <label>Essence</label>
 
-    {{!-- This path matches template.json: system.essences.e1.key --}}
+    {{!-- binds directly to template.json: system.essences.e1.key --}}
     <select name="system.essences.e1.key">
       <option value="">— Select Essence —</option>
 
-      {{!-- Pass the current value into the options partial --}}
       {{> "systems/hwfwm-d20/templates/actors/parts/subtabs/abilities/essence-options.hbs"
           current=system.essences.e1.key}}
     </select>
@@ -24,7 +23,6 @@
   <div class="essence-abilities-block">
     <h4>Essence 1 Abilities</h4>
 
-    {{!-- Five slots; we’ll wire drag/drop later --}}
     <div class="essence-ability-slot" data-essence-slot="e1" data-ability-index="0">
       <span class="ability-placeholder">Ability Slot 1 – Drop Essence Ability here</span>
     </div>
