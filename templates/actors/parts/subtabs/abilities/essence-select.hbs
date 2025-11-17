@@ -1,64 +1,51 @@
-{{!-- systems/hwfwm-d20/templates/actors/parts/subtabs/abilities/essence-select.hbs --}}
+{{!-- templates/actors/parts/subtabs/abilities/essence-select.hbs --}}
 
-<div class="essence-select-grid">
+<section class="essence-select-grid">
 
-  {{!-- ===== Essence 1 ===== --}}
-  <section class="essence-select-block">
-    <h3>Essence 1</h3>
-
-    <label>Essence</label>
-    <select name="system.essences.e1.key">
+  {{!-- Essence 1 --------------------------------------------------------- --}}
+  <div class="essence-select-block">
+    <label>Essence 1</label>
+    <select name="system.essences.e1.key"
+            data-essence-slot="e1"
+            class="essence-select">
+      <option value="">— Select Essence —</option>
       {{> "systems/hwfwm-d20/templates/actors/parts/subtabs/abilities/essence-options.hbs"}}
     </select>
+  </div>
 
-    <label>Confluence Essence (preview only)</label>
-    <select name="system.essences.confluence.previewFromE1" disabled>
-      {{> "systems/hwfwm-d20/templates/actors/parts/subtabs/abilities/confluence-options.hbs"}}
-    </select>
-  </section>
-
-  {{!-- ===== Essence 2 ===== --}}
-  <section class="essence-select-block">
-    <h3>Essence 2</h3>
-
-    <label>Essence</label>
-    <select name="system.essences.e2.key">
+  {{!-- Essence 2 --------------------------------------------------------- --}}
+  <div class="essence-select-block">
+    <label>Essence 2</label>
+    <select name="system.essences.e2.key"
+            data-essence-slot="e2"
+            class="essence-select">
+      <option value="">— Select Essence —</option>
       {{> "systems/hwfwm-d20/templates/actors/parts/subtabs/abilities/essence-options.hbs"}}
     </select>
+  </div>
 
-    <label>Confluence Essence (preview only)</label>
-    <select name="system.essences.confluence.previewFromE2" disabled>
-      {{> "systems/hwfwm-d20/templates/actors/parts/subtabs/abilities/confluence-options.hbs"}}
-    </select>
-  </section>
-
-  {{!-- ===== Essence 3 ===== --}}
-  <section class="essence-select-block">
-    <h3>Essence 3</h3>
-
-    <label>Essence</label>
-    <select name="system.essences.e3.key">
+  {{!-- Essence 3 --------------------------------------------------------- --}}
+  <div class="essence-select-block">
+    <label>Essence 3</label>
+    <select name="system.essences.e3.key"
+            data-essence-slot="e3"
+            class="essence-select">
+      <option value="">— Select Essence —</option>
       {{> "systems/hwfwm-d20/templates/actors/parts/subtabs/abilities/essence-options.hbs"}}
     </select>
+  </div>
 
-    <label>Confluence Essence (preview only)</label>
-    <select name="system.essences.confluence.previewFromE3" disabled>
+  {{!-- Confluence Essence ------------------------------------------------ --}}
+  <div class="essence-select-block">
+    <label>Confluence Essence</label>
+    <select name="system.essences.confluence.key"
+            data-essence-slot="confluence"
+            class="confluence-select">
+      <option value="">— Select Confluence Essence —</option>
+
+      {{!-- NOTE: correct path is parts/subtabs/abilities, not parts/abilities/subtabs --}}
       {{> "systems/hwfwm-d20/templates/actors/parts/subtabs/abilities/confluence-options.hbs"}}
     </select>
-  </section>
+  </div>
 
-  {{!-- ===== Confluence Essence (GM-set) ===== --}}
-  <section class="essence-select-block">
-    <h3>Confluence Essence</h3>
-
-    <label>Selected Confluence Essence</label>
-    <select name="system.essences.confluence.key">
-      {{> "systems/hwfwm-d20/templates/actors/parts/subtabs/abilities/confluence-options.hbs"}}
-    </select>
-
-    <p class="hint">
-      This dropdown is GM-set. Later we’ll auto-filter based on the three Essences.
-    </p>
-  </section>
-
-</div>
+</section>
