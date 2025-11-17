@@ -3,7 +3,13 @@
     "types": ["pc", "npc"],
     "templates": {
       "base": {
-        "details": { "name": "", "rank": "", "nature": "", "role": "", "background": "" },
+        "details": {
+          "name": "",
+          "rank": "",
+          "nature": "",
+          "role": "",
+          "background": ""
+        },
         "attributes": {
           "power":    { "label": "Power",    "base": 10, "rank": "", "rankScore": 0, "mod": 0 },
           "speed":    { "label": "Speed",    "base": 10, "rank": "", "rankScore": 0, "mod": 0 },
@@ -20,17 +26,18 @@
           "resolve":   { "label": "Resolve",    "value": 0,  "max": 0 },
           "willpower": { "label": "Willpower",  "value": 0,  "max": 0 }
         },
-       "defenses": {
-  "defense": { "label": "Defense", "value": 10 },
-  "reaction": { "label": "Reaction", "value": 0 },
-  "pace": { "label": "Pace", "value": 6 },
-  "lifeforceRegen": { "label": "Life Force Regen", "value": 0 },
-  "manaRegen": { "label": "Mana Regen", "value": 0 },
-  "staminaRegen": { "label": "Stamina Regen", "value": 0 }
-},
+        "defenses": {
+          "defense":       { "label": "Defense",           "value": 10 },
+          "reaction":      { "label": "Reaction",          "value": 0 },
+          "pace":          { "label": "Pace",              "value": 6 },
+          "lifeforceRegen":{ "label": "Life Force Regen",  "value": 0 },
+          "manaRegen":     { "label": "Mana Regen",        "value": 0 },
+          "staminaRegen":  { "label": "Stamina Regen",     "value": 0 }
+        },
 
         "essences": {
           "e1": {
+            "key": "",
             "itemId": "",
             "attribute": "",
             "abilities": [
@@ -42,6 +49,7 @@
             ]
           },
           "e2": {
+            "key": "",
             "itemId": "",
             "attribute": "",
             "abilities": [
@@ -53,6 +61,7 @@
             ]
           },
           "e3": {
+            "key": "",
             "itemId": "",
             "attribute": "",
             "abilities": [
@@ -64,6 +73,7 @@
             ]
           },
           "confluence": {
+            "key": "",
             "itemId": "",
             "attribute": "",
             "abilities": [
@@ -86,8 +96,18 @@
 
   "Item": {
     "types": [
-      "weapon","armor","essence","magicStone","essenceAbility",
-      "feature","equipment","skill","race","background","role","racialAbility"
+      "weapon",
+      "armor",
+      "essence",
+      "magicStone",
+      "essenceAbility",
+      "feature",
+      "equipment",
+      "skill",
+      "race",
+      "background",
+      "role",
+      "racialAbility"
     ],
     "templates": {
       "base": {
@@ -208,18 +228,17 @@
         "notes": ""
       }
     },
-    "weapon":       { "templates": ["base", "weapon"] },
-    "armor":        { "templates": ["base", "armor"] },
-    "essence":      { "templates": ["base", "essence"] },
-    "magicStone":   { "templates": ["base", "magicStone"] },
-    "essenceAbility": { "templates": ["base", "essenceAbility"] },
-    "feature":      { "templates": ["base", "feature"] },
-    "equipment":    { "templates": ["base"] },
-    "skill":        { "templates": ["base", "skill"] },
-    "race":         { "templates": ["base", "race"] },
-    "background":   { "templates": ["base", "background"] },
-    "role":         { "templates": ["base", "role"] },
-    "racialAbility":{ "templates": ["base", "racialAbility"] }
+    "weapon":        { "templates": ["base", "weapon"] },
+    "armor":         { "templates": ["base", "armor"] },
+    "essence":       { "templates": ["base", "essence"] },
+    "magicStone":    { "templates": ["base", "magicStone"] },
+    "essenceAbility":{ "templates": ["base", "essenceAbility"] },
+    "feature":       { "templates": ["base", "feature"] },
+    "equipment":     { "templates": ["base"] },
+    "skill":         { "templates": ["base", "skill"] },
+    "race":          { "templates": ["base", "race"] },
+    "background":    { "templates": ["base", "background"] },
+    "role":          { "templates": ["base", "role"] },
+    "racialAbility": { "templates": ["base", "racialAbility"] }
   }
 }
-
