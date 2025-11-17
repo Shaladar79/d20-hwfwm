@@ -4,22 +4,27 @@
   <section class="card abilities-root">
     <h2>Abilities</h2>
 
-    {{!-- ===================== SUBTAB BUTTONS ===================== --}}
+    {{!-- SUBTAB BUTTONS: Essence 1 / 2 / 3 / Confluence --}}
     {{> "systems/hwfwm-d20/templates/actors/parts/subtabs/abilities/essence-subtabs.hbs"}}
 
-    {{!-- ===================== SUBTAB: ESSENCE SELECT ===================== --}}
-    <div class="subtab essence-subtab active" data-subtab="essences">
-      {{> "systems/hwfwm-d20/templates/actors/parts/subtabs/abilities/essence-select.hbs"}}
+    {{!-- SUBTAB: ESSENCE 1 --}}
+    <div class="subtab essence-subtab active" data-subtab="ess1">
+      {{> "systems/hwfwm-d20/templates/actors/parts/subtabs/abilities/essence1.hbs"}}
     </div>
 
-    {{!-- ===================== SUBTAB: ESSENCE DETAILS ===================== --}}
-    <div class="subtab essence-subtab" data-subtab="details">
-      {{> "systems/hwfwm-d20/templates/actors/parts/subtabs/abilities/essence-details.hbs"}}
+    {{!-- SUBTAB: ESSENCE 2 --}}
+    <div class="subtab essence-subtab" data-subtab="ess2">
+      {{> "systems/hwfwm-d20/templates/actors/parts/subtabs/abilities/essence2.hbs"}}
     </div>
 
-    {{!-- ===================== SUBTAB: ESSENCE RULES ===================== --}}
-    <div class="subtab essence-subtab" data-subtab="rules">
-      {{> "systems/hwfwm-d20/templates/actors/parts/subtabs/abilities/essence-rules.hbs"}}
+    {{!-- SUBTAB: ESSENCE 3 --}}
+    <div class="subtab essence-subtab" data-subtab="ess3">
+      {{> "systems/hwfwm-d20/templates/actors/parts/subtabs/abilities/essence3.hbs"}}
+    </div>
+
+    {{!-- SUBTAB: CONFLUENCE ESSENCE --}}
+    <div class="subtab essence-subtab" data-subtab="confluence">
+      {{> "systems/hwfwm-d20/templates/actors/parts/subtabs/abilities/essence-confluence.hbs"}}
     </div>
 
   </section>
