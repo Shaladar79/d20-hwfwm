@@ -1,79 +1,46 @@
 <!-- ============================================================
-     ESSENCE SELECTION PANEL
-     Three Primary Essences + Confluence Essence
-     GM can edit; players see read-only
-=============================================================== -->
+     Essence Selection Subtab
+     This displays 3 Primary Essence dropdowns + 1 Confluence
+   ============================================================ -->
 
-<div class="essence-select-grid">
+<div class="essence-select-container">
 
-  <!-- ================================
-       ESSENCE SLOT 1
-  ================================= -->
-  <div class="essence-slot">
-    <h3>Essence 1</h3>
-
-    <select name="system.essences.e1.key"
-            {{#unless isGM}}disabled{{/unless}}>
-      <option value="">— Select Essence —</option>
-      {{> "systems/hwfwm-d20/templates/actors/parts/abilities/essence-options.hbs"
-          current=system.essences.e1.key}}
+  <!-- ================= ESSENCE 1 ================= -->
+  <div class="essence-select-block">
+    <label for="essence-e1">Essence 1</label>
+    <select name="system.essences.e1.itemId">
+      {{> "systems/hwfwm-d20/templates/actors/parts/subtabs/abilities/essence-options.hbs"}}
     </select>
   </div>
 
-  <!-- ================================
-       ESSENCE SLOT 2
-  ================================= -->
-  <div class="essence-slot">
-    <h3>Essence 2</h3>
-
-    <select name="system.essences.e2.key"
-            {{#unless isGM}}disabled{{/unless}}>
-      <option value="">— Select Essence —</option>
-      {{> "systems/hwfwm-d20/templates/actors/parts/abilities/essence-options.hbs"
-          current=system.essences.e2.key}}
+  <!-- ================= ESSENCE 2 ================= -->
+  <div class="essence-select-block">
+    <label for="essence-e2">Essence 2</label>
+    <select name="system.essences.e2.itemId">
+      {{> "systems/hwfwm-d20/templates/actors/parts/subtabs/abilities/essence-options.hbs"}}
     </select>
   </div>
 
-  <!-- ================================
-       ESSENCE SLOT 3
-  ================================= -->
-  <div class="essence-slot">
-    <h3>Essence 3</h3>
-
-    <select name="system.essences.e3.key"
-            {{#unless isGM}}disabled{{/unless}}>
-      <option value="">— Select Essence —</option>
-      {{> "systems/hwfwm-d20/templates/actors/parts/abilities/essence-options.hbs"
-          current=system.essences.e3.key}}
+  <!-- ================= ESSENCE 3 ================= -->
+  <div class="essence-select-block">
+    <label for="essence-e3">Essence 3</label>
+    <select name="system.essences.e3.itemId">
+      {{> "systems/hwfwm-d20/templates/actors/parts/subtabs/abilities/essence-options.hbs"}}
     </select>
   </div>
 
-  <!-- ================================
-       CONFLUENCE ESSENCE
-  ================================= -->
-  <div class="essence-slot confluence-slot">
-    <h3>Confluence Essence</h3>
+  <!-- ================= CONFLUENCE ESSENCE ================= -->
+  <div class="essence-select-block">
+    <label for="essence-confluence">Confluence Essence</label>
 
     {{!-- 
-      AUTO-POPULATED by combinations
-      But GM can override if needed
+      NOTE: This dropdown will eventually be FILTERED based on the 
+            combination of e1 + e2 + e3 
+            AND it will be GM-locked unless override enabled.
     --}}
-    <select name="system.essences.confluence.key"
-            class="confluence-select"
-            {{#unless isGM}}disabled{{/unless}}>
-      <option value="">— Auto / GM Select —</option>
-
-      {{!-- This partial filters available choices based on e1,e2,e3 --}}
-      {{> "systems/hwfwm-d20/templates/actors/parts/abilities/confluence-options.hbs"
-          e1=system.essences.e1.key
-          e2=system.essences.e2.key
-          e3=system.essences.e3.key
-          current=system.essences.confluence.key}}
+    <select name="system.essences.confluence.itemId">
+      {{> "systems/hwfwm-d20/templates/actors/parts/subtabs/abilities/essence-options.hbs"}}
     </select>
-
-    {{#unless isGM}}
-      <p class="hint smalltext">Generated automatically</p>
-    {{/unless}}
   </div>
 
 </div>
