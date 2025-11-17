@@ -26,11 +26,15 @@ class HWFWMPCSheet extends ActorSheet {
     const data = super.getData(options);
     const sys  = this.actor.system ?? {};
 
+    // Rank-based toggle for Willpower
     const rank = (sys.details?.rank ?? "").toString().toLowerCase();
     data.showWillpower = rank.includes("gold") || rank.includes("diamond");
 
-    // Expose itemTypes for easy use on tabs
+    // Expose itemTypes for easy use on tabs (skills, etc.)
     data.itemTypes = this.actor.itemTypes ?? {};
+
+    // Expose GM flag for Essence / Confluence controls
+    data.isGM = game.user?.isGM ?? false;
 
     return data;
   }
@@ -65,7 +69,7 @@ class HWFWMPCSheet extends ActorSheet {
 
     // ---------------- Embedded Item Controls (skills, etc.) -----------------
     html.find(".item-create").on("click", async ev => {
-      const btn = ev.currentTarget;
+      const btn  = ev.currentTarget;
       const type = btn.dataset.type;
       if (!type) return;
 
