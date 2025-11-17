@@ -1,1 +1,123 @@
+{{!-- Essence Select Subtab
+     Uses:
+       - system.essences.e1/e2/e3/confluence.key
+       - allConfluences (from JS)
+       - confluenceSuggestions (from JS)
+       - isGM (from JS)
+       - essence-options.hbs for the normal Essence lists
+--}}
+
+<section class="essence-grid">
+
+  {{!-- ========== ESSENCE 1 ========== --}}
+  <section class="essence-block">
+    <div class="essence-header">
+      <h3>Essence 1</h3>
+      <small>Primary Essence</small>
+    </div>
+
+    <div class="essence-body">
+      <label>Essence</label>
+      <select name="system.essences.e1.key"
+              {{#unless isGM}}disabled{{/unless}}
+              value="{{system.essences.e1.key}}">
+        <option value="">— Select Essence —</option>
+        {{> "systems/hwfwm-d20/templates/actors/parts/abilities/essence-options.hbs"}}
+      </select>
+
+      <p class="hint">
+        Current: {{#if system.essences.e1.key}}{{system.essences.e1.key}}{{else}}None{{/if}}.
+        Essences are normally permanent; changes are GM-controlled.
+      </p>
+    </div>
+  </section>
+
+  {{!-- ========== ESSENCE 2 ========== --}}
+  <section class="essence-block">
+    <div class="essence-header">
+      <h3>Essence 2</h3>
+      <small>Secondary Essence</small>
+    </div>
+
+    <div class="essence-body">
+      <label>Essence</label>
+      <select name="system.essences.e2.key"
+              {{#unless isGM}}disabled{{/unless}}
+              value="{{system.essences.e2.key}}">
+        <option value="">— Select Essence —</option>
+        {{> "systems/hwfwm-d20/templates/actors/parts/abilities/essence-options.hbs"}}
+      </select>
+
+      <p class="hint">
+        Current: {{#if system.essences.e2.key}}{{system.essences.e2.key}}{{else}}None{{/if}}.
+      </p>
+    </div>
+  </section>
+
+  {{!-- ========== ESSENCE 3 ========== --}}
+  <section class="essence-block">
+    <div class="essence-header">
+      <h3>Essence 3</h3>
+      <small>Tertiary Essence</small>
+    </div>
+
+    <div class="essence-body">
+      <label>Essence</label>
+      <select name="system.essences.e3.key"
+              {{#unless isGM}}disabled{{/unless}}
+              value="{{system.essences.e3.key}}">
+        <option value="">— Select Essence —</option>
+        {{> "systems/hwfwm-d20/templates/actors/parts/abilities/essence-options.hbs"}}
+      </select>
+
+      <p class="hint">
+        Current: {{#if system.essences.e3.key}}{{system.essences.e3.key}}{{else}}None{{/if}}.
+      </p>
+    </div>
+  </section>
+
+  {{!-- ========== CONFLUENCE ESSENCE ========== --}}
+  <section class="essence-block">
+    <div class="essence-header">
+      <h3>Confluence Essence</h3>
+      <small>Born from your three Essences</small>
+    </div>
+
+    <div class="essence-body">
+      {{!-- Suggested result from JS lookup --}}
+      {{#if confluenceSuggestions}}
+        <p class="hint">
+          Suggested Confluence:
+          {{#each confluenceSuggestions}}
+            <strong>{{this}}</strong>{{#unless @last}}, {{/unless}}
+          {{/each}}
+        </p>
+      {{else}}
+        <p class="hint">
+          No suggested Confluence yet — check your three Essences.
+        </p>
+      {{/if}}
+
+      <label>Confluence Essence</label>
+      <select name="system.essences.confluence.key"
+              {{#unless isGM}}disabled{{/unless}}>
+        <option value="">— Select Confluence —</option>
+
+        {{!-- All known confluence keys from JS --}}
+        {{#each allConfluences}}
+          <option value="{{this}}"
+            {{#if (eq ../system.essences.confluence.key this)}}selected{{/if}}>
+            {{this}}
+          </option>
+        {{/each}}
+      </select>
+
+      <p class="hint">
+        Only the GM can change the Confluence Essence. They may choose a
+        different confluence if it fits story or system changes.
+      </p>
+    </div>
+  </section>
+
+</section>
 
