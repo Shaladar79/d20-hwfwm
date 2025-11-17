@@ -1,185 +1,174 @@
-{{!-- ============================================================
-     ESSENCE OPTIONS LIST
-     Used in dropdowns for Primary Essences.
-     Organized by rarity for readability.
-     Each <option> value is the lowercase ID used in the system.
-     Display text is the proper name.
-     ============================================================ --}}
+{{!-- Essence options partial
+     Expects: current = currently selected essence key (string)
+--}}
 
-{{!-- ======================== COMMON ========================== --}}
+{{!-- ======================== COMMON =========================== --}}
 <optgroup label="Common">
-  <option value="adept">Adept</option>
-  <option value="ape">Ape</option>
-  <option value="air">Air</option>
-  <option value="armour">Armour</option>
-  <option value="axe">Axe</option>
-  <option value="bat">Bat</option>
-  <option value="bear">Bear</option>
-  <option value="bee">Bee</option>
-  <option value="bird">Bird</option>
-  <option value="bow">Bow</option>
-  <option value="cage">Cage</option>
-  <option value="cat">Cat</option>
-  <option value="cattle">Cattle</option>
-  <option value="chain">Chain</option>
-  <option value="cloth">Cloth</option>
-  <option value="coral">Coral</option>
-  <option value="crocodile">Crocodile</option>
-  <option value="deer">Deer</option>
-  <option value="dog">Dog</option>
-  <option value="duck">Duck</option>
-  <option value="earth">Earth</option>
-  <option value="eye">Eye</option>
-  <option value="feast">Feast</option>
-  <option value="fire">Fire</option>
-  <option value="fish">Fish</option>
-  <option value="flea">Flea</option>
-  <option value="foot">Foot</option>
-  <option value="fork">Fork</option>
-  <option value="fox">Fox</option>
-  <option value="frog">Frog</option>
-  <option value="fungus">Fungus</option>
-  <option value="goat">Goat</option>
-  <option value="grazen">Grazen</option>
-  <option value="gun">Gun</option>
-  <option value="hair">Hair</option>
-  <option value="hammer">Hammer</option>
-  <option value="hand">Hand</option>
-  <option value="heidel">Heidel</option>
-  <option value="hook">Hook</option>
-  <option value="horse">Horse</option>
-  <option value="hunt">Hunt</option>
-  <option value="iron">Iron</option>
-  <option value="knife">Knife</option>
-  <option value="lizard">Lizard</option>
-  <option value="locust">Locust</option>
-  <option value="magic">Magic</option>
-  <option value="manatee">Manatee</option>
-  <option value="might">Might</option>
-  <option value="monkey">Monkey</option>
-  <option value="mouse">Mouse</option>
-  <option value="needle">Needle</option>
-  <option value="net">Net</option>
-  <option value="octopus">Octopus</option>
-  <option value="pangolin">Pangolin</option>
-  <option value="paper">Paper</option>
-  <option value="plant">Plant</option>
-  <option value="rabbit">Rabbit</option>
-  <option value="rake">Rake</option>
-  <option value="rat">Rat</option>
-  <option value="sceptre">Sceptre</option>
-  <option value="shark">Shark</option>
-  <option value="shield">Shield</option>
-  <option value="ship">Ship</option>
-  <option value="shovel">Shovel</option>
-  <option value="sickle">Sickle</option>
-  <option value="skunk">Skunk</option>
-  <option value="sloth">Sloth</option>
-  <option value="snake">Snake</option>
-  <option value="spear">Spear</option>
-  <option value="spider">Spider</option>
-  <option value="spike">Spike</option>
-  <option value="staff">Staff</option>
-  <option value="swift">Swift</option>
-  <option value="sword">Sword</option>
-  <option value="technology">Technology</option>
-  <option value="thread">Thread</option>
-  <option value="tooth">Tooth</option>
-  <option value="trap">Trap</option>
-  <option value="tree">Tree</option>
-  <option value="trowel">Trowel</option>
-  <option value="turtle">Turtle</option>
-  <option value="vehicle">Vehicle</option>
-  <option value="wasp">Wasp</option>
-  <option value="water">Water</option>
-  <option value="whale">Whale</option>
-  <option value="wheel">Wheel</option>
-  <option value="whip">Whip</option>
-  <option value="wind">Wind</option>
-  <option value="wolf">Wolf</option>
-  
-  {{!-- Unknown rarity placed into Common (best match) --}}
-  <option value="brush">Brush</option>
-  <option value="feeble">Feeble</option>
-  <option value="lurker">Lurker</option>
-  <option value="wood">Wood</option>
-</optgroup>
+  <option value="adept"      {{#if (eq current "adept")}}selected{{/if}}>Adept</option>
+  <option value="ape"        {{#if (eq current "ape")}}selected{{/if}}>Ape</option>
+  <option value="air"        {{#if (eq current "air")}}selected{{/if}}>Air</option>
+  <option value="armour"     {{#if (eq current "armour")}}selected{{/if}}>Armour</option>
+  <option value="axe"        {{#if (eq current "axe")}}selected{{/if}}>Axe</option>
+  <option value="bat"        {{#if (eq current "bat")}}selected{{/if}}>Bat</option>
+  <option value="bear"       {{#if (eq current "bear")}}selected{{/if}}>Bear</option>
+  <option value="bee"        {{#if (eq current "bee")}}selected{{/if}}>Bee</option>
+  <option value="bird"       {{#if (eq current "bird")}}selected{{/if}}>Bird</option>
+  <option value="bow"        {{#if (eq current "bow")}}selected{{/if}}>Bow</option>
+  <option value="cage"       {{#if (eq current "cage")}}selected{{/if}}>Cage</option>
+  <option value="cat"        {{#if (eq current "cat")}}selected{{/if}}>Cat</option>
+  <option value="cattle"     {{#if (eq current "cattle")}}selected{{/if}}>Cattle</option>
+  <option value="chain"      {{#if (eq current "chain")}}selected{{/if}}>Chain</option>
+  <option value="cloth"      {{#if (eq current "cloth")}}selected{{/if}}>Cloth</option>
+  <option value="coral"      {{#if (eq current "coral")}}selected{{/if}}>Coral</option>
+  <option value="crocodile"  {{#if (eq current "crocodile")}}selected{{/if}}>Crocodile</option>
+  <option value="deer"       {{#if (eq current "deer")}}selected{{/if}}>Deer</option>
+  <option value="dog"        {{#if (eq current "dog")}}selected{{/if}}>Dog</option>
+  <option value="duck"       {{#if (eq current "duck")}}selected{{/if}}>Duck</option>
+  <option value="earth"      {{#if (eq current "earth")}}selected{{/if}}>Earth</option>
+  <option value="eye"        {{#if (eq current "eye")}}selected{{/if}}>Eye</option>
+  <option value="feast"      {{#if (eq current "feast")}}selected{{/if}}>Feast</option>
+  <option value="fire"       {{#if (eq current "fire")}}selected{{/if}}>Fire</option>
+  <option value="fish"       {{#if (eq current "fish")}}selected{{/if}}>Fish</option>
+  <option value="flea"       {{#if (eq current "flea")}}selected{{/if}}>Flea</option>
+  <option value="foot"       {{#if (eq current "foot")}}selected{{/if}}>Foot</option>
+  <option value="fork"       {{#if (eq current "fork")}}selected{{/if}}>Fork</option>
+  <option value="fox"        {{#if (eq current "fox")}}selected{{/if}}>Fox</option>
+  <option value="frog"       {{#if (eq current "frog")}}selected{{/if}}>Frog</option>
+  <option value="fungus"     {{#if (eq current "fungus")}}selected{{/if}}>Fungus</option>
+  <option value="goat"       {{#if (eq current "goat")}}selected{{/if}}>Goat</option>
+  <option value="grazen"     {{#if (eq current "grazen")}}selected{{/if}}>Grazen</option>
+  <option value="gun"        {{#if (eq current "gun")}}selected{{/if}}>Gun</option>
+  <option value="hair"       {{#if (eq current "hair")}}selected{{/if}}>Hair</option>
+  <option value="hammer"     {{#if (eq current "hammer")}}selected{{/if}}>Hammer</option>
+  <option value="hand"       {{#if (eq current "hand")}}selected{{/if}}>Hand</option>
+  <option value="heidel"     {{#if (eq current "heidel")}}selected{{/if}}>Heidel</option>
+  <option value="hook"       {{#if (eq current "hook")}}selected{{/if}}>Hook</option>
+  <option value="horse"      {{#if (eq current "horse")}}selected{{/if}}>Horse</option>
+  <option value="hunt"       {{#if (eq current "hunt")}}selected{{/if}}>Hunt</option>
+  <option value="iron"       {{#if (eq current "iron")}}selected{{/if}}>Iron</option>
+  <option value="knife"      {{#if (eq current "knife")}}selected{{/if}}>Knife</option>
+  <option value="lizard"     {{#if (eq current "lizard")}}selected{{/if}}>Lizard</option>
+  <option value="locust"     {{#if (eq current "locust")}}selected{{/if}}>Locust</option>
+  <option value="magic"      {{#if (eq current "magic")}}selected{{/if}}>Magic</option>
+  <option value="manatee"    {{#if (eq current "manatee")}}selected{{/if}}>Manatee</option>
+  <option value="might"      {{#if (eq current "might")}}selected{{/if}}>Might</option>
+  <option value="monkey"     {{#if (eq current "monkey")}}selected{{/if}}>Monkey</option>
+  <option value="mouse"      {{#if (eq current "mouse")}}selected{{/if}}>Mouse</option>
+  <option value="needle"     {{#if (eq current "needle")}}selected{{/if}}>Needle</option>
+  <option value="net"        {{#if (eq current "net")}}selected{{/if}}>Net</option>
+  <option value="octopus"    {{#if (eq current "octopus")}}selected{{/if}}>Octopus</option>
+  <option value="pangolin"   {{#if (eq current "pangolin")}}selected{{/if}}>Pangolin</option>
+  <option value="paper"      {{#if (eq current "paper")}}selected{{/if}}>Paper</option>
+  <option value="plant"      {{#if (eq current "plant")}}selected{{/if}}>Plant</option>
+  <option value="rabbit"     {{#if (eq current "rabbit")}}selected{{/if}}>Rabbit</option>
+  <option value="rake"       {{#if (eq current "rake")}}selected{{/if}}>Rake</option>
+  <option value="rat"        {{#if (eq current "rat")}}selected{{/if}}>Rat</option>
+  <option value="sceptre"    {{#if (eq current "sceptre")}}selected{{/if}}>Sceptre</option>
+  <option value="shark"      {{#if (eq current "shark")}}selected{{/if}}>Shark</option>
+  <option value="shield"     {{#if (eq current "shield")}}selected{{/if}}>Shield</option>
+  <option value="ship"       {{#if (eq current "ship")}}selected{{/if}}>Ship</option>
+  <option value="shovel"     {{#if (eq current "shovel")}}selected{{/if}}>Shovel</option>
+  <option value="sickle"     {{#if (eq current "sickle")}}selected{{/if}}>Sickle</option>
+  <option value="skunk"      {{#if (eq current "skunk")}}selected{{/if}}>Skunk</option>
+  <option value="sloth"      {{#if (eq current "sloth")}}selected{{/if}}>Sloth</option>
+  <option value="snake"      {{#if (eq current "snake")}}selected{{/if}}>Snake</option>
+  <option value="spear"      {{#if (eq current "spear")}}selected{{/if}}>Spear</option>
+  <option value="spider"     {{#if (eq current "spider")}}selected{{/if}}>Spider</option>
+  <option value="spike"      {{#if (eq current "spike")}}selected{{/if}}>Spike</option>
+  <option value="staff"      {{#if (eq current "staff")}}selected{{/if}}>Staff</option>
+  <option value="swift"      {{#if (eq current "swift")}}selected{{/if}}>Swift</option>
+  <option value="sword"      {{#if (eq current "sword")}}selected{{/if}}>Sword</option>
+  <option value="technology" {{#if (eq current "technology")}}selected{{/if}}>Technology</option>
+  <option value="thread"     {{#if (eq current "thread")}}selected{{/if}}>Thread</option>
+  <option value="tooth"      {{#if (eq current "tooth")}}selected{{/if}}>Tooth</option>
+  <option value="trap"       {{#if (eq current "trap")}}selected{{/if}}>Trap</option>
+  <option value="tree"       {{#if (eq current "tree")}}selected{{/if}}>Tree</option>
+  <option value="trowel"     {{#if (eq current "trowel")}}selected{{/if}}>Trowel</option>
+  <option value="turtle"     {{#if (eq current "turtle")}}selected{{/if}}>Turtle</option>
+  <option value="vehicle"    {{#if (eq current "vehicle")}}selected{{/if}}>Vehicle</option>
+  <option value="wasp"       {{#if (eq current "wasp")}}selected{{/if}}>Wasp</option>
+  <option value="water"      {{#if (eq current "water")}}selected{{/if}}>Water</option>
+  <option value="whale"      {{#if (eq current "whale")}}selected{{/if}}>Whale</option>
+  <option value="wheel"      {{#if (eq current "wheel")}}selected{{/if}}>Wheel</option>
+  <option value="whip"       {{#if (eq current "whip")}}selected{{/if}}>Whip</option>
+  <option value="wind"       {{#if (eq current "wind")}}selected{{/if}}>Wind</option>
+  <option value="wolf"       {{#if (eq current "wolf")}}selected{{/if}}>Wolf</option>
 
+  {{!-- Unknown rarity treated as Common --}}
+  <option value="brush"  {{#if (eq current "brush")}}selected{{/if}}>Brush</option>
+  <option value="feeble" {{#if (eq current "feeble")}}selected{{/if}}>Feeble</option>
+  <option value="lurker" {{#if (eq current "lurker")}}selected{{/if}}>Lurker</option>
+  <option value="wood"   {{#if (eq current "wood")}}selected{{/if}}>Wood</option>
+</optgroup>
 
 {{!-- ======================== UNCOMMON ========================== --}}
 <optgroup label="Uncommon">
-  <option value="balance">Balance</option>
-  <option value="blood">Blood</option>
-  <option value="bone">Bone</option>
-  <option value="claw">Claw</option>
-  <option value="cloud">Cloud</option>
-  <option value="cold">Cold</option>
-  <option value="dance">Dance</option>
-  <option value="dark">Dark</option>
-  <option value="death">Death</option>
-  <option value="dust">Dust</option>
-  <option value="flesh">Flesh</option>
-  <option value="glass">Glass</option>
-  <option value="growth">Growth</option>
-  <option value="ice">Ice</option>
-  <option value="knowledge">Knowledge</option>
-  <option value="life">Life</option>
-  <option value="light">Light</option>
-  <option value="lightning">Lightning</option>
-  <option value="mirror">Mirror</option>
-  <option value="pure">Pure</option>
-  <option value="sand">Sand</option>
-  <option value="smoke">Smoke</option>
-  <option value="song">Song</option>
-  <option value="venom">Venom</option>
+  <option value="balance"   {{#if (eq current "balance")}}selected{{/if}}>Balance</option>
+  <option value="blood"     {{#if (eq current "blood")}}selected{{/if}}>Blood</option>
+  <option value="bone"      {{#if (eq current "bone")}}selected{{/if}}>Bone</option>
+  <option value="claw"      {{#if (eq current "claw")}}selected{{/if}}>Claw</option>
+  <option value="cloud"     {{#if (eq current "cloud")}}selected{{/if}}>Cloud</option>
+  <option value="cold"      {{#if (eq current "cold")}}selected{{/if}}>Cold</option>
+  <option value="dance"     {{#if (eq current "dance")}}selected{{/if}}>Dance</option>
+  <option value="dark"      {{#if (eq current "dark")}}selected{{/if}}>Dark</option>
+  <option value="death"     {{#if (eq current "death")}}selected{{/if}}>Death</option>
+  <option value="dust"      {{#if (eq current "dust")}}selected{{/if}}>Dust</option>
+  <option value="flesh"     {{#if (eq current "flesh")}}selected{{/if}}>Flesh</option>
+  <option value="glass"     {{#if (eq current "glass")}}selected{{/if}}>Glass</option>
+  <option value="growth"    {{#if (eq current "growth")}}selected{{/if}}>Growth</option>
+  <option value="ice"       {{#if (eq current "ice")}}selected{{/if}}>Ice</option>
+  <option value="knowledge" {{#if (eq current "knowledge")}}selected{{/if}}>Knowledge</option>
+  <option value="life"      {{#if (eq current "life")}}selected{{/if}}>Life</option>
+  <option value="light"     {{#if (eq current "light")}}selected{{/if}}>Light</option>
+  <option value="lightning" {{#if (eq current "lightning")}}selected{{/if}}>Lightning</option>
+  <option value="mirror"    {{#if (eq current "mirror")}}selected{{/if}}>Mirror</option>
+  <option value="pure"      {{#if (eq current "pure")}}selected{{/if}}>Pure</option>
+  <option value="sand"      {{#if (eq current "sand")}}selected{{/if}}>Sand</option>
+  <option value="smoke"     {{#if (eq current "smoke")}}selected{{/if}}>Smoke</option>
+  <option value="song"      {{#if (eq current "song")}}selected{{/if}}>Song</option>
+  <option value="venom"     {{#if (eq current "venom")}}selected{{/if}}>Venom</option>
 </optgroup>
-
 
 {{!-- ======================== RARE ============================= --}}
 <optgroup label="Rare">
-  <option value="crystal">Crystal</option>
-  <option value="deep">Deep</option>
-  <option value="echo">Echo</option>
-  <option value="gathering">Gathering</option>
-  <option value="hunger">Hunger</option>
-  <option value="moon">Moon</option>
-  <option value="resolute">Resolute</option>
-  <option value="serene">Serene</option>
-  <option value="star">Star</option>
-  <option value="sun">Sun</option>
-  <option value="zeal">Zeal</option>
+  <option value="crystal"   {{#if (eq current "crystal")}}selected{{/if}}>Crystal</option>
+  <option value="deep"      {{#if (eq current "deep")}}selected{{/if}}>Deep</option>
+  <option value="echo"      {{#if (eq current "echo")}}selected{{/if}}>Echo</option>
+  <option value="gathering" {{#if (eq current "gathering")}}selected{{/if}}>Gathering</option>
+  <option value="hunger"    {{#if (eq current "hunger")}}selected{{/if}}>Hunger</option>
+  <option value="moon"      {{#if (eq current "moon")}}selected{{/if}}>Moon</option>
+  <option value="resolute"  {{#if (eq current "resolute")}}selected{{/if}}>Resolute</option>
+  <option value="serene"    {{#if (eq current "serene")}}selected{{/if}}>Serene</option>
+  <option value="star"      {{#if (eq current "star")}}selected{{/if}}>Star</option>
+  <option value="sun"       {{#if (eq current "sun")}}selected{{/if}}>Sun</option>
+  <option value="zeal"      {{#if (eq current "zeal")}}selected{{/if}}>Zeal</option>
 
-  {{!-- Unknown rarity placed here (appropriate for power level) --}}
-  <option value="blight">Blight</option>
+  {{!-- Unknown rarity upgraded to Rare --}}
+  <option value="blight"    {{#if (eq current "blight")}}selected{{/if}}>Blight</option>
 </optgroup>
-
 
 {{!-- ======================== EPIC ============================= --}}
 <optgroup label="Epic">
-  <option value="corrupt">Corrupt</option>
-  <option value="discord">Discord</option>
-  <option value="elemental">Elemental</option>
-  <option value="harmonic">Harmonic</option>
-  <option value="malign">Malign</option>
-  <option value="omen">Omen</option>
-  <option value="potent">Potent</option>
-  <option value="renewal">Renewal</option>
-  <option value="rune">Rune</option>
-  <option value="shimmer">Shimmer</option>
-  <option value="tentacle">Tentacle</option>
-  <option value="wing">Wing</option>
+  <option value="corrupt"   {{#if (eq current "corrupt")}}selected{{/if}}>Corrupt</option>
+  <option value="discord"   {{#if (eq current "discord")}}selected{{/if}}>Discord</option>
+  <option value="elemental" {{#if (eq current "elemental")}}selected{{/if}}>Elemental</option>
+  <option value="harmonic"  {{#if (eq current "harmonic")}}selected{{/if}}>Harmonic</option>
+  <option value="malign"    {{#if (eq current "malign")}}selected{{/if}}>Malign</option>
+  <option value="omen"      {{#if (eq current "omen")}}selected{{/if}}>Omen</option>
+  <option value="potent"    {{#if (eq current "potent")}}selected{{/if}}>Potent</option>
+  <option value="renewal"   {{#if (eq current "renewal")}}selected{{/if}}>Renewal</option>
+  <option value="rune"      {{#if (eq current "rune")}}selected{{/if}}>Rune</option>
+  <option value="shimmer"   {{#if (eq current "shimmer")}}selected{{/if}}>Shimmer</option>
+  <option value="tentacle"  {{#if (eq current "tentacle")}}selected{{/if}}>Tentacle</option>
+  <option value="wing"      {{#if (eq current "wing")}}selected{{/if}}>Wing</option>
 </optgroup>
-
 
 {{!-- ======================== LEGENDARY ========================= --}}
 <optgroup label="Legendary">
-  <option value="dimension">Dimension</option>
-  <option value="myriad">Myriad</option>
-  <option value="sin">Sin</option>
-  <option value="vast">Vast</option>
-  <option value="visage">Visage</option>
-  <option value="void">Void</option>
+  <option value="dimension" {{#if (eq current "dimension")}}selected{{/if}}>Dimension</option>
+  <option value="myriad"    {{#if (eq current "myriad")}}selected{{/if}}>Myriad</option>
+  <option value="sin"       {{#if (eq current "sin")}}selected{{/if}}>Sin</option>
+  <option value="vast"      {{#if (eq current "vast")}}selected{{/if}}>Vast</option>
+  <option value="visage"    {{#if (eq current "visage")}}selected{{/if}}>Visage</option>
+  <option value="void"      {{#if (eq current "void")}}selected{{/if}}>Void</option>
 </optgroup>
-
-
-
