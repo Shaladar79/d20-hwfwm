@@ -1,0 +1,43 @@
+<section class="essence-panel essence-panel-1">
+
+  <h3>Essence 1</h3>
+
+  <div class="essence-row">
+    <label>Essence</label>
+    <select name="system.essences.e1.key" {{#unless isGM}}disabled{{/unless}}>
+      <option value="">— Select Essence —</option>
+      {{> "systems/hwfwm-d20/templates/actors/parts/abilities/essence-options.hbs"
+          current=system.essences.e1.key}}
+    </select>
+  </div>
+
+  <div class="essence-theme-block">
+    <h4>Theme & Description</h4>
+    {{!-- Later we can auto-fill this from essence-themes --}}
+    <p class="theme-text">
+      {{system.essences.e1.theme}}
+    </p>
+  </div>
+
+  <div class="essence-abilities-block">
+    <h4>Essence 1 Abilities</h4>
+
+    {{!-- 5 slots reserved for Essence 1 abilities --}}
+    <div class="essence-ability-slot" data-essence-slot="essence1" data-ability-index="0">
+      <span class="ability-placeholder">Ability Slot 1 – Drop Essence Ability here</span>
+    </div>
+    <div class="essence-ability-slot" data-essence-slot="essence1" data-ability-index="1">
+      <span class="ability-placeholder">Ability Slot 2 – Drop Essence Ability here</span>
+    </div>
+    <div class="essence-ability-slot" data-essence-slot="essence1" data-ability-index="2">
+      <span class="ability-placeholder">Ability Slot 3 – Drop Essence Ability here</span>
+    </div>
+    <div class="essence-ability-slot" data-essence-slot="essence1" data-ability-index="3">
+      <span class="ability-placeholder">Ability Slot 4 – Drop Essence Ability here</span>
+    </div>
+    <div class="essence-ability-slot" data-essence-slot="essence1" data-ability-index="4">
+      <span class="ability-placeholder">Ability Slot 5 – Drop Essence Ability here</span>
+    </div>
+  </div>
+
+</section>
