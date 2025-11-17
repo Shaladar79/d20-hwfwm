@@ -3,35 +3,6 @@
 // HWFWM-D20 | Actor & Item sheet registration + Tabs/Subtabs support
 // ============================================================================
 
-/* ------------------ Confluence combo loader (JSON file) ------------------ */
-async function loadConfluenceCombos() {
-  // Cache on the system object so we only fetch once
-  if (game.system.hwfwmConfluenceCombos) {
-    return game.system.hwfwmConfluenceCombos;
-  }
-
-  const path = "systems/hwfwm-d20/templates/actors/parts/abilities/confluence-combos.hbs";
-
-  try {
-    const res = await fetch(path);
-    if (!res.ok) {
-      console.error("HWFWM-D20 | Failed to load confluence-combos.hbs:", res.status, res.statusText);
-      game.system.hwfwmConfluenceCombos = { byCombination: {}, byConfluence: {} };
-      return game.system.hwfwmConfluenceCombos;
-    }
-
-    const text = await res.text();
-    // File is pure JSON text: { "byCombination": {...}, "byConfluence": {...} }
-    const data = JSON.parse(text);
-    game.system.hwfwmConfluenceCombos = data;
-    return data;
-  } catch (err) {
-    console.error("HWFWM-D20 | Error loading confluence-combos.hbs:", err);
-    game.system.hwfwmConfluenceCombos = { byCombination: {}, byConfluence: {} };
-    return game.system.hwfwmConfluenceCombos;
-  }
-}
-
 /* ----------------------------- PC Actor Sheet ----------------------------- */
 class HWFWMPCSheet extends ActorSheet {
   static get defaultOptions() {
@@ -51,41 +22,20 @@ class HWFWMPCSheet extends ActorSheet {
   }
 
   /** Inject extra data into the sheet */
-  async getData(options) {
-    const data = await super.getData(options);
+  getData(options) {
+    const data = super.getData(options);
     const sys  = this.actor.system ?? {};
 
     const rank = (sys.details?.rank ?? "").toString().toLowerCase();
+
+    // Show Willpower only for Gold/Diamond
     data.showWillpower = rank.includes("gold") || rank.includes("diamond");
 
-    // Expose itemTypes for easy use on tabs (skills, etc.)
+    // Is this user a GM? (for GM-only controls like Essence selection / Confluence override)
+    data.isGM = game.user?.isGM ?? false;
+
+    // Expose itemTypes for easy use on tabs (inventory/skills, etc.)
     data.itemTypes = this.actor.itemTypes ?? {};
-
-    // GM flag for locking Essence / Confluence edits
-    data.isGM = game.user.isGM;
-
-    // ----- Essence + Confluence suggestion logic -----
-    const ess = sys.essences ?? {};
-    const e1 = ess.e1?.key || "";
-    const e2 = ess.e2?.key || "";
-    const e3 = ess.e3?.key || "";
-
-    const combos = await loadConfluenceCombos();
-    const byComb = combos.byCombination ?? {};
-    const byConf = combos.byConfluence ?? {};
-
-    // All known confluence keys, sorted
-    const allConfluences = Object.keys(byConf).sort();
-    data.allConfluences = allConfluences;
-
-    // Suggested confluence(s) based on the three normal Essences
-    let suggestions = [];
-    if (e1 && e2 && e3) {
-      const key = [e1, e2, e3].sort().join("+"); // we store combo keys sorted
-      const confKey = byComb[key];
-      if (confKey) suggestions = [confKey];
-    }
-    data.confluenceSuggestions = suggestions;
 
     return data;
   }
@@ -95,7 +45,7 @@ class HWFWMPCSheet extends ActorSheet {
     super.activateListeners(html);
     if (!this.isEditable) return;
 
-    // ---------------- Subtabs (Stats, Skills, Inventory, etc.) -------------
+    // ---------------- Subtabs (Stats, Skills, Abilities, Inventory, etc.) -------------
     html.find(".subtabs").each((_, elem) => {
       const $block   = $(elem);
       const $buttons = $block.find(".subtab-btn");
@@ -120,7 +70,7 @@ class HWFWMPCSheet extends ActorSheet {
 
     // ---------------- Embedded Item Controls (skills, etc.) -----------------
     html.find(".item-create").on("click", async ev => {
-      const btn = ev.currentTarget;
+      const btn  = ev.currentTarget;
       const type = btn.dataset.type;
       if (!type) return;
 
@@ -202,11 +152,6 @@ Hooks.once("init", async function () {
     });
   });
 
-  // Simple increment helper (used for ability slot labels, etc.)
-  Handlebars.registerHelper("inc", function (value) {
-    return Number(value) + 1;
-  });
-
   // ---------- Register sheets ----------
   Actors.unregisterSheet("core", ActorSheet);
   Actors.registerSheet("hwfwm-d20", HWFWMPCSheet, {
@@ -224,7 +169,7 @@ Hooks.once("init", async function () {
     // Main actor sheet
     "systems/hwfwm-d20/templates/actors/actor-sheet.hbs",
 
-    // Tabs
+    // Main tabs
     "systems/hwfwm-d20/templates/actors/parts/tabs/stats.hbs",
     "systems/hwfwm-d20/templates/actors/parts/tabs/skills.hbs",
     "systems/hwfwm-d20/templates/actors/parts/tabs/abilities.hbs",
@@ -250,8 +195,17 @@ Hooks.once("init", async function () {
     "systems/hwfwm-d20/templates/actors/parts/subtabs/skills/crafting-skills.hbs",
     "systems/hwfwm-d20/templates/actors/parts/subtabs/skills/knowledge-skills.hbs",
 
-    // Abilities partials (Essence dropdown list)
-    "systems/hwfwm-d20/templates/actors/parts/abilities/essence-options.hbs"
+    // Abilities: Essence subtabs + panels
+    "systems/hwfwm-d20/templates/actors/parts/subtabs/abilities/essence-subtabs.hbs",
+    "systems/hwfwm-d20/templates/actors/parts/subtabs/abilities/essence1.hbs",
+    "systems/hwfwm-d20/templates/actors/parts/subtabs/abilities/essence2.hbs",
+    "systems/hwfwm-d20/templates/actors/parts/subtabs/abilities/essence3.hbs",
+    "systems/hwfwm-d20/templates/actors/parts/subtabs/abilities/essence-confluence.hbs",
+
+    // Abilities: shared partials (Essence dropdowns & Confluence combos)
+    "systems/hwfwm-d20/templates/actors/parts/abilities/essence-options.hbs",
+    "systems/hwfwm-d20/templates/actors/parts/abilities/confluence-options.hbs",
+    "systems/hwfwm-d20/templates/actors/parts/abilities/confluence-combos.hbs"
   ];
 
   await loadTemplates(templatePaths);
