@@ -3,6 +3,35 @@
 // HWFWM-D20 | Actor & Item sheet registration + Tabs/Subtabs support
 // ============================================================================
 
+/* ------------------ Confluence combo loader (JSON file) ------------------ */
+async function loadConfluenceCombos() {
+  // Cache on the system object so we only fetch once
+  if (game.system.hwfwmConfluenceCombos) {
+    return game.system.hwfwmConfluenceCombos;
+  }
+
+  const path = "systems/hwfwm-d20/templates/actors/parts/abilities/confluence-combos.hbs";
+
+  try {
+    const res = await fetch(path);
+    if (!res.ok) {
+      console.error("HWFWM-D20 | Failed to load confluence-combos.hbs:", res.status, res.statusText);
+      game.system.hwfwmConfluenceCombos = { byCombination: {}, byConfluence: {} };
+      return game.system.hwfwmConfluenceCombos;
+    }
+
+    const text = await res.text();
+    // File is pure JSON text: { "byCombination": {...}, "byConfluence": {...} }
+    const data = JSON.parse(text);
+    game.system.hwfwmConfluenceCombos = data;
+    return data;
+  } catch (err) {
+    console.error("HWFWM-D20 | Error loading confluence-combos.hbs:", err);
+    game.system.hwfwmConfluenceCombos = { byCombination: {}, byConfluence: {} };
+    return game.system.hwfwmConfluenceCombos;
+  }
+}
+
 /* ----------------------------- PC Actor Sheet ----------------------------- */
 class HWFWMPCSheet extends ActorSheet {
   static get defaultOptions() {
@@ -22,15 +51,41 @@ class HWFWMPCSheet extends ActorSheet {
   }
 
   /** Inject extra data into the sheet */
-  getData(options) {
-    const data = super.getData(options);
+  async getData(options) {
+    const data = await super.getData(options);
     const sys  = this.actor.system ?? {};
 
     const rank = (sys.details?.rank ?? "").toString().toLowerCase();
     data.showWillpower = rank.includes("gold") || rank.includes("diamond");
 
-    // Expose itemTypes for easy use on tabs
+    // Expose itemTypes for easy use on tabs (skills, etc.)
     data.itemTypes = this.actor.itemTypes ?? {};
+
+    // GM flag for locking Essence / Confluence edits
+    data.isGM = game.user.isGM;
+
+    // ----- Essence + Confluence suggestion logic -----
+    const ess = sys.essences ?? {};
+    const e1 = ess.e1?.key || "";
+    const e2 = ess.e2?.key || "";
+    const e3 = ess.e3?.key || "";
+
+    const combos = await loadConfluenceCombos();
+    const byComb = combos.byCombination ?? {};
+    const byConf = combos.byConfluence ?? {};
+
+    // All known confluence keys, sorted
+    const allConfluences = Object.keys(byConf).sort();
+    data.allConfluences = allConfluences;
+
+    // Suggested confluence(s) based on the three normal Essences
+    let suggestions = [];
+    if (e1 && e2 && e3) {
+      const key = [e1, e2, e3].sort().join("+"); // we store combo keys sorted
+      const confKey = byComb[key];
+      if (confKey) suggestions = [confKey];
+    }
+    data.confluenceSuggestions = suggestions;
 
     return data;
   }
@@ -147,6 +202,11 @@ Hooks.once("init", async function () {
     });
   });
 
+  // Simple increment helper (used for ability slot labels, etc.)
+  Handlebars.registerHelper("inc", function (value) {
+    return Number(value) + 1;
+  });
+
   // ---------- Register sheets ----------
   Actors.unregisterSheet("core", ActorSheet);
   Actors.registerSheet("hwfwm-d20", HWFWMPCSheet, {
@@ -188,7 +248,10 @@ Hooks.once("init", async function () {
     "systems/hwfwm-d20/templates/actors/parts/subtabs/skills/spirit-skills.hbs",
     "systems/hwfwm-d20/templates/actors/parts/subtabs/skills/recovery-skills.hbs",
     "systems/hwfwm-d20/templates/actors/parts/subtabs/skills/crafting-skills.hbs",
-    "systems/hwfwm-d20/templates/actors/parts/subtabs/skills/knowledge-skills.hbs"
+    "systems/hwfwm-d20/templates/actors/parts/subtabs/skills/knowledge-skills.hbs",
+
+    // Abilities partials (Essence dropdown list)
+    "systems/hwfwm-d20/templates/actors/parts/abilities/essence-options.hbs"
   ];
 
   await loadTemplates(templatePaths);
