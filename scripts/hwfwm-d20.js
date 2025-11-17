@@ -27,14 +27,9 @@ class HWFWMPCSheet extends ActorSheet {
     const sys  = this.actor.system ?? {};
 
     const rank = (sys.details?.rank ?? "").toString().toLowerCase();
-
-    // Show Willpower only for Gold/Diamond
     data.showWillpower = rank.includes("gold") || rank.includes("diamond");
 
-    // Is this user a GM? (for GM-only controls like Essence selection / Confluence override)
-    data.isGM = game.user?.isGM ?? false;
-
-    // Expose itemTypes for easy use on tabs (inventory/skills, etc.)
+    // Expose itemTypes for easy use on tabs
     data.itemTypes = this.actor.itemTypes ?? {};
 
     return data;
@@ -45,7 +40,7 @@ class HWFWMPCSheet extends ActorSheet {
     super.activateListeners(html);
     if (!this.isEditable) return;
 
-    // ---------------- Subtabs (Stats, Skills, Abilities, Inventory, etc.) -------------
+    // ---------------- Subtabs (Stats, Skills, Inventory, Abilities, etc.) -------------
     html.find(".subtabs").each((_, elem) => {
       const $block   = $(elem);
       const $buttons = $block.find(".subtab-btn");
@@ -70,7 +65,7 @@ class HWFWMPCSheet extends ActorSheet {
 
     // ---------------- Embedded Item Controls (skills, etc.) -----------------
     html.find(".item-create").on("click", async ev => {
-      const btn  = ev.currentTarget;
+      const btn = ev.currentTarget;
       const type = btn.dataset.type;
       if (!type) return;
 
@@ -169,7 +164,7 @@ Hooks.once("init", async function () {
     // Main actor sheet
     "systems/hwfwm-d20/templates/actors/actor-sheet.hbs",
 
-    // Main tabs
+    // Tabs
     "systems/hwfwm-d20/templates/actors/parts/tabs/stats.hbs",
     "systems/hwfwm-d20/templates/actors/parts/tabs/skills.hbs",
     "systems/hwfwm-d20/templates/actors/parts/tabs/abilities.hbs",
@@ -195,17 +190,17 @@ Hooks.once("init", async function () {
     "systems/hwfwm-d20/templates/actors/parts/subtabs/skills/crafting-skills.hbs",
     "systems/hwfwm-d20/templates/actors/parts/subtabs/skills/knowledge-skills.hbs",
 
-    // Abilities: Essence subtabs + panels
+    // Abilities / Essences subtabs & partials
     "systems/hwfwm-d20/templates/actors/parts/subtabs/abilities/essence-subtabs.hbs",
+    "systems/hwfwm-d20/templates/actors/parts/subtabs/abilities/essence-select.hbs",
+    "systems/hwfwm-d20/templates/actors/parts/subtabs/abilities/essence-options.hbs",
+    "systems/hwfwm-d20/templates/actors/parts/subtabs/abilities/confluence-options.hbs",
+    "systems/hwfwm-d20/templates/actors/parts/subtabs/abilities/essence-details.hbs",
+    "systems/hwfwm-d20/templates/actors/parts/subtabs/abilities/essence-rules.hbs",
     "systems/hwfwm-d20/templates/actors/parts/subtabs/abilities/essence1.hbs",
     "systems/hwfwm-d20/templates/actors/parts/subtabs/abilities/essence2.hbs",
     "systems/hwfwm-d20/templates/actors/parts/subtabs/abilities/essence3.hbs",
-    "systems/hwfwm-d20/templates/actors/parts/subtabs/abilities/essence-confluence.hbs",
-
-    // Abilities: shared partials (Essence dropdowns & Confluence combos)
-    "systems/hwfwm-d20/templates/actors/parts/abilities/essence-options.hbs",
-    "systems/hwfwm-d20/templates/actors/parts/abilities/confluence-options.hbs",
-    "systems/hwfwm-d20/templates/actors/parts/abilities/confluence-combos.hbs"
+    "systems/hwfwm-d20/templates/actors/parts/subtabs/abilities/essence-confluence.hbs"
   ];
 
   await loadTemplates(templatePaths);
