@@ -27,17 +27,17 @@
           "willpower": { "label": "Willpower",  "value": 0,  "max": 0 }
         },
         "defenses": {
-          "defense":       { "label": "Defense",           "value": 10 },
-          "reaction":      { "label": "Reaction",          "value": 0 },
-          "pace":          { "label": "Pace",              "value": 6 },
-          "lifeforceRegen":{ "label": "Life Force Regen",  "value": 0 },
-          "manaRegen":     { "label": "Mana Regen",        "value": 0 },
-          "staminaRegen":  { "label": "Stamina Regen",     "value": 0 }
+          "defense":        { "label": "Defense",          "value": 10 },
+          "reaction":       { "label": "Reaction",         "value": 0 },
+          "pace":           { "label": "Pace",             "value": 6 },
+          "lifeforceRegen": { "label": "Life Force Regen", "value": 0 },
+          "manaRegen":      { "label": "Mana Regen",       "value": 0 },
+          "staminaRegen":   { "label": "Stamina Regen",    "value": 0 }
         },
-
         "essences": {
           "e1": {
             "key": "",
+            "theme": "",
             "itemId": "",
             "attribute": "",
             "abilities": [
@@ -50,6 +50,7 @@
           },
           "e2": {
             "key": "",
+            "theme": "",
             "itemId": "",
             "attribute": "",
             "abilities": [
@@ -62,6 +63,7 @@
           },
           "e3": {
             "key": "",
+            "theme": "",
             "itemId": "",
             "attribute": "",
             "abilities": [
@@ -74,6 +76,7 @@
           },
           "confluence": {
             "key": "",
+            "theme": "",
             "itemId": "",
             "attribute": "",
             "abilities": [
@@ -85,9 +88,14 @@
             ]
           }
         },
-
-        "traits": { "size": "medium", "tags": [] },
-        "notes":  { "biography": "", "gmNotes": "" }
+        "traits": {
+          "size": "medium",
+          "tags": []
+        },
+        "notes": {
+          "biography": "",
+          "gmNotes": ""
+        }
       }
     },
     "pc":  { "templates": ["base"] },
