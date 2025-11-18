@@ -32,6 +32,9 @@ class HWFWMPCSheet extends ActorSheet {
     // Expose itemTypes for easy use on tabs
     data.itemTypes = this.actor.itemTypes ?? {};
 
+    // Expose isGM for confluence GM-only select
+    data.isGM = game.user?.isGM ?? false;
+
     return data;
   }
 
@@ -63,11 +66,17 @@ class HWFWMPCSheet extends ActorSheet {
       });
     });
 
-    // ---------------- FORCE SAVE for Essence dropdowns -----------------
-    // Any change to system.essences.*.key will immediately submit the form
-    html.find("select[name^='system.essences']").on("change", ev => {
-      // Let the base sheet do its normal form handling / update
-      this._onSubmit(ev);
+    // ---------------- Essence dropdowns: manual save to actor -----------------
+    // Any <select> with .essence-select and data-slot="e1|e2|e3|confluence"
+    html.find("select.essence-select").on("change", ev => {
+      const select = ev.currentTarget;
+      const slot   = select.dataset.slot;     // e1, e2, e3, confluence
+      const value  = select.value || "";
+
+      if (!slot) return;
+
+      const path = `system.essences.${slot}.key`;
+      this.actor.update({ [path]: value });
     });
 
     // ---------------- Embedded Item Controls (skills, etc.) -----------------
@@ -199,11 +208,8 @@ Hooks.once("init", async function () {
 
     // Abilities / Essences subtabs & partials
     "systems/hwfwm-d20/templates/actors/parts/subtabs/abilities/essence-subtabs.hbs",
-    "systems/hwfwm-d20/templates/actors/parts/subtabs/abilities/essence-select.hbs",
     "systems/hwfwm-d20/templates/actors/parts/subtabs/abilities/essence-options.hbs",
     "systems/hwfwm-d20/templates/actors/parts/subtabs/abilities/confluence-options.hbs",
-    "systems/hwfwm-d20/templates/actors/parts/subtabs/abilities/essence-details.hbs",
-    "systems/hwfwm-d20/templates/actors/parts/subtabs/abilities/essence-rules.hbs",
     "systems/hwfwm-d20/templates/actors/parts/subtabs/abilities/essence1.hbs",
     "systems/hwfwm-d20/templates/actors/parts/subtabs/abilities/essence2.hbs",
     "systems/hwfwm-d20/templates/actors/parts/subtabs/abilities/essence3.hbs",
