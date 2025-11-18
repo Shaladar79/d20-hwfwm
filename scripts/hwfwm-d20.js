@@ -26,24 +26,23 @@ class HWFWMPCSheet extends ActorSheet {
     const data = super.getData(options);
     const sys  = this.actor.system ?? {};
 
-    const rank = (sys.details?.rank ?? "").toString().toLowerCase();
+    const rank = (sys.details?.rank ?? "").toLowerCase();
     data.showWillpower = rank.includes("gold") || rank.includes("diamond");
 
-    // Expose itemTypes for easy use on tabs
+    // Expose itemTypes for use in tabs
     data.itemTypes = this.actor.itemTypes ?? {};
-
-    // Expose isGM for confluence GM-only select
-    data.isGM = game.user?.isGM ?? false;
 
     return data;
   }
 
-  /** Activate listeners for sheet controls */
+  /** Activate listeners */
   activateListeners(html) {
     super.activateListeners(html);
     if (!this.isEditable) return;
 
-    // ---------------- Subtabs (Stats, Skills, Inventory, Abilities, etc.) -------------
+    // ----------------------------------------------------------
+    // Subtabs (Stats, Skills, Inventory, Abilities, etc.)
+    // ----------------------------------------------------------
     html.find(".subtabs").each((_, elem) => {
       const $block   = $(elem);
       const $buttons = $block.find(".subtab-btn");
@@ -53,11 +52,11 @@ class HWFWMPCSheet extends ActorSheet {
         const target = $btn.data("subtab");
         if (!target) return;
 
-        // Update buttons
+        // UI update
         $buttons.removeClass("active");
         $btn.addClass("active");
 
-        // Subtab containers are within the same .card
+        // Show correct subtab
         const $card = $block.closest(".card");
         const $tabs = $card.find(".subtab");
 
@@ -66,7 +65,25 @@ class HWFWMPCSheet extends ActorSheet {
       });
     });
 
-    // ---------------- Embedded Item Controls (skills, etc.) -----------------
+    // ----------------------------------------------------------
+    // Essence dropdowns — direct update to actor data
+    // ----------------------------------------------------------
+    html.on("change", "select.essence-select", ev => {
+      const select = ev.currentTarget;
+      const path   = select.name;   // e.g. system.essences.e1.key
+      const value  = select.value;
+
+      if (!path) return;
+
+      console.log("Updating Essence:", path, "=", value);
+      this.actor.update({ [path]: value });
+    });
+
+    // ----------------------------------------------------------
+    // Embedded Item Controls (Skills / Abilities)
+    // ----------------------------------------------------------
+
+    // Create new embedded item
     html.find(".item-create").on("click", async ev => {
       const btn = ev.currentTarget;
       const type = btn.dataset.type;
@@ -87,24 +104,30 @@ class HWFWMPCSheet extends ActorSheet {
       ]);
     });
 
+    // Edit item
     html.find(".item-edit").on("click", ev => {
       const li = ev.currentTarget.closest("[data-item-id]");
       if (!li) return;
+
       const item = this.actor.items.get(li.dataset.itemId);
       if (item) item.sheet.render(true);
     });
 
+    // Delete item
     html.find(".item-delete").on("click", async ev => {
       const li = ev.currentTarget.closest("[data-item-id]");
       if (!li) return;
+
       await this.actor.deleteEmbeddedDocuments("Item", [li.dataset.itemId]);
     });
 
+    // Toggle skill trained
     html.find(".skill-trained").on("change", async ev => {
       const cb   = ev.currentTarget;
       const id   = cb.dataset.itemId;
       const item = this.actor.items.get(id);
       if (!item) return;
+
       await item.update({ "system.trained": cb.checked });
     });
   }
@@ -122,8 +145,7 @@ class HWFWMItemSheet extends ItemSheet {
   }
 
   getData(options) {
-    const data = super.getData(options);
-    return data;
+    return super.getData(options);
   }
 }
 
@@ -131,14 +153,11 @@ class HWFWMItemSheet extends ItemSheet {
 Hooks.once("init", async function () {
   console.log("HWFWM-D20 | init");
 
-  // ---------- Handlebars helpers ----------
-  Handlebars.registerHelper("eq", function (a, b) {
-    return a === b;
-  });
+  // Handlebars helpers
+  Handlebars.registerHelper("eq", (a, b) => a === b);
 
   Handlebars.registerHelper("array", function (...args) {
-    // Last arg is Handlebars options object
-    return args.slice(0, -1);
+    return args.slice(0, -1); // remove handlebars options object
   });
 
   Handlebars.registerHelper("sortBy", function (collection, field) {
@@ -150,7 +169,7 @@ Hooks.once("init", async function () {
     });
   });
 
-  // ---------- Register sheets ----------
+  // Register sheets
   Actors.unregisterSheet("core", ActorSheet);
   Actors.registerSheet("hwfwm-d20", HWFWMPCSheet, {
     makeDefault: true,
@@ -162,9 +181,8 @@ Hooks.once("init", async function () {
     makeDefault: true
   });
 
-  // ---------- Preload templates ----------
+  // Preload templates
   const templatePaths = [
-    // Main actor sheet
     "systems/hwfwm-d20/templates/actors/actor-sheet.hbs",
 
     // Tabs
@@ -184,7 +202,7 @@ Hooks.once("init", async function () {
     "systems/hwfwm-d20/templates/actors/parts/subtabs/inventory/gear.hbs",
     "systems/hwfwm-d20/templates/actors/parts/subtabs/inventory/consumables.hbs",
 
-    // Skills subtabs
+    // Skills
     "systems/hwfwm-d20/templates/actors/parts/subtabs/skills/combat-skills.hbs",
     "systems/hwfwm-d20/templates/actors/parts/subtabs/skills/power-skills.hbs",
     "systems/hwfwm-d20/templates/actors/parts/subtabs/skills/speed-skills.hbs",
@@ -193,10 +211,13 @@ Hooks.once("init", async function () {
     "systems/hwfwm-d20/templates/actors/parts/subtabs/skills/crafting-skills.hbs",
     "systems/hwfwm-d20/templates/actors/parts/subtabs/skills/knowledge-skills.hbs",
 
-    // Abilities / Essences subtabs & partials
+    // Abilities / Essences
     "systems/hwfwm-d20/templates/actors/parts/subtabs/abilities/essence-subtabs.hbs",
+    "systems/hwfwm-d20/templates/actors/parts/subtabs/abilities/essence-select.hbs",
     "systems/hwfwm-d20/templates/actors/parts/subtabs/abilities/essence-options.hbs",
     "systems/hwfwm-d20/templates/actors/parts/subtabs/abilities/confluence-options.hbs",
+    "systems/hwfwm-d20/templates/actors/parts/subtabs/abilities/essence-details.hbs",
+    "systems/hwfwm-d20/templates/actors/parts/subtabs/abilities/essence-rules.hbs",
     "systems/hwfwm-d20/templates/actors/parts/subtabs/abilities/essence1.hbs",
     "systems/hwfwm-d20/templates/actors/parts/subtabs/abilities/essence2.hbs",
     "systems/hwfwm-d20/templates/actors/parts/subtabs/abilities/essence3.hbs",
@@ -211,4 +232,3 @@ Hooks.once("init", async function () {
 Hooks.once("ready", () => {
   console.log("HWFWM-D20 | ready");
 });
-
