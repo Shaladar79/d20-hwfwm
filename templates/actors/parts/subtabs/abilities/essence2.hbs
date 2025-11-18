@@ -5,14 +5,14 @@
     <label>Essence</label>
 
     <select name="system.essences.e2.key" class="essence-select">
-      <option value="">— Select Essence —</option>
+      <option value="" {{#unless system.essences.e2.key}}selected{{/unless}}>— Select Essence —</option>
       {{> "systems/hwfwm-d20/templates/actors/parts/subtabs/abilities/essence-options.hbs"
           current=system.essences.e2.key}}
     </select>
   </div>
 
   <div class="essence-theme-block">
-    <h4>Theme & Description</h4>
+    <h4>Theme &amp; Description</h4>
     <p class="theme-text">
       {{system.essences.e2.theme}}
     </p>
