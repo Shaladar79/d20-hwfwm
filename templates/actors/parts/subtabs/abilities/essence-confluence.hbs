@@ -1,5 +1,4 @@
 <section class="essence-panel essence-panel-confluence">
-
   <h3>Confluence Essence</h3>
 
   <div class="essence-row">
@@ -7,11 +6,9 @@
 
     <select name="system.essences.confluence.key"
             class="essence-select"
-            data-slot="confluence"
             {{#unless isGM}}disabled{{/unless}}>
       <option value="">— Auto / GM Select —</option>
 
-      {{!-- Options constrained by e1/e2/e3 combos, plus GM override --}}
       {{> "systems/hwfwm-d20/templates/actors/parts/subtabs/abilities/confluence-options.hbs"
           e1=system.essences.e1.key
           e2=system.essences.e2.key
@@ -52,5 +49,4 @@
       <span class="ability-placeholder">Ability Slot 5 – Drop Essence Ability here</span>
     </div>
   </div>
-
 </section>
