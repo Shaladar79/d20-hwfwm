@@ -26,7 +26,7 @@ class HWFWMPCSheet extends ActorSheet {
     const data = super.getData(options);
     const sys  = this.actor.system ?? {};
 
-    const rank = (sys.details?.rank ?? "").toString().toLowerCase();
+    const rank = (sys.details?.rank ?? "").toLowerCase();
     data.showWillpower = rank.includes("gold") || rank.includes("diamond");
 
     // Expose itemTypes for use in tabs
@@ -65,10 +65,23 @@ class HWFWMPCSheet extends ActorSheet {
       });
     });
 
-    // NOTE: ❌ No custom handler for select.essence-select.
-    // Foundry's core _onChangeInput will automatically update
-    // system.essences.e1.key / e2.key / e3.key / confluence.key
-    // based on the <select name="..."> attributes in your HBS.
+    // ----------------------------------------------------------
+    // Essence dropdowns — direct update to actor data
+    // ----------------------------------------------------------
+    html.on("change", "select.essence-select, select.confluence-select", async ev => {
+      const select = ev.currentTarget;
+      const path   = select.name;   // e.g. system.essences.e1.key
+      const value  = select.value;
+
+      if (!path) return;
+
+      console.log("HWFWM-D20 | Updating Essence field:", path, "=", value);
+      try {
+        await this.actor.update({ [path]: value });
+      } catch (err) {
+        console.error("HWFWM-D20 | Failed to update Essence:", err);
+      }
+    });
 
     // ----------------------------------------------------------
     // Embedded Item Controls (Skills / Abilities)
@@ -76,7 +89,7 @@ class HWFWMPCSheet extends ActorSheet {
 
     // Create new embedded item
     html.find(".item-create").on("click", async ev => {
-      const btn  = ev.currentTarget;
+      const btn = ev.currentTarget;
       const type = btn.dataset.type;
       if (!type) return;
 
@@ -204,6 +217,7 @@ Hooks.once("init", async function () {
 
     // Abilities / Essences
     "systems/hwfwm-d20/templates/actors/parts/subtabs/abilities/essence-subtabs.hbs",
+    "systems/hwfwm-d20/templates/actors/parts/subtabs/abilities/essence-select.hbs",
     "systems/hwfwm-d20/templates/actors/parts/subtabs/abilities/essence-options.hbs",
     "systems/hwfwm-d20/templates/actors/parts/subtabs/abilities/confluence-options.hbs",
     "systems/hwfwm-d20/templates/actors/parts/subtabs/abilities/essence-details.hbs",
