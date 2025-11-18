@@ -65,23 +65,16 @@ class HWFWMPCSheet extends ActorSheet {
       });
     });
 
-    // ----------------------------------------------------------
-    // Essence dropdowns — direct update to actor data
-    // ----------------------------------------------------------
-    html.on("change", "select.essence-select, select.confluence-select", async ev => {
-      const select = ev.currentTarget;
-      const path   = select.name;   // e.g. system.essences.e1.key
-      const value  = select.value;
-
-      if (!path) return;
-
-      console.log("HWFWM-D20 | Updating Essence field:", path, "=", value);
-      try {
-        await this.actor.update({ [path]: value });
-      } catch (err) {
-        console.error("HWFWM-D20 | Failed to update Essence:", err);
-      }
-    });
+    // NOTE: We no longer add a custom "change" handler for the Essence
+    // selects. FormApplication (ActorSheet) already auto-saves any
+    // <input>/<select>/<textarea> that has a name like "system.xxx"
+    // via its built-in _onChangeInput + submit logic.
+    // As long as the selects have:
+    //   name="system.essences.e1.key"
+    //   name="system.essences.e2.key"
+    //   name="system.essences.e3.key"
+    //   name="system.essences.confluence.key"
+    // their values will be persisted automatically.
 
     // ----------------------------------------------------------
     // Embedded Item Controls (Skills / Abilities)
