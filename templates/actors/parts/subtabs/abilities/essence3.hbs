@@ -1,20 +1,20 @@
-<section class="essence-panel essence-panel-primary">
+<section class="essence-panel essence-panel-e3">
   <h3>Essence 3</h3>
 
   <div class="essence-row">
     <label>Essence</label>
 
-    {{!-- binds to system.essences.e3.key --}}
-    <select name="system.essences.e3.key">
+    <select name="system.essences.e3.key"
+            class="essence-select"
+            data-slot="e3">
       <option value="">— Select Essence —</option>
-
       {{> "systems/hwfwm-d20/templates/actors/parts/subtabs/abilities/essence-options.hbs"
           current=system.essences.e3.key}}
     </select>
   </div>
 
   <div class="essence-theme-block">
-    <h4>Theme</h4>
+    <h4>Theme & Description</h4>
     <p class="theme-text">
       {{system.essences.e3.theme}}
     </p>
