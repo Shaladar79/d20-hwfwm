@@ -66,19 +66,6 @@ class HWFWMPCSheet extends ActorSheet {
       });
     });
 
-    // ---------------- Essence dropdowns: manual save to actor -----------------
-    // Any <select> with .essence-select and data-slot="e1|e2|e3|confluence"
-    html.find("select.essence-select").on("change", ev => {
-      const select = ev.currentTarget;
-      const slot   = select.dataset.slot;     // e1, e2, e3, confluence
-      const value  = select.value || "";
-
-      if (!slot) return;
-
-      const path = `system.essences.${slot}.key`;
-      this.actor.update({ [path]: value });
-    });
-
     // ---------------- Embedded Item Controls (skills, etc.) -----------------
     html.find(".item-create").on("click", async ev => {
       const btn = ev.currentTarget;
@@ -224,3 +211,4 @@ Hooks.once("init", async function () {
 Hooks.once("ready", () => {
   console.log("HWFWM-D20 | ready");
 });
+
