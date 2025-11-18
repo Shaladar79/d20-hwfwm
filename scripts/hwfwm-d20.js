@@ -26,15 +26,11 @@ class HWFWMPCSheet extends ActorSheet {
     const data = super.getData(options);
     const sys  = this.actor.system ?? {};
 
-    // Rank-based toggle for Willpower
     const rank = (sys.details?.rank ?? "").toString().toLowerCase();
     data.showWillpower = rank.includes("gold") || rank.includes("diamond");
 
-    // Expose itemTypes for easy use on tabs (skills, etc.)
+    // Expose itemTypes for easy use on tabs
     data.itemTypes = this.actor.itemTypes ?? {};
-
-    // Expose GM flag for Essence / Confluence controls
-    data.isGM = game.user?.isGM ?? false;
 
     return data;
   }
@@ -67,9 +63,16 @@ class HWFWMPCSheet extends ActorSheet {
       });
     });
 
+    // ---------------- FORCE SAVE for Essence dropdowns -----------------
+    // Any change to system.essences.*.key will immediately submit the form
+    html.find("select[name^='system.essences']").on("change", ev => {
+      // Let the base sheet do its normal form handling / update
+      this._onSubmit(ev);
+    });
+
     // ---------------- Embedded Item Controls (skills, etc.) -----------------
     html.find(".item-create").on("click", async ev => {
-      const btn  = ev.currentTarget;
+      const btn = ev.currentTarget;
       const type = btn.dataset.type;
       if (!type) return;
 
